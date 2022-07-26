@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Jul-26-2022                                               *
  *        Initial version supports QML Rectangle                    *
+ * 1.0.1: Jul-26-2022                                               *
+ *        When draw object, default is red and later is blue        *
  *******************************************************************/
 
 #include "MT_DSA_QMLObject.h"
@@ -56,7 +58,8 @@ void MT_DSA_QMLObject::drawObject()
                         "height: " + QString::number(this->getCurPosition()->getH()) + ";"
                         "Rectangle { "
                             "id: id_name; "
-                            "color: \"blue\";"
+                            "objectName: \"id_name\";"
+                            "color: \"red\";"
                             "anchors.fill: parent; "
                             "anchors.margins: 10; "
                             "Text { "
@@ -79,4 +82,7 @@ void MT_DSA_QMLObject::move()
 {
     _quickitem->setProperty("x", this->getNextPosition()->getX());
     _quickitem->setProperty("y", this->getNextPosition()->getY());
+    QObject* idname = _quickitem->findChild<QObject*>("id_name");
+    if (idname)
+        idname->setProperty("color", "blue");
 }
