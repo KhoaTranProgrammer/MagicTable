@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Jul-24-2022                                               *
  *        Initial version supports: simple sorting                  *
+ * 1.1.0: Jul-31-2022                                               *
+ *        Supports sort/draw history all and one by one             *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTING_H
@@ -51,9 +53,13 @@ private:
 public:
     MT_DSA_Sorting();
 
-    void createTable(int w, int h, int col, int row);
-    void addData(MT_DSA_Object& obj, int value);
-    void sortData();
+    mt_void createTable(int w, int h, int col, int row);
+    mt_void addData(MT_DSA_Object& obj, int value);
+    mt_void addDataWithoutSort(MT_DSA_Object& obj, int value);
+    mt_void sortData();
+    mt_void sortDataWithHistory();
+    mt_void drawHistoryAll();
+    mt_void drawHistoryOne();
 };
 
 #endif // MT_DSA_SORTING_H

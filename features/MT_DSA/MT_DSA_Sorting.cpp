@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Jul-24-2022                                               *
  *        Initial version supports: simple sorting                  *
+ * 1.1.0: Jul-31-2022                                               *
+ *        Supports sort/draw history all and one by one             *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -42,12 +44,12 @@ MT_DSA_Sorting::MT_DSA_Sorting()
 
 }
 
-void MT_DSA_Sorting::createTable(int w, int h, int col, int row)
+mt_void MT_DSA_Sorting::createTable(int w, int h, int col, int row)
 {
     this->_mttable.createTable(w, h, col, row);
 }
 
-void MT_DSA_Sorting::addData(MT_DSA_Object& obj, int value)
+mt_void MT_DSA_Sorting::addData(MT_DSA_Object& obj, int value)
 {
     obj.setValue(value);
     this->_listSortObjects.push_back(&obj);
@@ -55,7 +57,14 @@ void MT_DSA_Sorting::addData(MT_DSA_Object& obj, int value)
     this->sortData();
 }
 
-void MT_DSA_Sorting::sortData()
+mt_void MT_DSA_Sorting::addDataWithoutSort(MT_DSA_Object& obj, int value)
+{
+    obj.setValue(value);
+    this->_listSortObjects.push_back(&obj);
+    this->_mttable.addObject(obj);
+}
+
+mt_void MT_DSA_Sorting::sortData()
 {
     for(int i = 0; i < this->_listSortObjects.size(); i++)
     {
@@ -76,4 +85,39 @@ void MT_DSA_Sorting::sortData()
     }
 
     this->_mttable.drawObjects();
+}
+
+mt_void MT_DSA_Sorting::sortDataWithHistory()
+{
+    this->_mttable.clearHistory();
+
+    for(int i = 0; i < this->_listSortObjects.size(); i++)
+    {
+        this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
+    }
+
+    for(int i = 0; i < this->_listSortObjects.size(); i++)
+    {
+        for(int j = i + 1; j < this->_listSortObjects.size(); j++)
+        {
+            if(this->_listSortObjects.at(i)->getValue() > this->_listSortObjects.at(j)->getValue())
+            {
+                MT_DSA_Object* temp = this->_listSortObjects.at(i);
+                this->_listSortObjects.at(i) = this->_listSortObjects.at(j);
+                this->_listSortObjects.at(j) = temp;
+                this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
+                this->_mttable.updateObjectPosition(*this->_listSortObjects.at(j), j % this->_mttable.getCol(), j / this->_mttable.getRow());
+            }
+        }
+    }
+}
+
+mt_void MT_DSA_Sorting::drawHistoryAll()
+{
+    this->_mttable.drawHistoryAll();
+}
+
+mt_void MT_DSA_Sorting::drawHistoryOne()
+{
+    this->_mttable.drawHistoryOne();
 }
