@@ -35,6 +35,8 @@
  *        Initial version supports QML Rectangle                    *
  * 1.0.1: Jul-26-2022                                               *
  *        When draw object, default is red and later is blue        *
+ * 1.0.2: Jul-26-2022                                               *
+ *        Change NumberAnimation of x/y behavior to 500             *
  *******************************************************************/
 
 #include "MT_DSA_QMLObject.h"
@@ -68,8 +70,8 @@ void MT_DSA_QMLObject::drawObject()
                                 "font.pointSize: 13; "
                             "}"
                         "}"
-                        "Behavior on x { NumberAnimation { duration: 1000} }"
-                        "Behavior on y { NumberAnimation { duration: 1000} }"
+                        "Behavior on x { NumberAnimation { duration: 500} }"
+                        "Behavior on y { NumberAnimation { duration: 500} }"
                     "}";
     _component = new QQmlComponent(this->_engine);
     _component->setData(data.toUtf8(), QUrl());

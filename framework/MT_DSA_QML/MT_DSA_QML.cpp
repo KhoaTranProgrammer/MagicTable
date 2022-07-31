@@ -33,6 +33,9 @@
  ********************************************************************
  * 1.0.0: Jul-26-2022                                               *
  *        Initial version supports simple sorting                   *
+ * 1.1.0: Jul-31-2022                                               *
+ *        Add list of new data                                      *
+ *        Support drawHistoryOneByOne slot                          *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -44,11 +47,27 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void MT_DSA_QML::paint(QPainter *painter)
 {
-    this->createTable((int)this->width(), (int)this->height(), 5, 5);
+    this->createTable((int)this->width(), (int)this->height(), 7, 7);
 }
 
 void MT_DSA_QML::addNewData(int value)
 {
     MT_DSA_QMLObject *obj = new MT_DSA_QMLObject(*engine, *this);
     this->addData(*obj, value);
+}
+
+void MT_DSA_QML::addNewDataList(QString value)
+{
+    QStringList datalist = value.split(QLatin1Char(','));
+    for (int i = 0; i < datalist.count(); i++)
+    {
+        MT_DSA_QMLObject *obj = new MT_DSA_QMLObject(*engine, *this);
+        this->addDataWithoutSort(*obj, datalist.at(i).toInt());
+    }
+    this->sortDataWithHistory();
+}
+
+void MT_DSA_QML::drawHistoryOneByOne()
+{
+    this->drawHistoryOne();
 }

@@ -33,6 +33,9 @@
  ********************************************************************
  * 1.0.0: Jul-26-2022                                               *
  *        Initial version supports simple sorting                   *
+ * 1.1.0: Jul-31-2022                                               *
+ *        Add list of new data                                      *
+ *        Support drawHistoryOneByOne slot                          *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -56,6 +59,8 @@ public:
 
 public slots:
     void addNewData(int value);
+    void addNewDataList(QString value); // 7,5,9,1,31,23,14
+    void drawHistoryOneByOne();
 };
 
 #endif // MT_DSA_QML_H
