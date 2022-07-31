@@ -33,6 +33,10 @@
  ********************************************************************
  * 1.0.0: Jul-21-2022                                               *
  *        Initial version supports: Add/update/draw Object          *
+ * 1.1.0: Jul-31-2022                                               *
+ *        Supports process history of Object moving using           *
+ *        MT_RefObject                                              *
+ *        Add MT_RefObject into history inside updateObjectPosition *
  *******************************************************************/
 
 #include "MT_Table.h"
@@ -105,6 +109,9 @@ bool MT_Table::updateObjectPosition(MT_Object &obj, mt_uint col, mt_uint row)
     {
         MT_Position* objpos = this->getPositionAt(col, row);
         obj.updatePosition(*objpos);
+
+        MT_RefObject* refobj = new MT_RefObject(obj, *objpos);
+        this->_history.push_back(refobj);
         return true;
     }
     return false;
@@ -124,4 +131,24 @@ mt_bool MT_Table::checkValidPosition(mt_uint col, mt_uint row)
 {
     if(col < this->_column && row < this->_row) return true;
     else return false;
+}
+
+mt_void MT_Table::clearHistory()
+{
+    for (mt_uint i = this->_history.size(); i > 0;)
+    {
+        --i;
+        delete this->_history.at(i);
+        this->_history.pop_back();
+    }
+}
+
+mt_void MT_Table::drawHistory()
+{
+    for(mt_uint i = 0; i < this->_history.size(); i++)
+    {
+        MT_Object* obj = this->_history.at(i)->getObject();
+        obj->updatePosition(*(this->_history.at(i)->getPosition()));
+        obj->draw();
+    }
 }

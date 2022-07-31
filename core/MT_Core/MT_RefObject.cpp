@@ -25,58 +25,35 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This class describe/process for Table in Magic Table             *
+ * This class keeps the position of object                          *
  *******************************************************************/
 
 /********************************************************************
  * VERSION HISTORY                                                  *
  ********************************************************************
- * 1.0.0: Jul-21-2022                                               *
- *        Initial version supports: Add/update/draw Object          *
- * 1.1.0: Jul-31-2022                                               *
- *        Supports process history of Object moving using           *
- *        MT_RefObject                                              *
+ * 1.0.0: Jul-31-2022                                               *
+ *        Initial version supports: Init/draw RefObject             *
  *******************************************************************/
 
-#ifndef MT_TABLE_H
-#define MT_TABLE_H
-
-#include <vector>
-#include "MT_Atom.h"
-#include "MT_Object.h"
-#include "MT_Position.h"
 #include "MT_RefObject.h"
 
-class MT_Table : public MT_Atom
+MT_RefObject::MT_RefObject(MT_Object& obj, MT_Position& pos)
 {
-private:
-    vector<MT_Object*> _objectlist;
-    vector<MT_Position*> _matrixposition;
-    mt_uint _actual_width; // Actual width in pixel unit
-    mt_uint _actual_height; // Actual height in pixel unit
-    mt_uint _position_width; // Position width in pixel unit
-    mt_uint _position_height; // Position height in pixel unit
-    mt_uint _row; // Number of rows in table
-    mt_uint _column; // Numner of columns in table
-    vector<MT_RefObject*> _history; // History moving of objects in table
+    this->_pos = &pos;
+    this->_obj = &obj;
+}
 
-public:
-    MT_Table();
+MT_Position* MT_RefObject::getPosition()
+{
+    return this->_pos;
+}
 
-    mt_void createTable(mt_uint w, mt_uint h, mt_uint col, mt_uint row);
-    mt_void addObject(mt_uint col, mt_uint row);
-    mt_void addObject(MT_Object& obj, mt_uint col, mt_uint row);
-    mt_void addObject(MT_Object& obj);
-    MT_Position* getPositionAt(mt_uint col, mt_uint row);
-    mt_bool updateObjectPosition(MT_Object& obj, mt_uint col, mt_uint row);
-    mt_uint getRow();
-    mt_uint getCol();
+MT_Object* MT_RefObject::getObject()
+{
+    return this->_obj;
+}
 
-    mt_void drawObjects();
+mt_void MT_RefObject::drawRefObject()
+{
 
-    bool checkValidPosition(mt_uint col, mt_uint row);
-    mt_void clearHistory();
-    mt_void drawHistory();
-};
-
-#endif // MT_TABLE_H
+}
