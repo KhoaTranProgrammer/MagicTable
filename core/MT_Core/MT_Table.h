@@ -36,6 +36,8 @@
  * 1.1.0: Jul-31-2022                                               *
  *        Supports process history of Object moving using           *
  *        MT_RefObject                                              *
+ * 1.1.1: Jul-31-2022                                               *
+ *        Supports draw history all and one by one                  *
  *******************************************************************/
 
 #ifndef MT_TABLE_H
@@ -59,6 +61,7 @@ private:
     mt_uint _row; // Number of rows in table
     mt_uint _column; // Numner of columns in table
     vector<MT_RefObject*> _history; // History moving of objects in table
+    mt_uint _index_history; // Current index in History
 
 public:
     MT_Table();
@@ -76,7 +79,8 @@ public:
 
     bool checkValidPosition(mt_uint col, mt_uint row);
     mt_void clearHistory();
-    mt_void drawHistory();
+    mt_void drawHistoryAll();
+    mt_void drawHistoryOne();
 };
 
 #endif // MT_TABLE_H
