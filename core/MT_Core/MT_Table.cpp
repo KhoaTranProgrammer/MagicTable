@@ -39,6 +39,8 @@
  *        Add MT_RefObject into history inside updateObjectPosition *
  * 1.1.1: Jul-31-2022                                               *
  *        Supports draw history all and one by one                  *
+ * 1.1.2: Aug-04-2022                                               *
+ *        Support each index in history as list of MT_RefObject     *
  *******************************************************************/
 
 #include "MT_Table.h"
@@ -113,8 +115,11 @@ bool MT_Table::updateObjectPosition(MT_Object &obj, mt_uint col, mt_uint row)
         MT_Position* objpos = this->getPositionAt(col, row);
         obj.updatePosition(*objpos);
 
+        vector<MT_RefObject*> listofrefobj;
         MT_RefObject* refobj = new MT_RefObject(obj, *objpos);
-        this->_history.push_back(refobj);
+        listofrefobj.push_back(refobj);
+        this->_history.push_back(listofrefobj);
+
         return true;
     }
     return false;
@@ -142,7 +147,13 @@ mt_void MT_Table::clearHistory()
     for (mt_uint i = this->_history.size(); i > 0;)
     {
         --i;
-        delete this->_history.at(i);
+        for (mt_uint j = this->_history.at(i).size(); j > 0;)
+        {
+            --j;
+            delete this->_history.at(i).at(j);
+            this->_history.at(i).pop_back();
+        }
+
         this->_history.pop_back();
     }
 }
@@ -151,9 +162,12 @@ mt_void MT_Table::drawHistoryAll()
 {
     for(mt_uint i = 0; i < this->_history.size(); i++)
     {
-        MT_Object* obj = this->_history.at(i)->getObject();
-        obj->updatePosition(*(this->_history.at(i)->getPosition()));
-        obj->draw();
+        for(mt_uint j = 0; j < this->_history.at(i).size(); j++)
+        {
+            MT_Object* obj = this->_history.at(i).at(j)->getObject();
+            obj->updatePosition(*(this->_history.at(i).at(j)->getPosition()));
+            obj->draw();
+        }
     }
 }
 
@@ -161,9 +175,12 @@ mt_void MT_Table::drawHistoryOne()
 {
     if (this->_index_history < this->_history.size())
     {
-        MT_Object* obj = this->_history.at(this->_index_history)->getObject();
-        obj->updatePosition(*(this->_history.at(this->_index_history)->getPosition()));
-        obj->draw();
+        for(mt_uint j = 0; j < this->_history.at(this->_index_history).size(); j++)
+        {
+            MT_Object* obj = this->_history.at(this->_index_history).at(j)->getObject();
+            obj->updatePosition(*(this->_history.at(this->_index_history).at(j)->getPosition()));
+            obj->draw();
+        }
         this->_index_history++;
     }
 }

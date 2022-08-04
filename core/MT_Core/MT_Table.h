@@ -38,6 +38,8 @@
  *        MT_RefObject                                              *
  * 1.1.1: Jul-31-2022                                               *
  *        Supports draw history all and one by one                  *
+ * 1.1.2: Aug-04-2022                                               *
+ *        Support each index in history as list of MT_RefObject     *
  *******************************************************************/
 
 #ifndef MT_TABLE_H
@@ -60,7 +62,7 @@ private:
     mt_uint _position_height; // Position height in pixel unit
     mt_uint _row; // Number of rows in table
     mt_uint _column; // Numner of columns in table
-    vector<MT_RefObject*> _history; // History moving of objects in table
+    vector<vector<MT_RefObject*>> _history; // History moving of objects in table
     mt_uint _index_history; // Current index in History
 
 public:
