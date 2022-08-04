@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Jul-26-2022                                               *
  *        Initial version uses MT_DSA_QML to display Simple Sorting *
+ * 1.0.1: Aug-04-2022                                               *
+ *        Sort the list input of data                               *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -44,7 +46,6 @@ Rectangle {
     color: "black"
 
     property var arr: [7, 5, 9, 1, 31, 23, 14, 2, 9, 33, 0, 99, 3]
-    property int _increase: 0
 
     MT_DSA_QML {
         id: myTable
@@ -52,13 +53,17 @@ Rectangle {
     }
 
     Timer {
-        interval: 2000; running: true; repeat: true
+        interval: 1000; running: true; repeat: false
 
         onTriggered: {
-            myTable.addNewData(arr[_increase])
-            _increase++
+            myTable.addNewDataList("7,5,9,1,31,23,14")
+        }
+    }
 
-            if (_increase == 12) repeat = false
+    Timer {
+        interval: 1000; running: true; repeat: true
+        onTriggered: {
+            myTable.drawHistoryOneByOne()
         }
     }
 }
