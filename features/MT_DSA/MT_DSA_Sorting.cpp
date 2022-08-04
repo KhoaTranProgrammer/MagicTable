@@ -35,6 +35,8 @@
  *        Initial version supports: simple sorting                  *
  * 1.1.0: Jul-31-2022                                               *
  *        Supports sort/draw history all and one by one             *
+ * 1.1.1: Aug-04-2022                                               *
+ *        Update position for two objects in sortDataWithHistory    *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -105,8 +107,8 @@ mt_void MT_DSA_Sorting::sortDataWithHistory()
                 MT_DSA_Object* temp = this->_listSortObjects.at(i);
                 this->_listSortObjects.at(i) = this->_listSortObjects.at(j);
                 this->_listSortObjects.at(j) = temp;
-                this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
-                this->_mttable.updateObjectPosition(*this->_listSortObjects.at(j), j % this->_mttable.getCol(), j / this->_mttable.getRow());
+                this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow(),
+                                                    *this->_listSortObjects.at(j), j % this->_mttable.getCol(), j / this->_mttable.getRow());
             }
         }
     }
