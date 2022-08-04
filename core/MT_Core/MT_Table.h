@@ -40,6 +40,8 @@
  *        Supports draw history all and one by one                  *
  * 1.1.2: Aug-04-2022                                               *
  *        Support each index in history as list of MT_RefObject     *
+ * 1.1.3: Aug-04-2022                                               *
+ *        Update position for two objects                           *
  *******************************************************************/
 
 #ifndef MT_TABLE_H
@@ -74,6 +76,8 @@ public:
     mt_void addObject(MT_Object& obj);
     MT_Position* getPositionAt(mt_uint col, mt_uint row);
     mt_bool updateObjectPosition(MT_Object& obj, mt_uint col, mt_uint row);
+    mt_bool updateObjectPosition(MT_Object& obj1, mt_uint col1, mt_uint row1,
+                                 MT_Object& obj2, mt_uint col2, mt_uint row2);
     mt_uint getRow();
     mt_uint getCol();
 

@@ -41,6 +41,8 @@
  *        Supports draw history all and one by one                  *
  * 1.1.2: Aug-04-2022                                               *
  *        Support each index in history as list of MT_RefObject     *
+ * 1.1.3: Aug-04-2022                                               *
+ *        Update position for two objects                           *
  *******************************************************************/
 
 #include "MT_Table.h"
@@ -122,6 +124,38 @@ bool MT_Table::updateObjectPosition(MT_Object &obj, mt_uint col, mt_uint row)
 
         return true;
     }
+    return false;
+}
+
+mt_bool MT_Table::updateObjectPosition(MT_Object& obj1, mt_uint col1, mt_uint row1,
+                                       MT_Object& obj2, mt_uint col2, mt_uint row2)
+{
+    vector<MT_RefObject*> listofrefobj;
+
+    if(checkValidPosition(col1, row1))
+    {
+        MT_Position* objpos1 = this->getPositionAt(col1, row1);
+        obj1.updatePosition(*objpos1);
+
+        MT_RefObject* refobj1 = new MT_RefObject(obj1, *objpos1);
+        listofrefobj.push_back(refobj1);
+    }
+
+    if(checkValidPosition(col2, row2))
+    {
+        MT_Position* objpos2 = this->getPositionAt(col2, row2);
+        obj2.updatePosition(*objpos2);
+
+        MT_RefObject* refobj2 = new MT_RefObject(obj2, *objpos2);
+        listofrefobj.push_back(refobj2);
+    }
+
+    if(listofrefobj.size() > 0)
+    {
+        this->_history.push_back(listofrefobj);
+        return true;
+    }
+
     return false;
 }
 
