@@ -43,6 +43,8 @@
  *        Support each index in history as list of MT_RefObject     *
  * 1.1.3: Aug-04-2022                                               *
  *        Update position for two objects                           *
+ * 1.1.4: Aug-06-2022                                               *
+ *        Change matrixposition from array to matrix storage        *
  *******************************************************************/
 
 #include "MT_Table.h"
@@ -68,13 +70,16 @@ void MT_Table::createTable(mt_uint w, mt_uint h, mt_uint col, mt_uint row)
     // Create the table with the matrix of position
     for (mt_uint row = 0; row < this->_row; row++)
     {
+        vector<MT_Position*> onerow;
         for (mt_uint col = 0; col < this->_column; col++)
         {
             MT_Position* onepos = new MT_Position( col * this->_position_width, row * this->_position_height,
                                                    this->_position_width, this->_position_height,
                                                    col, row);
-            this->_matrixposition.push_back(onepos);
+
+            onerow.push_back(onepos);
         }
+        this->_matrixposition.push_back(onerow);
     }
 }
 
@@ -99,7 +104,7 @@ void MT_Table::addObject(MT_Object& obj)
 
 MT_Position* MT_Table::getPositionAt(mt_uint col, mt_uint row)
 {
-    return this->_matrixposition.at(static_cast<mt_uint>(row * this->_row + col));
+    return this->_matrixposition.at(row).at(col);
 }
 
 void MT_Table::drawObjects()

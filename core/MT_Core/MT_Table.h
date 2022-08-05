@@ -42,6 +42,8 @@
  *        Support each index in history as list of MT_RefObject     *
  * 1.1.3: Aug-04-2022                                               *
  *        Update position for two objects                           *
+ * 1.1.4: Aug-06-2022                                               *
+ *        Change matrixposition from array to matrix storage        *
  *******************************************************************/
 
 #ifndef MT_TABLE_H
@@ -57,7 +59,7 @@ class MT_Table : public MT_Atom
 {
 private:
     vector<MT_Object*> _objectlist;
-    vector<MT_Position*> _matrixposition;
+    vector<vector<MT_Position*>> _matrixposition;
     mt_uint _actual_width; // Actual width in pixel unit
     mt_uint _actual_height; // Actual height in pixel unit
     mt_uint _position_width; // Position width in pixel unit
