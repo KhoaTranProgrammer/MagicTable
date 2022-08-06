@@ -35,6 +35,8 @@
  *        Initial version uses MT_DSA_QML to display Simple Sorting *
  * 1.0.1: Aug-04-2022                                               *
  *        Sort the list input of data                               *
+ * 1.1.0: Aug-06-2022                                               *
+ *        Supports animation time setting                           *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -50,6 +52,8 @@ Rectangle {
     MT_DSA_QML {
         id: myTable
         anchors.fill: parent
+
+        Component.onCompleted: setObjectAnimationTime(900)
     }
 
     Timer {
