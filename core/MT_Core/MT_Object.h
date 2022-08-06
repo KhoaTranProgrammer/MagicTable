@@ -34,6 +34,8 @@
  ********************************************************************
  * 1.0.0: Jul-18-2022                                               *
  *        Initial version supports: position/state/move/draw object *
+ * 1.1.0: Aug-06-2022                                               *
+ *        Supports animation time setting                           *
  *******************************************************************/
 
 #ifndef MT_OBJECT_H
@@ -53,6 +55,8 @@ private:
 
     MT_OBJECT_STATE _state;
 
+    mt_uint64 _animationtime; // Time (ms) use when performing animation on object
+
 public:
     MT_Object();
     MT_Object(MT_Position& pos);
@@ -65,6 +69,9 @@ public:
     mt_void draw();
     virtual mt_void drawObject();
     virtual mt_void move();
+
+    mt_void setAnimationTime(mt_uint64 animationtime);
+    mt_uint64 getAnimationTime();
 };
 
 #endif // MT_OBJECT_H

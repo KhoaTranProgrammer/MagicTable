@@ -34,6 +34,8 @@
  ********************************************************************
  * 1.0.0: Jul-18-2022                                               *
  *        Initial version supports: position/state/move/draw object *
+ * 1.1.0: Aug-06-2022                                               *
+ *        Supports animation time setting                           *
  *******************************************************************/
 
 #include "MT_Object.h"
@@ -49,12 +51,14 @@ enum MT_OBJECT_STATE : short
 MT_Object::MT_Object()
 {
     this->_state = MT_OBJECT_INIT;
+    this->_animationtime = 0;
 }
 
 MT_Object::MT_Object(MT_Position& pos)
 {
     this->_state = MT_OBJECT_INIT;
     this->_pos = &pos;
+    this->_animationtime = 0;
 }
 
 mt_void MT_Object::updatePosition(MT_Position &pos)
@@ -104,4 +108,14 @@ MT_Position* MT_Object::getCurPosition()
 MT_Position* MT_Object::getNextPosition()
 {
     return this->_nextpos;
+}
+
+mt_void MT_Object::setAnimationTime(mt_uint64 animationtime)
+{
+    this->_animationtime = animationtime;
+}
+
+mt_uint64 MT_Object::getAnimationTime()
+{
+    return this->_animationtime;
 }
