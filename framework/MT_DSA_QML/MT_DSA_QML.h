@@ -36,6 +36,8 @@
  * 1.1.0: Jul-31-2022                                               *
  *        Add list of new data                                      *
  *        Support drawHistoryOneByOne slot                          *
+ * 1.2.0: Aug-06-2022                                               *
+ *        Supports animation time setting                           *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -56,11 +58,13 @@ public:
     void paint(QPainter *painter);
     QQmlEngine* engine;
     vector<MT_DSA_QMLObject*> _listSortObjects;
+    ulong _animationtime;
 
 public slots:
     void addNewData(int value);
     void addNewDataList(QString value); // 7,5,9,1,31,23,14
     void drawHistoryOneByOne();
+    void setObjectAnimationTime(ulong animationtime);
 };
 
 #endif // MT_DSA_QML_H

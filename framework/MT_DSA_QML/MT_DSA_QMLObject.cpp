@@ -37,6 +37,8 @@
  *        When draw object, default is red and later is blue        *
  * 1.0.2: Jul-26-2022                                               *
  *        Change NumberAnimation of x/y behavior to 500             *
+ * 1.1.0: Aug-06-2022                                               *
+ *        Supports animation time setting                           *
  *******************************************************************/
 
 #include "MT_DSA_QMLObject.h"
@@ -70,8 +72,8 @@ void MT_DSA_QMLObject::drawObject()
                                 "font.pointSize: 13; "
                             "}"
                         "}"
-                        "Behavior on x { NumberAnimation { duration: 500} }"
-                        "Behavior on y { NumberAnimation { duration: 500} }"
+                        "Behavior on x { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
+                        "Behavior on y { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
                     "}";
     _component = new QQmlComponent(this->_engine);
     _component->setData(data.toUtf8(), QUrl());

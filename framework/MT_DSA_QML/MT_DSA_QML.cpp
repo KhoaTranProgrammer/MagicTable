@@ -36,6 +36,8 @@
  * 1.1.0: Jul-31-2022                                               *
  *        Add list of new data                                      *
  *        Support drawHistoryOneByOne slot                          *
+ * 1.2.0: Aug-06-2022                                               *
+ *        Supports animation time setting                           *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -43,6 +45,7 @@
 MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     engine = new QQmlEngine;
+    _animationtime = 0;
 }
 
 void MT_DSA_QML::paint(QPainter *painter)
@@ -62,6 +65,7 @@ void MT_DSA_QML::addNewDataList(QString value)
     for (int i = 0; i < datalist.count(); i++)
     {
         MT_DSA_QMLObject *obj = new MT_DSA_QMLObject(*engine, *this);
+        obj->setAnimationTime(this->_animationtime);
         this->addDataWithoutSort(*obj, datalist.at(i).toInt());
     }
     this->sortDataWithHistory();
@@ -70,4 +74,9 @@ void MT_DSA_QML::addNewDataList(QString value)
 void MT_DSA_QML::drawHistoryOneByOne()
 {
     this->drawHistoryOne();
+}
+
+void MT_DSA_QML::setObjectAnimationTime(ulong animationtime)
+{
+    this->_animationtime = animationtime;
 }
