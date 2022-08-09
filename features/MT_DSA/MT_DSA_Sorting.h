@@ -35,6 +35,8 @@
  *        Initial version supports: simple sorting                  *
  * 1.1.0: Jul-31-2022                                               *
  *        Supports sort/draw history all and one by one             *
+ * 1.2.0: Aug-09-2022                                               *
+ *        Add Bubble sorting                                        *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTING_H
@@ -46,7 +48,7 @@
 
 class MT_DSA_Sorting
 {
-private:
+protected:
     MT_Table _mttable;
     vector<MT_DSA_Object*> _listSortObjects;
 
@@ -56,8 +58,8 @@ public:
     mt_void createTable(int w, int h, int col, int row);
     mt_void addData(MT_DSA_Object& obj, int value);
     mt_void addDataWithoutSort(MT_DSA_Object& obj, int value);
-    mt_void sortData();
-    mt_void sortDataWithHistory();
+    virtual mt_void sortData();
+    virtual mt_void sortDataWithHistory();
     mt_void drawHistoryAll();
     mt_void drawHistoryOne();
 };
