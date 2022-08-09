@@ -38,6 +38,8 @@
  *        Support drawHistoryOneByOne slot                          *
  * 1.2.0: Aug-06-2022                                               *
  *        Supports animation time setting                           *
+ * 1.3.0: Aug-09-2022                                               *
+ *        Add Bubble sorting                                        *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -46,17 +48,18 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     engine = new QQmlEngine;
     _animationtime = 0;
+    _dsa_sorting = new MT_DSA_SortingBubble();
 }
 
 void MT_DSA_QML::paint(QPainter *painter)
 {
-    this->createTable((int)this->width(), (int)this->height(), 7, 7);
+    _dsa_sorting->createTable((int)this->width(), (int)this->height(), 7, 7);
 }
 
 void MT_DSA_QML::addNewData(int value)
 {
     MT_DSA_QMLObject *obj = new MT_DSA_QMLObject(*engine, *this);
-    this->addData(*obj, value);
+    _dsa_sorting->addData(*obj, value);
 }
 
 void MT_DSA_QML::addNewDataList(QString value)
@@ -66,14 +69,14 @@ void MT_DSA_QML::addNewDataList(QString value)
     {
         MT_DSA_QMLObject *obj = new MT_DSA_QMLObject(*engine, *this);
         obj->setAnimationTime(this->_animationtime);
-        this->addDataWithoutSort(*obj, datalist.at(i).toInt());
+        _dsa_sorting->addDataWithoutSort(*obj, datalist.at(i).toInt());
     }
-    this->sortDataWithHistory();
+    _dsa_sorting->sortDataWithHistory();
 }
 
 void MT_DSA_QML::drawHistoryOneByOne()
 {
-    this->drawHistoryOne();
+    _dsa_sorting->drawHistoryOne();
 }
 
 void MT_DSA_QML::setObjectAnimationTime(ulong animationtime)

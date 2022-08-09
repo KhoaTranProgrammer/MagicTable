@@ -38,6 +38,8 @@
  *        Support drawHistoryOneByOne slot                          *
  * 1.2.0: Aug-06-2022                                               *
  *        Supports animation time setting                           *
+ * 1.3.0: Aug-09-2022                                               *
+ *        Add Bubble sorting                                        *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -48,9 +50,10 @@
 #include <QColor>
 #include <QPainter>
 #include "MT_DSA_Sorting.h"
+#include "MT_DSA_SortingBubble.h"
 #include "MT_DSA_QMLObject.h"
 
-class MT_DSA_QML : public QQuickPaintedItem, public MT_DSA_Sorting
+class MT_DSA_QML : public QQuickPaintedItem
 {
     Q_OBJECT
 public:
@@ -65,6 +68,9 @@ public slots:
     void addNewDataList(QString value); // 7,5,9,1,31,23,14
     void drawHistoryOneByOne();
     void setObjectAnimationTime(ulong animationtime);
+
+private:
+    MT_DSA_Sorting* _dsa_sorting;
 };
 
 #endif // MT_DSA_QML_H
