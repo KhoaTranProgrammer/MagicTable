@@ -40,6 +40,8 @@
  *        Supports animation time setting                           *
  * 1.3.0: Aug-09-2022                                               *
  *        Add Bubble sorting                                        *
+ * 1.3.1: Aug-12-2022                                               *
+ *        Add property Features to select sort type from app        *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -48,7 +50,6 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     engine = new QQmlEngine;
     _animationtime = 0;
-    _dsa_sorting = new MT_DSA_SortingBubble();
 }
 
 void MT_DSA_QML::paint(QPainter *painter)
@@ -82,4 +83,18 @@ void MT_DSA_QML::drawHistoryOneByOne()
 void MT_DSA_QML::setObjectAnimationTime(ulong animationtime)
 {
     this->_animationtime = animationtime;
+}
+
+MT_DSA_QML::Features MT_DSA_QML::features() const
+{
+    return this->_features;
+}
+
+void MT_DSA_QML::setFeatures(const Features& feature)
+{
+    this->_features = feature;
+    if (this->_dsa_sorting != NULL)
+        delete this->_dsa_sorting;
+    if (this->_features == BUBBLE_SORT)
+        this->_dsa_sorting = new MT_DSA_SortingBubble();
 }
