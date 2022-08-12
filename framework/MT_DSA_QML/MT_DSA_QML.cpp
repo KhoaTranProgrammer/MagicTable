@@ -42,6 +42,8 @@
  *        Add Bubble sorting                                        *
  * 1.3.1: Aug-12-2022                                               *
  *        Add property Features to select sort type from app        *
+ * 1.3.2: Aug-12-2022                                               *
+ *        Add to support Selection sort                             *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -95,6 +97,13 @@ void MT_DSA_QML::setFeatures(const Features& feature)
     this->_features = feature;
     if (this->_dsa_sorting != NULL)
         delete this->_dsa_sorting;
-    if (this->_features == BUBBLE_SORT)
-        this->_dsa_sorting = new MT_DSA_SortingBubble();
+
+    switch(this->_features) {
+        case BUBBLE_SORT:
+            this->_dsa_sorting = new MT_DSA_SortingBubble();
+            break;
+        case SELECTION_SORT:
+            this->_dsa_sorting = new MT_DSA_SortingSelection();
+            break;
+    }
 }
