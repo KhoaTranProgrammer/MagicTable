@@ -37,6 +37,8 @@
  *        Sort the list input of data                               *
  * 1.1.0: Aug-06-2022                                               *
  *        Supports animation time setting                           *
+ * 1.1.1: Aug-12-2022                                               *
+ *        Add property Features to select sort type from app        *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -53,7 +55,10 @@ Rectangle {
         id: myTable
         anchors.fill: parent
 
-        Component.onCompleted: setObjectAnimationTime(900)
+        Component.onCompleted: {
+            myTable.features = MT_DSA_QML.BUBBLE_SORT
+            myTable.setObjectAnimationTime(900)
+        }
     }
 
     Timer {
