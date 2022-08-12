@@ -35,6 +35,8 @@
 # *        Initial version supports simple sorting                   *
 # * 1.1.0: Aug-09-2022                                               *
 # *        Add Bubble sorting                                        *
+# * 1.1.1: Aug-12-2022                                               *
+# *        Add Selection sorting                                     *
 # *******************************************************************/
 
 CONFIG -= qt
@@ -51,12 +53,14 @@ CONFIG += c++11
 SOURCES += \
     MT_DSA_Object.cpp \
     MT_DSA_Sorting.cpp \
-    MT_DSA_SortingBubble.cpp
+    MT_DSA_SortingBubble.cpp \
+    MT_DSA_SortingSelection.cpp
 
 HEADERS += \
     MT_DSA_Object.h \
     MT_DSA_Sorting.h \
-    MT_DSA_SortingBubble.h
+    MT_DSA_SortingBubble.h \
+    MT_DSA_SortingSelection.h
 
 # Rules for deployment.
 win32 {
