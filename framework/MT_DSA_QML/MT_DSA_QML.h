@@ -48,6 +48,8 @@
  *        Add to support Insertion sort                             *
  * 1.3.4: Aug-14-2022                                               *
  *        Add to support Merge sort                                 *
+ * 1.3.5: Aug-14-2022                                               *
+ *        Add to support Quick sort                                 *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -62,6 +64,7 @@
 #include "MT_DSA_SortingSelection.h"
 #include "MT_DSA_SortingInsertion.h"
 #include "MT_DSA_SortingMerge.h"
+#include "MT_DSA_SortingQuick.h"
 #include "MT_DSA_QMLObject.h"
 
 class MT_DSA_QML : public QQuickPaintedItem
@@ -73,7 +76,8 @@ public:
         BUBBLE_SORT,
         SELECTION_SORT,
         INSERTION_SORT,
-        MERGE_SORT
+        MERGE_SORT,
+        QUICK_SORT
     };
     Q_ENUM(Features)
     Features features() const;
