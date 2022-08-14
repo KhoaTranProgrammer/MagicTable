@@ -41,6 +41,8 @@
 # *        Add Insertion sorting                                     *
 # * 1.1.3: Aug-14-2022                                               *
 # *        Add Merge sorting                                         *
+# * 1.1.4: Aug-14-2022                                               *
+# *        Add Quick sorting                                         *
 # *******************************************************************/
 
 CONFIG -= qt
@@ -60,6 +62,7 @@ SOURCES += \
     MT_DSA_SortingBubble.cpp \
     MT_DSA_SortingInsertion.cpp \
     MT_DSA_SortingMerge.cpp \
+    MT_DSA_SortingQuick.cpp \
     MT_DSA_SortingSelection.cpp
 
 HEADERS += \
@@ -68,6 +71,7 @@ HEADERS += \
     MT_DSA_SortingBubble.h \
     MT_DSA_SortingInsertion.h \
     MT_DSA_SortingMerge.h \
+    MT_DSA_SortingQuick.h \
     MT_DSA_SortingSelection.h
 
 # Rules for deployment.
