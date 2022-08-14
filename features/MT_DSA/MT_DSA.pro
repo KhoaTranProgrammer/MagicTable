@@ -37,6 +37,8 @@
 # *        Add Bubble sorting                                        *
 # * 1.1.1: Aug-12-2022                                               *
 # *        Add Selection sorting                                     *
+# * 1.1.2: Aug-14-2022                                               *
+# *        Add Insertion sorting                                     *
 # *******************************************************************/
 
 CONFIG -= qt
@@ -54,12 +56,14 @@ SOURCES += \
     MT_DSA_Object.cpp \
     MT_DSA_Sorting.cpp \
     MT_DSA_SortingBubble.cpp \
+    MT_DSA_SortingInsertion.cpp \
     MT_DSA_SortingSelection.cpp
 
 HEADERS += \
     MT_DSA_Object.h \
     MT_DSA_Sorting.h \
     MT_DSA_SortingBubble.h \
+    MT_DSA_SortingInsertion.h \
     MT_DSA_SortingSelection.h
 
 # Rules for deployment.
