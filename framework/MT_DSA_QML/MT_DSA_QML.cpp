@@ -46,6 +46,8 @@
  *        Add to support Selection sort                             *
  * 1.3.3: Aug-14-2022                                               *
  *        Add to support Insertion sort                             *
+ * 1.3.4: Aug-14-2022                                               *
+ *        Add to support Merge sort                                 *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -109,6 +111,9 @@ void MT_DSA_QML::setFeatures(const Features& feature)
             break;
         case INSERTION_SORT:
             this->_dsa_sorting = new MT_DSA_SortingInsertion();
+            break;
+        case MERGE_SORT:
+            this->_dsa_sorting = new MT_DSA_SortingMerge();
             break;
     }
 }
