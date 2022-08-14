@@ -44,6 +44,8 @@
  *        Add property Features to select sort type from app        *
  * 1.3.2: Aug-12-2022                                               *
  *        Add to support Selection sort                             *
+ * 1.3.3: Aug-14-2022                                               *
+ *        Add to support Insertion sort                             *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -56,6 +58,7 @@
 #include "MT_DSA_Sorting.h"
 #include "MT_DSA_SortingBubble.h"
 #include "MT_DSA_SortingSelection.h"
+#include "MT_DSA_SortingInsertion.h"
 #include "MT_DSA_QMLObject.h"
 
 class MT_DSA_QML : public QQuickPaintedItem
@@ -65,7 +68,8 @@ class MT_DSA_QML : public QQuickPaintedItem
 public:
     enum Features {
         BUBBLE_SORT,
-        SELECTION_SORT
+        SELECTION_SORT,
+        INSERTION_SORT
     };
     Q_ENUM(Features)
     Features features() const;

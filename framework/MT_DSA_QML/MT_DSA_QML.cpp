@@ -44,6 +44,8 @@
  *        Add property Features to select sort type from app        *
  * 1.3.2: Aug-12-2022                                               *
  *        Add to support Selection sort                             *
+ * 1.3.3: Aug-14-2022                                               *
+ *        Add to support Insertion sort                             *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -104,6 +106,9 @@ void MT_DSA_QML::setFeatures(const Features& feature)
             break;
         case SELECTION_SORT:
             this->_dsa_sorting = new MT_DSA_SortingSelection();
+            break;
+        case INSERTION_SORT:
+            this->_dsa_sorting = new MT_DSA_SortingInsertion();
             break;
     }
 }
