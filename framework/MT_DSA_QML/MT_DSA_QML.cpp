@@ -50,6 +50,8 @@
  *        Add to support Merge sort                                 *
  * 1.3.5: Aug-14-2022                                               *
  *        Add to support Quick sort                                 *
+ * 1.4.0: Aug-20-2022                                               *
+ *        Add method createTable to create table                    *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -62,7 +64,7 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void MT_DSA_QML::paint(QPainter *painter)
 {
-    _dsa_sorting->createTable((int)this->width(), (int)this->height(), 7, 7);
+
 }
 
 void MT_DSA_QML::addNewData(int value)
@@ -121,4 +123,9 @@ void MT_DSA_QML::setFeatures(const Features& feature)
             this->_dsa_sorting = new MT_DSA_SortingQuick();
             break;
     }
+}
+
+void MT_DSA_QML::createTable(int col, int row)
+{
+    _dsa_sorting->createTable((int)this->width(), (int)this->height(), col, row);
 }

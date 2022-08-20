@@ -50,6 +50,8 @@
  *        Add to support Merge sort                                 *
  * 1.3.5: Aug-14-2022                                               *
  *        Add to support Quick sort                                 *
+ * 1.4.0: Aug-20-2022                                               *
+ *        Add method createTable to create table                    *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -97,6 +99,7 @@ public slots:
     void addNewDataList(QString value); // 7,5,9,1,31,23,14
     void drawHistoryOneByOne();
     void setObjectAnimationTime(ulong animationtime);
+    void createTable(int col, int row);
 
 private:
     MT_DSA_Sorting* _dsa_sorting = NULL;
