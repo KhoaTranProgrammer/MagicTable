@@ -37,6 +37,8 @@
  *        Supports sort/draw history all and one by one             *
  * 1.2.0: Aug-09-2022                                               *
  *        Add Bubble sorting                                        *
+ * 1.3.0: Aug-20-2022                                               *
+ *        Support Time Measurement                                  *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTING_H
@@ -45,9 +47,14 @@
 #include "MT_Table.h"
 #include "MT_Object.h"
 #include "MT_DSA_Object.h"
+#include <bits/stdc++.h>
 
 class MT_DSA_Sorting
 {
+private:
+    clock_t _startexecutiontime;
+    clock_t _stopexecutiontime;
+
 protected:
     MT_Table _mttable;
     vector<MT_DSA_Object*> _listSortObjects;
@@ -62,6 +69,9 @@ public:
     virtual mt_void sortDataWithHistory();
     mt_void drawHistoryAll();
     mt_void drawHistoryOne();
+    mt_void startMeasure();
+    mt_void stopMeasure();
+    mt_double elapsedMicroseconds();
 };
 
 #endif // MT_DSA_SORTING_H

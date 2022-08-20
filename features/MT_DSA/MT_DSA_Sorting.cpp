@@ -42,6 +42,8 @@
  *        for sortDataWithHistory                                   *
  * 1.2.0: Aug-09-2022                                               *
  *        Add Bubble sorting                                        *
+ * 1.3.0: Aug-20-2022                                               *
+ *        Support Time Measurement                                  *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -89,4 +91,20 @@ mt_void MT_DSA_Sorting::drawHistoryAll()
 mt_void MT_DSA_Sorting::drawHistoryOne()
 {
     this->_mttable.drawHistoryOne();
+}
+
+mt_void MT_DSA_Sorting::startMeasure()
+{
+    this->_startexecutiontime = clock();
+}
+
+mt_void MT_DSA_Sorting::stopMeasure()
+{
+    this->_stopexecutiontime = clock();
+}
+
+mt_double MT_DSA_Sorting::elapsedMicroseconds()
+{
+    double elapsedseconds = double(_stopexecutiontime - _startexecutiontime) / double(CLOCKS_PER_SEC);
+    return elapsedseconds;
 }
