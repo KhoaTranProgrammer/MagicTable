@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Aug-12-2022                                               *
  *        Initial version                                           *
+ * 1.0.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #include "MT_DSA_SortingSelection.h"
@@ -67,13 +69,6 @@ void MT_DSA_SortingSelection::sortData()
         this->_listSortObjects.at(i) = this->_listSortObjects.at(minIndex);
         this->_listSortObjects.at(minIndex) = temp;
     }
-
-    for(int i = 0; i < this->_listSortObjects.size(); i++)
-    {
-        this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
-    }
-
-    this->_mttable.drawObjects();
 }
 
 mt_void MT_DSA_SortingSelection::sortDataWithHistory()

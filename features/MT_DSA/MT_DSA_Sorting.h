@@ -39,6 +39,8 @@
  *        Add Bubble sorting                                        *
  * 1.3.0: Aug-20-2022                                               *
  *        Support Time Measurement                                  *
+ * 1.3.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTING_H
@@ -69,6 +71,7 @@ public:
     virtual mt_void sortDataWithHistory();
     mt_void drawHistoryAll();
     mt_void drawHistoryOne();
+    mt_void drawData();
     mt_void startMeasure();
     mt_void stopMeasure();
     mt_double elapsedMicroseconds();

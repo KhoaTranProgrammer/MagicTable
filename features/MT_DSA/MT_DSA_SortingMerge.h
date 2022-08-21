@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Aug-14-2022                                               *
  *        Initial version                                           *
+ * 1.0.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTINGMERGE_H
@@ -49,6 +51,11 @@ private:
     mt_void mergeSortWithHistory(mt_int startIndex,
                                  mt_int endIndex);
 
+    mt_void merge(mt_int startIndex,
+                             mt_int middleIndex,
+                             mt_int endIndex);
+    mt_void mergeSort(mt_int startIndex,
+                                 mt_int endIndex);
 public:
     MT_DSA_SortingMerge();
     mt_void sortData();

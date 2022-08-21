@@ -44,6 +44,8 @@
  *        Add Bubble sorting                                        *
  * 1.3.0: Aug-20-2022                                               *
  *        Support Time Measurement                                  *
+ * 1.3.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -91,6 +93,17 @@ mt_void MT_DSA_Sorting::drawHistoryAll()
 mt_void MT_DSA_Sorting::drawHistoryOne()
 {
     this->_mttable.drawHistoryOne();
+}
+
+mt_void MT_DSA_Sorting::drawData()
+{
+    this->_mttable.clearHistory();
+    for(int i = 0; i < this->_listSortObjects.size(); i++)
+    {
+        this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
+    }
+
+    this->_mttable.drawObjects();
 }
 
 mt_void MT_DSA_Sorting::startMeasure()

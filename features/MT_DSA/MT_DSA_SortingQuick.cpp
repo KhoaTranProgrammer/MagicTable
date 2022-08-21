@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Aug-14-2022                                               *
  *        Initial version                                           *
+ * 1.0.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #include "MT_DSA_SortingQuick.h"
@@ -109,9 +111,72 @@ mt_void MT_DSA_SortingQuick::quickSortWithHistory(mt_int startIndex, mt_int endI
     }
 }
 
+mt_int MT_DSA_SortingQuick::partition(mt_int startIndex, mt_int endIndex)
+{
+    // Set the first item as pivot
+    MT_DSA_Object* pivot = this->_listSortObjects.at(startIndex);
+
+    // Left sublist and right sublist
+    // are initially empty
+    int middleIndex = startIndex;
+
+    // Iterate through arr[1 ... n - 1]
+    for (int i = startIndex + 1; i <= endIndex; ++i)
+    {
+        if (this->_listSortObjects.at(i)->getValue() < pivot->getValue())
+        {
+            // the current item is on the left sublist
+            // prepare a seat by shifting middle index
+            ++middleIndex;
+
+            // the arr[middleIndex] is
+            // the member of right sublist,
+            // swap it to the current item which is
+            // member of left list
+            MT_DSA_Object* temp = this->_listSortObjects.at(i);
+            this->_listSortObjects.at(i) = this->_listSortObjects.at(middleIndex);
+            this->_listSortObjects.at(middleIndex) = temp;
+        }
+    }
+
+    // By now, the arr[middleIndex] item is
+    // member of left sublist.
+    // We can swap it with the pivot
+    // so the pivot will be in the correct position
+    // which is between left sublist and right sublist
+    MT_DSA_Object* temp = this->_listSortObjects.at(startIndex);
+    this->_listSortObjects.at(startIndex) = this->_listSortObjects.at(middleIndex);
+    this->_listSortObjects.at(middleIndex) = temp;
+
+    // return the index of pivot
+    // to be used by next quick sort
+    return middleIndex;
+}
+
+mt_void MT_DSA_SortingQuick::quickSort(mt_int startIndex, mt_int endIndex)
+{
+    // Only perform sort process
+    // if the end index is higher than start index
+    if (startIndex < endIndex)
+    {
+        // Retrieve pivot position from Partition() function
+        // This pivotIndex is the index of element that is already
+        // in correct position
+        int pivotIndex = partition(startIndex, endIndex);
+
+        // Sort left sublist
+        // arr[startIndex ... pivotIndex - 1]
+        quickSort(startIndex, pivotIndex - 1);
+
+        // Sort right sublist
+        // arr[pivotIndex + 1 ... endIndex]
+        quickSort(pivotIndex + 1, endIndex);
+    }
+}
+
 mt_void MT_DSA_SortingQuick::sortData()
 {
-
+    quickSort(0, this->_listSortObjects.size() - 1);
 }
 
 mt_void MT_DSA_SortingQuick::sortDataWithHistory()

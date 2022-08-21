@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Aug-14-2022                                               *
  *        Initial version                                           *
+ * 1.0.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #include "MT_DSA_SortingInsertion.h"
@@ -70,13 +72,6 @@ void MT_DSA_SortingInsertion::sortData()
         // Put the reference value in the current index (the right position)
         this->_listSortObjects.at(j+1) = refValue;
     }
-
-    for(int i = 0; i < this->_listSortObjects.size(); i++)
-    {
-        this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
-    }
-
-    this->_mttable.drawObjects();
 }
 
 mt_void MT_DSA_SortingInsertion::sortDataWithHistory()

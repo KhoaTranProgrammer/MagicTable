@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Aug-14-2022                                               *
  *        Initial version                                           *
+ * 1.0.1: Aug-21-2022                                               *
+ *        Separate draw data from sorting                           *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTINGQUICK_H
@@ -45,6 +47,8 @@ class MT_DSA_SortingQuick : public MT_DSA_Sorting
 private:
     mt_int partitionWithHistory(mt_int startIndex, mt_int endIndex);
     mt_void quickSortWithHistory(mt_int startIndex, mt_int endIndex);
+    mt_int partition(mt_int startIndex, mt_int endIndex);
+    mt_void quickSort(mt_int startIndex, mt_int endIndex);
 
 public:
     MT_DSA_SortingQuick();
