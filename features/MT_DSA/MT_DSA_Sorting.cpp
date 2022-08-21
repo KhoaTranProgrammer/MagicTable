@@ -46,6 +46,8 @@
  *        Support Time Measurement                                  *
  * 1.3.1: Aug-21-2022                                               *
  *        Separate draw data from sorting                           *
+ * 1.3.2: Aug-21-2022                                               *
+ *        Add method sortDataWithMeasurement                        *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -83,6 +85,13 @@ mt_void MT_DSA_Sorting::sortData()
 mt_void MT_DSA_Sorting::sortDataWithHistory()
 {
 
+}
+
+mt_void MT_DSA_Sorting::sortDataWithMeasurement()
+{
+    this->startMeasure();
+    this->sortData();
+    this->stopMeasure();
 }
 
 mt_void MT_DSA_Sorting::drawHistoryAll()

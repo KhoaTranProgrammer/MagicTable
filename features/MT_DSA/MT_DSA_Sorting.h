@@ -41,6 +41,8 @@
  *        Support Time Measurement                                  *
  * 1.3.1: Aug-21-2022                                               *
  *        Separate draw data from sorting                           *
+ * 1.3.2: Aug-21-2022                                               *
+ *        Add method sortDataWithMeasurement                        *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTING_H
@@ -69,6 +71,7 @@ public:
     mt_void addDataWithoutSort(MT_DSA_Object& obj, int value);
     virtual mt_void sortData();
     virtual mt_void sortDataWithHistory();
+    mt_void sortDataWithMeasurement();
     mt_void drawHistoryAll();
     mt_void drawHistoryOne();
     mt_void drawData();
