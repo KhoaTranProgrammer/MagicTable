@@ -52,6 +52,8 @@
  *        Add to support Quick sort                                 *
  * 1.4.0: Aug-20-2022                                               *
  *        Add method createTable to create table                    *
+ * 1.4.1: Aug-24-2022                                               *
+ *        Convert sorting feature from enum to string               *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -72,18 +74,7 @@
 class MT_DSA_QML : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(Features features READ features WRITE setFeatures NOTIFY featuresChanged)
 public:
-    enum Features {
-        BUBBLE_SORT,
-        SELECTION_SORT,
-        INSERTION_SORT,
-        MERGE_SORT,
-        QUICK_SORT
-    };
-    Q_ENUM(Features)
-    Features features() const;
-    void setFeatures(const Features& feature);
 
     MT_DSA_QML(QQuickItem *parent = 0);
     void paint(QPainter *painter);
@@ -100,10 +91,17 @@ public slots:
     void drawHistoryOneByOne();
     void setObjectAnimationTime(ulong animationtime);
     void createTable(int col, int row);
+    QString getFeatureSorting();
+    void setFeatureSorting(QString feature);
 
 private:
     MT_DSA_Sorting* _dsa_sorting = NULL;
-    Features _features;
+
+    QString BUBBLE_SORT;
+    QString SELECTION_SORT;
+    QString INSERTION_SORT;
+    QString MERGE_SORT;
+    QString QUICK_SORT;
 };
 
 #endif // MT_DSA_QML_H

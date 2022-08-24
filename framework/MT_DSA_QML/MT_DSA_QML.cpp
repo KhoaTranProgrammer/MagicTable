@@ -52,14 +52,23 @@
  *        Add to support Quick sort                                 *
  * 1.4.0: Aug-20-2022                                               *
  *        Add method createTable to create table                    *
+ * 1.4.1: Aug-24-2022                                               *
+ *        Convert sorting feature from enum to string               *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
 
 MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
+    BUBBLE_SORT = "BUBBLE";
+    SELECTION_SORT = "SELECTION";
+    INSERTION_SORT = "INSERTION";
+    MERGE_SORT = "MERGE";
+    QUICK_SORT = "QUICK";
+
     engine = new QQmlEngine;
     _animationtime = 0;
+    this->_dsa_sorting = new MT_DSA_SortingBubble();
 }
 
 void MT_DSA_QML::paint(QPainter *painter)
@@ -95,34 +104,33 @@ void MT_DSA_QML::setObjectAnimationTime(ulong animationtime)
     this->_animationtime = animationtime;
 }
 
-MT_DSA_QML::Features MT_DSA_QML::features() const
+void MT_DSA_QML::setFeatureSorting(QString feature)
 {
-    return this->_features;
-}
-
-void MT_DSA_QML::setFeatures(const Features& feature)
-{
-    this->_features = feature;
     if (this->_dsa_sorting != NULL)
         delete this->_dsa_sorting;
 
-    switch(this->_features) {
-        case BUBBLE_SORT:
-            this->_dsa_sorting = new MT_DSA_SortingBubble();
-            break;
-        case SELECTION_SORT:
-            this->_dsa_sorting = new MT_DSA_SortingSelection();
-            break;
-        case INSERTION_SORT:
-            this->_dsa_sorting = new MT_DSA_SortingInsertion();
-            break;
-        case MERGE_SORT:
-            this->_dsa_sorting = new MT_DSA_SortingMerge();
-            break;
-        case QUICK_SORT:
-            this->_dsa_sorting = new MT_DSA_SortingQuick();
-            break;
-    }
+    if (feature == "BUBBLE_SORT")
+        this->_dsa_sorting = new MT_DSA_SortingBubble();
+    else if (feature == "SELECTION_SORT")
+        this->_dsa_sorting = new MT_DSA_SortingSelection();
+    else if (feature == "INSERTION_SORT")
+        this->_dsa_sorting = new MT_DSA_SortingInsertion();
+    else if (feature == "MERGE_SORT")
+        this->_dsa_sorting = new MT_DSA_SortingMerge();
+    else if (feature == "QUICK_SORT")
+        this->_dsa_sorting = new MT_DSA_SortingQuick();
+}
+
+QString MT_DSA_QML::getFeatureSorting()
+{
+    QString result = "";
+    result += BUBBLE_SORT; result += "-";
+    result += SELECTION_SORT; result += "-";
+    result += INSERTION_SORT; result += "-";
+    result += MERGE_SORT; result += "-";
+    result += QUICK_SORT;
+
+    return result;
 }
 
 void MT_DSA_QML::createTable(int col, int row)
