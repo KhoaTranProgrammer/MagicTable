@@ -33,11 +33,18 @@
  ********************************************************************
  * 1.0.0: Jul-24-2022                                               *
  *        Initial version supports: integer value                   *
+ * 1.0.1: Oct-16-2022                                               *
+ *        Add virtual method to free object                         *
  *******************************************************************/
 
 #include "MT_DSA_Object.h"
 
 MT_DSA_Object::MT_DSA_Object() : MT_Object()
+{
+
+}
+
+MT_DSA_Object::~MT_DSA_Object()
 {
 
 }

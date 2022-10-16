@@ -48,6 +48,8 @@
  *        Separate draw data from sorting                           *
  * 1.3.2: Aug-21-2022                                               *
  *        Add method sortDataWithMeasurement                        *
+ * 1.3.3: Oct-16-2022                                               *
+ *        Add method clearData to free data                         *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -129,4 +131,10 @@ mt_double MT_DSA_Sorting::elapsedMicroseconds()
 {
     double elapsedseconds = double(_stopexecutiontime - _startexecutiontime) / double(CLOCKS_PER_SEC);
     return elapsedseconds;
+}
+
+mt_void MT_DSA_Sorting::clearData()
+{
+    this->_listSortObjects.clear();
+    this->_mttable.clearData();
 }

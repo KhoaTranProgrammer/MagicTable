@@ -43,6 +43,8 @@
  *        Separate draw data from sorting                           *
  * 1.3.2: Aug-21-2022                                               *
  *        Add method sortDataWithMeasurement                        *
+ * 1.3.3: Oct-16-2022                                               *
+ *        Add method clearData to free data                         *
  *******************************************************************/
 
 #ifndef MT_DSA_SORTING_H
@@ -78,6 +80,7 @@ public:
     mt_void startMeasure();
     mt_void stopMeasure();
     mt_double elapsedMicroseconds();
+    mt_void clearData();
 };
 
 #endif // MT_DSA_SORTING_H
