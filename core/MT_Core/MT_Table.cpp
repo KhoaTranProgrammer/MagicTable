@@ -45,6 +45,8 @@
  *        Update position for two objects                           *
  * 1.1.4: Aug-06-2022                                               *
  *        Change matrixposition from array to matrix storage        *
+ * 1.1.5: Oct-16-2022                                               *
+ *        Add method clearHistory, clearData to free data           *
  *******************************************************************/
 
 #include "MT_Table.h"
@@ -221,5 +223,15 @@ mt_void MT_Table::drawHistoryOne()
             obj->draw();
         }
         this->_index_history++;
+    }
+}
+
+mt_void MT_Table::clearData()
+{
+    for (mt_uint i = this->_objectlist.size(); i > 0;)
+    {
+        --i;
+        delete this->_objectlist.at(i);
+        this->_objectlist.pop_back();
     }
 }

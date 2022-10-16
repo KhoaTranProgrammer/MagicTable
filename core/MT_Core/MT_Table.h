@@ -44,6 +44,8 @@
  *        Update position for two objects                           *
  * 1.1.4: Aug-06-2022                                               *
  *        Change matrixposition from array to matrix storage        *
+ * 1.1.5: Oct-16-2022                                               *
+ *        Add method clearHistory, clearData to free data           *
  *******************************************************************/
 
 #ifndef MT_TABLE_H
@@ -89,6 +91,7 @@ public:
     mt_void clearHistory();
     mt_void drawHistoryAll();
     mt_void drawHistoryOne();
+    mt_void clearData();
 };
 
 #endif // MT_TABLE_H

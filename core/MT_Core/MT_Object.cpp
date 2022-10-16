@@ -36,6 +36,8 @@
  *        Initial version supports: position/state/move/draw object *
  * 1.1.0: Aug-06-2022                                               *
  *        Supports animation time setting                           *
+ * 1.1.1: Oct-16-2022                                               *
+ *        Add virtual method to free object                         *
  *******************************************************************/
 
 #include "MT_Object.h"
@@ -59,6 +61,11 @@ MT_Object::MT_Object(MT_Position& pos)
     this->_state = MT_OBJECT_INIT;
     this->_pos = &pos;
     this->_animationtime = 0;
+}
+
+MT_Object::~MT_Object()
+{
+
 }
 
 mt_void MT_Object::updatePosition(MT_Position &pos)
