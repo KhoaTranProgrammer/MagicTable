@@ -33,6 +33,8 @@
  ********************************************************************
  * 1.0.0: Jul-26-2022                                               *
  *        Initial version supports QML Rectangle                    *
+ * 1.0.1: Oct-22-2022                                               *
+ *        Add virtual method to free object                         *
  *******************************************************************/
 
 #ifndef MT_DSA_QMLOBJECT_H
@@ -51,6 +53,8 @@ class MT_DSA_QMLObject : public MT_DSA_Object
 {
 public:
     MT_DSA_QMLObject(QQmlEngine& engine, QObject& parent);
+    ~MT_DSA_QMLObject();
+
     void drawObject();
     void move();
 

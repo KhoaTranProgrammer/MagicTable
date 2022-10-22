@@ -54,6 +54,8 @@
  *        Add method createTable to create table                    *
  * 1.4.1: Aug-24-2022                                               *
  *        Convert sorting feature from enum to string               *
+ * 1.4.2: Oct-22-2022                                               *
+ *        Add method clearData to free data                         *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -91,7 +93,21 @@ void MT_DSA_QML::addNewDataList(QString value)
         obj->setAnimationTime(this->_animationtime);
         _dsa_sorting->addDataWithoutSort(*obj, datalist.at(i).toInt());
     }
+}
+
+void MT_DSA_QML::sortDataWithHistory()
+{
     _dsa_sorting->sortDataWithHistory();
+}
+
+void MT_DSA_QML::sortDataWithMeasurement()
+{
+    _dsa_sorting->sortDataWithMeasurement();
+}
+
+void MT_DSA_QML::drawData()
+{
+    _dsa_sorting->drawData();
 }
 
 void MT_DSA_QML::drawHistoryOneByOne()
@@ -109,16 +125,18 @@ void MT_DSA_QML::setFeatureSorting(QString feature)
     if (this->_dsa_sorting != NULL)
         delete this->_dsa_sorting;
 
-    if (feature == "BUBBLE_SORT")
+    if (feature == BUBBLE_SORT)
         this->_dsa_sorting = new MT_DSA_SortingBubble();
-    else if (feature == "SELECTION_SORT")
+    else if (feature == SELECTION_SORT)
         this->_dsa_sorting = new MT_DSA_SortingSelection();
-    else if (feature == "INSERTION_SORT")
+    else if (feature == INSERTION_SORT)
         this->_dsa_sorting = new MT_DSA_SortingInsertion();
-    else if (feature == "MERGE_SORT")
+    else if (feature == MERGE_SORT)
         this->_dsa_sorting = new MT_DSA_SortingMerge();
-    else if (feature == "QUICK_SORT")
+    else if (feature == QUICK_SORT)
         this->_dsa_sorting = new MT_DSA_SortingQuick();
+    else
+        this->_dsa_sorting = new MT_DSA_SortingBubble();
 }
 
 QString MT_DSA_QML::getFeatureSorting()
@@ -136,4 +154,9 @@ QString MT_DSA_QML::getFeatureSorting()
 void MT_DSA_QML::createTable(int col, int row)
 {
     _dsa_sorting->createTable((int)this->width(), (int)this->height(), col, row);
+}
+
+void MT_DSA_QML::clearData()
+{
+    this->_dsa_sorting->clearData();
 }

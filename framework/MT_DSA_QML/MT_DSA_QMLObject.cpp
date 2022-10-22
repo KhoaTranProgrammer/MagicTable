@@ -39,6 +39,8 @@
  *        Change NumberAnimation of x/y behavior to 500             *
  * 1.1.0: Aug-06-2022                                               *
  *        Supports animation time setting                           *
+ * 1.1.1: Oct-22-2022                                               *
+ *        Add virtual method to free object                         *
  *******************************************************************/
 
 #include "MT_DSA_QMLObject.h"
@@ -47,6 +49,12 @@ MT_DSA_QMLObject::MT_DSA_QMLObject(QQmlEngine& engine, QObject& parent) : MT_DSA
 {
     this->_engine = &engine;
     this->_parent = &parent;
+}
+
+MT_DSA_QMLObject::~MT_DSA_QMLObject()
+{
+    delete this->_quickitem;
+    delete this->_component;
 }
 
 void MT_DSA_QMLObject::drawObject()

@@ -54,6 +54,8 @@
  *        Add method createTable to create table                    *
  * 1.4.1: Aug-24-2022                                               *
  *        Convert sorting feature from enum to string               *
+ * 1.4.2: Oct-22-2022                                               *
+ *        Add method clearData to free data                         *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -93,6 +95,10 @@ public slots:
     void createTable(int col, int row);
     QString getFeatureSorting();
     void setFeatureSorting(QString feature);
+    void sortDataWithHistory();
+    void sortDataWithMeasurement();
+    void drawData();
+    void clearData();
 
 private:
     MT_DSA_Sorting* _dsa_sorting = NULL;
