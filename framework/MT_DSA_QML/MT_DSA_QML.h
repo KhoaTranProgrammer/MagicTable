@@ -56,6 +56,8 @@
  *        Convert sorting feature from enum to string               *
  * 1.4.2: Oct-22-2022                                               *
  *        Add method clearData to free data                         *
+ * 1.4.3: Oct-24-2022                                               *
+ *        Add method getSortMeasurementData to get execution time   *
  *******************************************************************/
 
 #ifndef MT_DSA_QML_H
@@ -80,9 +82,6 @@ public:
 
     MT_DSA_QML(QQuickItem *parent = 0);
     void paint(QPainter *painter);
-    QQmlEngine* engine;
-    vector<MT_DSA_QMLObject*> _listSortObjects;
-    ulong _animationtime;
 
 signals:
     void featuresChanged();
@@ -97,11 +96,15 @@ public slots:
     void setFeatureSorting(QString feature);
     void sortDataWithHistory();
     void sortDataWithMeasurement();
+    double getSortMeasurementData();
     void drawData();
     void clearData();
 
 private:
     MT_DSA_Sorting* _dsa_sorting = NULL;
+    QQmlEngine* engine;
+    vector<MT_DSA_QMLObject*> _listSortObjects;
+    ulong _animationtime;
 
     QString BUBBLE_SORT;
     QString SELECTION_SORT;

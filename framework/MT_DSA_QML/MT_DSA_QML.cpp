@@ -56,6 +56,8 @@
  *        Convert sorting feature from enum to string               *
  * 1.4.2: Oct-22-2022                                               *
  *        Add method clearData to free data                         *
+ * 1.4.3: Oct-24-2022                                               *
+ *        Add method getSortMeasurementData to get execution time   *
  *******************************************************************/
 
 #include "MT_DSA_QML.h"
@@ -103,6 +105,11 @@ void MT_DSA_QML::sortDataWithHistory()
 void MT_DSA_QML::sortDataWithMeasurement()
 {
     _dsa_sorting->sortDataWithMeasurement();
+}
+
+double MT_DSA_QML::getSortMeasurementData()
+{
+    return _dsa_sorting->elapsedMicroseconds();
 }
 
 void MT_DSA_QML::drawData()
