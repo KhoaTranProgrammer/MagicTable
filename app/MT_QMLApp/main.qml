@@ -39,8 +39,10 @@
  *        Supports animation time setting                           *
  * 1.1.1: Aug-12-2022                                               *
  *        Add property Features to select sort type from app        *
- * 1.1.2: OCt-22-2022                                               *
+ * 1.1.2: Oct-22-2022                                               *
  *        Support to select algorithm                               *
+ * 1.1.3: Oct-29-2022                                               *
+ *        Input data from text                                      *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -51,8 +53,6 @@ Rectangle {
     id: id_root
     anchors.fill: parent
     color: "black"
-
-    property var arr: [7, 5, 9, 1, 31, 23, 14, 2, 9, 33, 0, 99, 3]
 
     Rectangle {
         id: id_rec_optionarea
@@ -81,11 +81,31 @@ Rectangle {
                     myTable.clearData()
                     myTable.setFeatureSorting(currentText)
                     myTable.createTable(10, 10)
-                    myTable.addNewDataList("90,20,30,1")
-                    myTable.sortDataWithMeasurement();
+                    myTable.addNewDataList(id_txtdata.text)
+                    myTable.sortDataWithMeasurement()
                     myTable.drawData()
                 }
 
+            }
+        }
+
+        Rectangle {
+            id: id_inputdata
+            anchors {
+                right: id_rec_sorting.left
+                top: parent.top
+                bottom: parent.bottom
+                left: parent.left
+            }
+            color: "transparent"
+
+            TextEdit {
+                id: id_txtdata
+                anchors.fill: parent
+                text: "7,5,9,1,31,23,14,2,9,33,0,99,3"
+                font.pointSize: 9
+                color: "blue"
+                focus: true
             }
         }
     }
@@ -113,7 +133,7 @@ Rectangle {
 
         onTriggered: {
             myTable.createTable(10, 10)
-            myTable.addNewDataList("25,21,12,40,37,43,14,28")
+            myTable.addNewDataList(id_txtdata.text)
             myTable.sortDataWithMeasurement()
             myTable.drawData()
             var listofsorting = myTable.getFeatureSorting()
