@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:///main.qml"));
 
     // Set application size
-    view.setMinimumSize(QSize(500, 500));
+    view.setMinimumSize(QSize(700, 500));
 
     // Display application
     view.show();
