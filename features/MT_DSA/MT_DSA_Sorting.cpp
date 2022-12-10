@@ -50,6 +50,8 @@
  *        Add method sortDataWithMeasurement                        *
  * 1.3.3: Oct-16-2022                                               *
  *        Add method clearData to free data                         *
+ * 1.3.4: Dec-10-2022                                               *
+ *        Update formula in drawData to correct object position     *
  *******************************************************************/
 
 #include "MT_DSA_Sorting.h"
@@ -111,7 +113,7 @@ mt_void MT_DSA_Sorting::drawData()
     this->_mttable.clearHistory();
     for(int i = 0; i < this->_listSortObjects.size(); i++)
     {
-        this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getRow());
+        this->_mttable.updateObjectPosition(*this->_listSortObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
     }
 
     this->_mttable.drawObjects();
