@@ -45,6 +45,8 @@
  *        Input data from text                                      *
  * 1.1.4: Nov-11-2022                                               *
  *        Create switch button to select animation                  *
+ * 1.1.5: Dec-11-2022                                               *
+ *        Support to change Animation elapse time, change GUI       *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -70,8 +72,8 @@ Rectangle {
             id: id_txtdata
             anchors.fill: parent
             text: "7,5,9,1,31,23,14,2,9,33,0,99,3"
-            font.pointSize: 9
-            color: "blue"
+            font.pointSize: 10
+            color: "black"
             focus: true
         }
     }
@@ -84,7 +86,7 @@ Rectangle {
             top: id_inputdata.bottom
         }
         width: parent.width * 0.15
-        color: "blue"
+        color: "black"
 
         Rectangle {
             id: id_rec_animation
@@ -94,9 +96,10 @@ Rectangle {
                 right: parent.right
                 margins: 2
             }
-            height: 40
+            height: 70
             color: "transparent"
             border.width: 1
+            border.color: "white"
 
             Text {
                 id: id_txtAnimation
@@ -106,6 +109,7 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: "Animation"
+                color: "white"
                 font.pointSize: 10
             }
 
@@ -117,6 +121,34 @@ Rectangle {
                     leftMargin: 4
                 }
                 checked: false
+            }
+
+            Text
+            {
+                id: id_txt_elapse
+                color: "white"
+                text: "Elapse (second)"
+                anchors {
+                    top: id_animationEnabled.bottom
+                    left: parent.left
+                    leftMargin: 4
+                }
+                font.pointSize: 10
+            }
+
+            TextEdit {
+                id: id_txtEdit_elapse
+                anchors {
+                    top: id_txt_elapse.bottom
+                    left: parent.left
+                    bottom: parent.bottom
+                    right: parent.right
+                    leftMargin: 4
+                }
+                text: "0.9"
+                font.pointSize: 10
+                color: "white"
+                focus: true
             }
         }
 
@@ -131,6 +163,7 @@ Rectangle {
             height: 40
             color: "transparent"
             border.width: 1
+            border.color: "white"
 
             Text {
                 id: id_txt_executiontime
@@ -141,6 +174,7 @@ Rectangle {
                 }
                 text: "Execution Time"
                 font.pointSize: 10
+                color: "white"
             }
 
             Text {
@@ -152,6 +186,7 @@ Rectangle {
                 }
                 text: ""
                 font.pointSize: 10
+                color: "white"
             }
         }
 
@@ -164,8 +199,9 @@ Rectangle {
                 margins: 2
             }
             height: 50
-            color: "blue"
+            color: "black"
             border.width: 1
+            border.color: "white"
 
             Text {
                 id: id_txt_sorting
@@ -175,6 +211,7 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: "Sort Algorithm"
+                color: "white"
                 font.pointSize: 10
             }
 
@@ -203,6 +240,16 @@ Rectangle {
                         myTable.createTable(15, 10)
                         myTable.addNewDataList(id_txtdata.text)
                         myTable.sortDataWithHistory()
+
+                        if (isNaN(id_txtEdit_elapse.text)) {
+                            console.log(id_txtEdit_elapse.text + " is not number")
+                        } else {
+                            var elapsetime = parseFloat(id_txtEdit_elapse.text) * 1000
+                            console.log(elapsetime)
+                            id_TimerDrawHistory.interval = elapsetime
+                            myTable.setObjectAnimationTime(elapsetime)
+                        }
+
                         id_TimerDrawHistory.running = true
                     }
                 }
@@ -248,7 +295,7 @@ Rectangle {
 
     Timer {
         id: id_TimerDrawHistory
-        interval: 2000; running: false; repeat: true
+        interval: 900; running: false; repeat: true
 
         onTriggered: {
             myTable.drawHistoryOneByOne()
