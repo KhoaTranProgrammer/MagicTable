@@ -35,6 +35,9 @@
  *        Initial version supports QML Rectangle                    *
  * 1.0.1: Oct-22-2022                                               *
  *        Add virtual method to free object                         *
+ * 1.0.2: Dec-25-2022                                               *
+ *        Check NULL pointer for dynamic objects: QQmlComponent and *
+ *        QQuickItem                                                *
  *******************************************************************/
 
 #ifndef MT_DSA_QMLOBJECT_H
@@ -61,8 +64,8 @@ public:
 private:
     QQmlEngine* _engine;
     QObject* _parent;
-    QQmlComponent* _component;
-    QQuickItem* _quickitem;
+    QQmlComponent* _component = NULL;
+    QQuickItem* _quickitem = NULL;
 };
 
 #endif // MT_DSA_QMLOBJECT_H
