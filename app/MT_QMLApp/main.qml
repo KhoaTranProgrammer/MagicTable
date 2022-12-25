@@ -47,6 +47,8 @@
  *        Create switch button to select animation                  *
  * 1.1.5: Dec-11-2022                                               *
  *        Support to change Animation elapse time, change GUI       *
+ * 1.1.6: Dec-25-2022                                               *
+ *        Stop Animation before next Algorithm processing           *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -235,6 +237,7 @@ Rectangle {
                         myTable.drawData()
                         id_TimerDrawHistory.running = false
                     } else {
+                        id_TimerDrawHistory.running = false
                         myTable.clearData()
                         myTable.setFeatureSorting(currentText)
                         myTable.createTable(15, 10)
