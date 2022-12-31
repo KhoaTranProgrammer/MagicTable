@@ -49,6 +49,8 @@
  *        Support to change Animation elapse time, change GUI       *
  * 1.1.6: Dec-25-2022                                               *
  *        Stop Animation before next Algorithm processing           *
+ * 1.1.7: Dec-31-2022                                               *
+ *        Dynamic change table resolution                           *
  *******************************************************************/
 
 import QtQuick 2.12
@@ -59,6 +61,9 @@ Rectangle {
     id: id_root
     anchors.fill: parent
     color: "black"
+
+    property int rows: 10
+    property int columns: 15
 
     Rectangle {
         id: id_inputdata
@@ -91,9 +96,91 @@ Rectangle {
         color: "black"
 
         Rectangle {
-            id: id_rec_animation
+            id: id_rec_tableresolution
             anchors {
                 top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: 2
+            }
+            height: 50
+            color: "transparent"
+            border.width: 1
+            border.color: "white"
+
+            Text {
+                id: id_txt_resolution
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    leftMargin: 4
+                }
+                text: "Resolution"
+                color: "white"
+                font.pointSize: 10
+            }
+
+            Text
+            {
+                id: id_txt_resolution_rows
+                color: "white"
+                text: "Rows"
+                anchors {
+                    top: id_txt_resolution.bottom
+                    left: parent.left
+                    leftMargin: 4
+                }
+                font.pointSize: 10
+            }
+
+            TextEdit {
+                id: id_txtEdit_resolution_rows
+                anchors {
+                    top: id_txt_resolution.bottom
+                    left: id_txt_resolution_rows.right
+                    bottom: parent.bottom
+                    right: parent.right
+                    leftMargin: 4
+                }
+                text: id_root.rows
+                font.pointSize: 10
+                color: "white"
+                focus: true
+            }
+
+            Text
+            {
+                id: id_txt_resolution_cols
+                color: "white"
+                text: "Columns"
+                anchors {
+                    top: id_txt_resolution_rows.bottom
+                    left: parent.left
+                    leftMargin: 4
+                }
+                font.pointSize: 10
+            }
+
+            TextEdit {
+                id: id_txtEdit_resolution_cols
+                anchors {
+                    top: id_txt_resolution_rows.bottom
+                    left: id_txt_resolution_cols.right
+                    bottom: parent.bottom
+                    right: parent.right
+                    leftMargin: 4
+                }
+                text: id_root.columns
+                font.pointSize: 10
+                color: "white"
+                focus: true
+            }
+        }
+
+        Rectangle {
+            id: id_rec_animation
+            anchors {
+                top: id_rec_tableresolution.bottom
                 left: parent.left
                 right: parent.right
                 margins: 2
@@ -228,10 +315,22 @@ Rectangle {
                 model: id_lstmod_sorting
 
                 onActivated: {
+                    if (isNaN(id_txtEdit_resolution_rows.text)) {
+                        console.log(id_txtEdit_resolution_rows.text + " is not number")
+                    } else {
+                        id_root.rows = parseInt(id_txtEdit_resolution_rows.text)
+                    }
+
+                    if (isNaN(id_txtEdit_resolution_cols.text)) {
+                        console.log(id_txtEdit_resolution_cols.text + " is not number")
+                    } else {
+                        id_root.columns = parseInt(id_txtEdit_resolution_cols.text)
+                    }
+
                     if(!id_animationEnabled.checked) {
                         myTable.clearData()
                         myTable.setFeatureSorting(currentText)
-                        myTable.createTable(15, 10)
+                        myTable.createTable(id_root.columns, id_root.rows)
                         myTable.addNewDataList(id_txtdata.text)
                         myTable.sortDataWithMeasurement()
                         myTable.drawData()
@@ -240,7 +339,7 @@ Rectangle {
                         id_TimerDrawHistory.running = false
                         myTable.clearData()
                         myTable.setFeatureSorting(currentText)
-                        myTable.createTable(15, 10)
+                        myTable.createTable(id_root.columns, id_root.rows)
                         myTable.addNewDataList(id_txtdata.text)
                         myTable.sortDataWithHistory()
 
