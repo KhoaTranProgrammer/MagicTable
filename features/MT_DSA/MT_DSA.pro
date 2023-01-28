@@ -28,23 +28,6 @@
 # * This is configuration file for build in Qt qmake                 *
 # *******************************************************************/
 
-#/********************************************************************
-# * VERSION HISTORY                                                  *
-# ********************************************************************
-# * 1.0.0: Jul-24-2022                                               *
-# *        Initial version supports simple sorting                   *
-# * 1.1.0: Aug-09-2022                                               *
-# *        Add Bubble sorting                                        *
-# * 1.1.1: Aug-12-2022                                               *
-# *        Add Selection sorting                                     *
-# * 1.1.2: Aug-14-2022                                               *
-# *        Add Insertion sorting                                     *
-# * 1.1.3: Aug-14-2022                                               *
-# *        Add Merge sorting                                         *
-# * 1.1.4: Aug-14-2022                                               *
-# *        Add Quick sorting                                         *
-# *******************************************************************/
-
 CONFIG -= qt
 
 TEMPLATE = lib

@@ -28,25 +28,6 @@
  * This class supports Sorting Algorithm                            *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-24-2022                                               *
- *        Initial version supports: simple sorting                  *
- * 1.1.0: Jul-31-2022                                               *
- *        Supports sort/draw history all and one by one             *
- * 1.2.0: Aug-09-2022                                               *
- *        Add Bubble sorting                                        *
- * 1.3.0: Aug-20-2022                                               *
- *        Support Time Measurement                                  *
- * 1.3.1: Aug-21-2022                                               *
- *        Separate draw data from sorting                           *
- * 1.3.2: Aug-21-2022                                               *
- *        Add method sortDataWithMeasurement                        *
- * 1.3.3: Oct-16-2022                                               *
- *        Add method clearData to free data                         *
- *******************************************************************/
-
 #ifndef MT_DSA_SORTING_H
 #define MT_DSA_SORTING_H
 

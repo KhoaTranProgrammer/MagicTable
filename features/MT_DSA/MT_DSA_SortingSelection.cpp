@@ -28,15 +28,6 @@
  * This class supports Selection Sorting Algorithm                  *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Aug-12-2022                                               *
- *        Initial version                                           *
- * 1.0.1: Aug-21-2022                                               *
- *        Separate draw data from sorting                           *
- *******************************************************************/
-
 #include "MT_DSA_SortingSelection.h"
 
 MT_DSA_SortingSelection::MT_DSA_SortingSelection()
