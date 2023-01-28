@@ -28,13 +28,6 @@
  * This class describe/process for Position in Magic Table          *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-18-2022                                               *
- *        Initial version support set/get: x/y/w/h/r/c              *
- *******************************************************************/
-
 #include "MT_Position.h"
 
 MT_Position::MT_Position(mt_uint x, mt_uint y, mt_uint w, mt_uint h, mt_uint col, mt_uint row) : MT_Atom()

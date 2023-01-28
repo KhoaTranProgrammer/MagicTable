@@ -28,16 +28,6 @@
 # * This is configuration file for build in Qt qmake                 *
 # *******************************************************************/
 
-#/********************************************************************
-# * VERSION HISTORY                                                  *
-# ********************************************************************
-# * 1.0.0: Jul-21-2022                                               *
-# *        Initial version supports build share library for Windows  *
-# *        Class: MT_Atom/MT_Object/MT_Position/MT_Table             *
-# * 1.1.0: Jul-31-2022                                               *
-# *        Add MT_RefObject class keeps the position of object       *
-# *******************************************************************/
-
 QT -= gui
 
 TEMPLATE = lib

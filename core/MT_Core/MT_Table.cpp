@@ -28,27 +28,6 @@
  * This class describe/process for Table in Magic Table             *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-21-2022                                               *
- *        Initial version supports: Add/update/draw Object          *
- * 1.1.0: Jul-31-2022                                               *
- *        Supports process history of Object moving using           *
- *        MT_RefObject                                              *
- *        Add MT_RefObject into history inside updateObjectPosition *
- * 1.1.1: Jul-31-2022                                               *
- *        Supports draw history all and one by one                  *
- * 1.1.2: Aug-04-2022                                               *
- *        Support each index in history as list of MT_RefObject     *
- * 1.1.3: Aug-04-2022                                               *
- *        Update position for two objects                           *
- * 1.1.4: Aug-06-2022                                               *
- *        Change matrixposition from array to matrix storage        *
- * 1.1.5: Oct-16-2022                                               *
- *        Add method clearHistory, clearData to free data           *
- *******************************************************************/
-
 #include "MT_Table.h"
 
 MT_Table::MT_Table()

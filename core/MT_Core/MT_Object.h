@@ -29,17 +29,6 @@
  * Table                                                            *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-18-2022                                               *
- *        Initial version supports: position/state/move/draw object *
- * 1.1.0: Aug-06-2022                                               *
- *        Supports animation time setting                           *
- * 1.1.1: Oct-16-2022                                               *
- *        Add virtual method to free object                         *
- *******************************************************************/
-
 #ifndef MT_OBJECT_H
 #define MT_OBJECT_H
 

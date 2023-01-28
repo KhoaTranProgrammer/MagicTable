@@ -28,13 +28,6 @@
  * This class keeps the position of object                          *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-31-2022                                               *
- *        Initial version supports: Init/draw RefObject             *
- *******************************************************************/
-
 #include "MT_RefObject.h"
 
 MT_RefObject::MT_RefObject(MT_Object& obj, MT_Position& pos)
