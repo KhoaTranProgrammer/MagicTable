@@ -28,13 +28,6 @@
  * This file is the main file of MT_QMLApp                          *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-26-2022                                               *
- *        Initial version displays qml screen                       *
- *******************************************************************/
-
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtQuick>

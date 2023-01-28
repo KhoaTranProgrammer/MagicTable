@@ -28,31 +28,6 @@
  * This file is the main qml of MT_QMLApp                           *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-26-2022                                               *
- *        Initial version uses MT_DSA_QML to display Simple Sorting *
- * 1.0.1: Aug-04-2022                                               *
- *        Sort the list input of data                               *
- * 1.1.0: Aug-06-2022                                               *
- *        Supports animation time setting                           *
- * 1.1.1: Aug-12-2022                                               *
- *        Add property Features to select sort type from app        *
- * 1.1.2: Oct-22-2022                                               *
- *        Support to select algorithm                               *
- * 1.1.3: Oct-29-2022                                               *
- *        Input data from text                                      *
- * 1.1.4: Nov-11-2022                                               *
- *        Create switch button to select animation                  *
- * 1.1.5: Dec-11-2022                                               *
- *        Support to change Animation elapse time, change GUI       *
- * 1.1.6: Dec-25-2022                                               *
- *        Stop Animation before next Algorithm processing           *
- * 1.1.7: Dec-31-2022                                               *
- *        Dynamic change table resolution                           *
- *******************************************************************/
-
 import QtQuick 2.12
 import QtQuick.Controls 1.4
 import MT_DSA_QML 1.0
