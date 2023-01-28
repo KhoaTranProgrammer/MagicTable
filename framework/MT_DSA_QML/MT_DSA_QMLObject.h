@@ -28,18 +28,6 @@
  * This is class to define QML layout of MT_Object                  *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-26-2022                                               *
- *        Initial version supports QML Rectangle                    *
- * 1.0.1: Oct-22-2022                                               *
- *        Add virtual method to free object                         *
- * 1.0.2: Dec-25-2022                                               *
- *        Check NULL pointer for dynamic objects: QQmlComponent and *
- *        QQuickItem                                                *
- *******************************************************************/
-
 #ifndef MT_DSA_QMLOBJECT_H
 #define MT_DSA_QMLOBJECT_H
 

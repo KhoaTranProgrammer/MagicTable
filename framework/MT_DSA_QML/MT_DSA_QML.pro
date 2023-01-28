@@ -28,14 +28,6 @@
 # * This is configuration file for build in Qt qmake                 *
 # *******************************************************************/
 
-#/********************************************************************
-# * VERSION HISTORY                                                  *
-# ********************************************************************
-# * 1.0.0: Jul-26-2022                                               *
-# *        Initial version supports plugin for sorting integer       *
-# *        Class: MT_DSA_QMLPlugin/MT_DSA_QML/MT_DSA_QMLObject       *
-# *******************************************************************/
-
 TEMPLATE = lib
 TARGET = MT_DSA_QML
 QT += qml quick

@@ -28,24 +28,6 @@
  * This is class to define QML layout of MT_Object                  *
  *******************************************************************/
 
-/********************************************************************
- * VERSION HISTORY                                                  *
- ********************************************************************
- * 1.0.0: Jul-26-2022                                               *
- *        Initial version supports QML Rectangle                    *
- * 1.0.1: Jul-26-2022                                               *
- *        When draw object, default is red and later is blue        *
- * 1.0.2: Jul-26-2022                                               *
- *        Change NumberAnimation of x/y behavior to 500             *
- * 1.1.0: Aug-06-2022                                               *
- *        Supports animation time setting                           *
- * 1.1.1: Oct-22-2022                                               *
- *        Add virtual method to free object                         *
- * 1.1.2: Dec-25-2022                                               *
- *        Check NULL pointer for dynamic objects: QQmlComponent and *
- *        QQuickItem                                                *
- *******************************************************************/
-
 #include "MT_DSA_QMLObject.h"
 
 MT_DSA_QMLObject::MT_DSA_QMLObject(QQmlEngine& engine, QObject& parent) : MT_DSA_Object()
