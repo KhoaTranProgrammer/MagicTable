@@ -39,6 +39,7 @@ Rectangle {
 
     property int rows: 10
     property int columns: 15
+    property var ctx
 
     Rectangle {
         id: id_inputdata
@@ -53,7 +54,7 @@ Rectangle {
         TextEdit {
             id: id_txtdata
             anchors.fill: parent
-            text: "7,5,9,1,31,23,14,2,9,33,0,99,3"
+            text: "23,12,31,3,15,7,29,88,53"
             font.pointSize: 10
             color: "black"
             focus: true
@@ -280,6 +281,7 @@ Rectangle {
             }
 
             ComboBox {
+                id: id_cmbox_sorting
                 anchors {
                     top: id_txt_sorting.bottom
                     left: parent.left
@@ -301,6 +303,8 @@ Rectangle {
                     } else {
                         id_root.columns = parseInt(id_txtEdit_resolution_cols.text)
                     }
+
+                    id_cbBox_tree.currentIndex = -1
 
                     if(!id_animationEnabled.checked) {
                         myTable.clearData()
@@ -332,10 +336,86 @@ Rectangle {
                 }
             }
         }
+
+        Rectangle {
+            id: id_rec_tree
+            anchors {
+                right: parent.right
+                left: parent.left
+                top: id_rec_sorting.bottom
+                margins: 2
+            }
+            height: 50
+            color: "black"
+            border.width: 1
+            border.color: "white"
+
+            Text {
+                id: id_txt_tree
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    leftMargin: 4
+                }
+                text: "Tree Algorithm"
+                color: "white"
+                font.pointSize: 10
+            }
+
+            ComboBox {
+                id: id_cbBox_tree
+                anchors {
+                    top: id_txt_tree.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    margins: 4
+                }
+                model: id_lstmod_tree
+
+                onActivated: {
+                    if (isNaN(id_txtEdit_resolution_rows.text)) {
+                        console.log(id_txtEdit_resolution_rows.text + " is not number")
+                    } else {
+                        id_root.rows = parseInt(id_txtEdit_resolution_rows.text)
+                    }
+
+                    if (isNaN(id_txtEdit_resolution_cols.text)) {
+                        console.log(id_txtEdit_resolution_cols.text + " is not number")
+                    } else {
+                        id_root.columns = parseInt(id_txtEdit_resolution_cols.text)
+                    }
+
+                    id_cmbox_sorting.currentIndex = -1
+
+                    if(!id_animationEnabled.checked) {
+                        myTable.clearData()
+                        myTable.setFeatureTree(currentText)
+                        myTable.createTable(id_root.columns, id_root.rows)
+                        myTable.insertNewDataList(id_txtdata.text)
+                        myTable.drawData()
+                        id_TimerDrawHistory.running = false
+                    } else {
+                        id_TimerDrawHistory.running = false
+                        myTable.clearData()
+                        myTable.setFeatureTree(currentText)
+                        myTable.createTable(id_root.columns, id_root.rows)
+                        myTable.insertNewDataList(id_txtdata.text)
+                        myTable.drawData()
+
+//                        id_TimerDrawHistory.running = true
+                    }
+                }
+            }
+        }
     }
 
     ListModel {
         id: id_lstmod_sorting
+    }
+
+    ListModel {
+        id: id_lstmod_tree
     }
 
     MT_DSA_QML {
@@ -356,8 +436,7 @@ Rectangle {
         interval: 1000; running: true; repeat: false
 
         onTriggered: {
-            myTable.clearData()
-            myTable.createTable(15, 10)
+            myTable.createTable(id_root.columns, id_root.rows)
             myTable.addNewDataList(id_txtdata.text)
             myTable.sortDataWithMeasurement()
             id_txtMeasureTime.text = myTable.getSortMeasurementData() + " s "
@@ -367,6 +446,13 @@ Rectangle {
             for (var i = 0; i < listofsorting.length; i++) {
                 id_lstmod_sorting.append({"name": listofsorting[i]})
             }
+
+            var listoftree = myTable.getFeatureHierarchicalTree()
+            listoftree = listoftree.split("-")
+            for (var i = 0; i < listoftree.length; i++) {
+                id_lstmod_tree.append({"name": listoftree[i]})
+            }
+            id_cbBox_tree.currentIndex = -1
         }
     }
 
