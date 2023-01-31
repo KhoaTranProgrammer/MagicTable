@@ -42,6 +42,8 @@
 #include "MT_DSA_SortingMerge.h"
 #include "MT_DSA_SortingQuick.h"
 #include "MT_DSA_QMLObject.h"
+#include "MT_DSA_QMLTreeObject.h"
+#include "MT_DSA_HierarchicalTree.h"
 
 class MT_DSA_QML : public QQuickPaintedItem
 {
@@ -68,17 +70,32 @@ public slots:
     void drawData();
     void clearData();
 
+    QString getFeatureHierarchicalTree();
+    void setFeatureTree(QString feature);
+    void insertNewDataList(QString value); // 23,12,31,3,15,7,29,88,53
+
+    void drawLine(int startx, int starty, int endx, int endy);
 private:
     MT_DSA_Sorting* _dsa_sorting = NULL;
+    MT_DSA_HierarchicalTree* _dsa_hierarchicaltree = NULL;
     QQmlEngine* engine;
     vector<MT_DSA_QMLObject*> _listSortObjects;
     ulong _animationtime;
+
+    int _startx = 0;
+    int _starty = 0;
+    int _endx = 0;
+    int _endy = 0;
+
+    QVector<QLineF> lines;
 
     QString BUBBLE_SORT;
     QString SELECTION_SORT;
     QString INSERTION_SORT;
     QString MERGE_SORT;
     QString QUICK_SORT;
+
+    QString BINARY_SEARCH_TREE;
 };
 
 #endif // MT_DSA_QML_H
