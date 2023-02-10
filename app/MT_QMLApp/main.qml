@@ -30,7 +30,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 1.4
-import MT_DSA_QML 1.0
+import "Common.js" as Common
 
 Rectangle {
     id: id_root
@@ -256,7 +256,7 @@ Rectangle {
         }
 
         Rectangle {
-            id: id_rec_sorting
+            id: id_rec_datastructure
             anchors {
                 right: parent.right
                 left: parent.left
@@ -275,13 +275,13 @@ Rectangle {
                     left: parent.left
                     leftMargin: 4
                 }
-                text: "Sort Algorithm"
+                text: "Data S and A"
                 color: "white"
                 font.pointSize: 10
             }
 
             ComboBox {
-                id: id_cmbox_sorting
+                id: id_cmbox_dsa
                 anchors {
                     top: id_txt_sorting.bottom
                     left: parent.left
@@ -289,121 +289,26 @@ Rectangle {
                     bottom: parent.bottom
                     margins: 4
                 }
-                model: id_lstmod_sorting
+                model: id_lstmod_dsa
 
                 onActivated: {
-                    if (isNaN(id_txtEdit_resolution_rows.text)) {
-                        console.log(id_txtEdit_resolution_rows.text + " is not number")
-                    } else {
-                        id_root.rows = parseInt(id_txtEdit_resolution_rows.text)
-                    }
+                    for (var i = 0 ; i < Common.group_sorting_algorithm.length; i+=2 ) {
+                        if (Common.group_sorting_algorithm[i] === currentText) {
+                            console.log(Common.group_sorting_algorithm[i+1])
+                            // Setting new control
+                            id_loaderControl.source = Common.group_sorting_algorithm[i+1]
 
-                    if (isNaN(id_txtEdit_resolution_cols.text)) {
-                        console.log(id_txtEdit_resolution_cols.text + " is not number")
-                    } else {
-                        id_root.columns = parseInt(id_txtEdit_resolution_cols.text)
-                    }
+                            var scene = null
+                            scene = id_loaderControl.item
+                            scene.parent = id_root
+                            scene.anchors.fill = id_control_area
 
-                    id_cbBox_tree.currentIndex = -1
+                            controlInformationUpdate()
 
-                    if(!id_animationEnabled.checked) {
-                        myTable.clearData()
-                        myTable.setFeatureSorting(currentText)
-                        myTable.createTable(id_root.columns, id_root.rows)
-                        myTable.addNewDataList(id_txtdata.text)
-                        myTable.sortDataWithMeasurement()
-                        myTable.drawData()
-                        id_TimerDrawHistory.running = false
-                    } else {
-                        id_TimerDrawHistory.running = false
-                        myTable.clearData()
-                        myTable.setFeatureSorting(currentText)
-                        myTable.createTable(id_root.columns, id_root.rows)
-                        myTable.addNewDataList(id_txtdata.text)
-                        myTable.sortDataWithHistory()
-
-                        if (isNaN(id_txtEdit_elapse.text)) {
-                            console.log(id_txtEdit_elapse.text + " is not number")
-                        } else {
-                            var elapsetime = parseFloat(id_txtEdit_elapse.text) * 1000
-                            console.log(elapsetime)
-                            id_TimerDrawHistory.interval = elapsetime
-                            myTable.setObjectAnimationTime(elapsetime)
+                            scene.controlInfor.connect(controlInformationUpdate)
+                            scene.controlMeasureTime.connect(updateMeasureTime)
+                            scene.execute()
                         }
-
-                        id_TimerDrawHistory.running = true
-                    }
-                }
-            }
-        }
-
-        Rectangle {
-            id: id_rec_tree
-            anchors {
-                right: parent.right
-                left: parent.left
-                top: id_rec_sorting.bottom
-                margins: 2
-            }
-            height: 50
-            color: "black"
-            border.width: 1
-            border.color: "white"
-
-            Text {
-                id: id_txt_tree
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    leftMargin: 4
-                }
-                text: "Tree Algorithm"
-                color: "white"
-                font.pointSize: 10
-            }
-
-            ComboBox {
-                id: id_cbBox_tree
-                anchors {
-                    top: id_txt_tree.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                    margins: 4
-                }
-                model: id_lstmod_tree
-
-                onActivated: {
-                    if (isNaN(id_txtEdit_resolution_rows.text)) {
-                        console.log(id_txtEdit_resolution_rows.text + " is not number")
-                    } else {
-                        id_root.rows = parseInt(id_txtEdit_resolution_rows.text)
-                    }
-
-                    if (isNaN(id_txtEdit_resolution_cols.text)) {
-                        console.log(id_txtEdit_resolution_cols.text + " is not number")
-                    } else {
-                        id_root.columns = parseInt(id_txtEdit_resolution_cols.text)
-                    }
-
-                    id_cmbox_sorting.currentIndex = -1
-
-                    if(!id_animationEnabled.checked) {
-                        myTable.clearData()
-                        myTable.setFeatureTree(currentText)
-                        myTable.createTable(id_root.columns, id_root.rows)
-                        myTable.insertNewDataList(id_txtdata.text)
-                        myTable.drawData()
-                        id_TimerDrawHistory.running = false
-                    } else {
-                        id_TimerDrawHistory.running = false
-                        myTable.clearData()
-                        myTable.setFeatureTree(currentText)
-                        myTable.createTable(id_root.columns, id_root.rows)
-                        myTable.insertNewDataList(id_txtdata.text)
-                        myTable.drawData()
-
-//                        id_TimerDrawHistory.running = true
                     }
                 }
             }
@@ -411,24 +316,26 @@ Rectangle {
     }
 
     ListModel {
-        id: id_lstmod_sorting
+        id: id_lstmod_dsa
     }
 
     ListModel {
         id: id_lstmod_tree
     }
 
-    MT_DSA_QML {
-        id: myTable
+    // Using to open control
+    Loader {
+        id: id_loaderControl
+    }
+
+    Item {
+        id: id_control_area
+
         anchors {
             left: id_information_area.right
             right: parent.right
             top: id_inputdata.bottom
             bottom: parent.bottom
-        }
-
-        Component.onCompleted: {
-            myTable.setObjectAnimationTime(900)
         }
     }
 
@@ -436,32 +343,51 @@ Rectangle {
         interval: 1000; running: true; repeat: false
 
         onTriggered: {
-            myTable.createTable(id_root.columns, id_root.rows)
-            myTable.addNewDataList(id_txtdata.text)
-            myTable.sortDataWithMeasurement()
-            id_txtMeasureTime.text = myTable.getSortMeasurementData() + " s "
-            myTable.drawData()
-            var listofsorting = myTable.getFeatureSorting()
-            listofsorting = listofsorting.split("-")
-            for (var i = 0; i < listofsorting.length; i++) {
-                id_lstmod_sorting.append({"name": listofsorting[i]})
+            for (var i = 0 ; i < Common.group_sorting_algorithm.length; i+=2 ) {
+                id_lstmod_dsa.append({"name": Common.group_sorting_algorithm[i]})
             }
-
-            var listoftree = myTable.getFeatureHierarchicalTree()
-            listoftree = listoftree.split("-")
-            for (var i = 0; i < listoftree.length; i++) {
-                id_lstmod_tree.append({"name": listoftree[i]})
-            }
-            id_cbBox_tree.currentIndex = -1
+            id_cmbox_dsa.currentIndex = -1
         }
     }
 
-    Timer {
-        id: id_TimerDrawHistory
-        interval: 900; running: false; repeat: true
+    function controlInformationUpdate() {
+        // Initialize data for new control
+        var scene = null
+        scene = id_loaderControl.item
 
-        onTriggered: {
-            myTable.drawHistoryOneByOne()
+        if (isNaN(id_txtEdit_resolution_rows.text)) {
+            console.log(id_txtEdit_resolution_rows.text + " is not number")
+        } else {
+            id_root.rows = parseInt(id_txtEdit_resolution_rows.text)
         }
+
+        if (isNaN(id_txtEdit_resolution_cols.text)) {
+            console.log(id_txtEdit_resolution_cols.text + " is not number")
+        } else {
+            id_root.columns = parseInt(id_txtEdit_resolution_cols.text)
+        }
+
+        scene.columns = id_root.columns
+        scene.rows = id_root.rows
+        scene.datalist = id_txtdata.text
+
+        if(!id_animationEnabled.checked) {
+            scene.isAnimation = false
+        } else {
+            scene.isAnimation = true
+            if (isNaN(id_txtEdit_elapse.text)) {
+                console.log(id_txtEdit_elapse.text + " is not number")
+            } else {
+                var elapsetime = parseFloat(id_txtEdit_elapse.text) * 1000
+                console.log(elapsetime)
+                scene.elapsetime = elapsetime
+            }
+        }
+    }
+
+    function updateMeasureTime() {
+        var scene = null
+        scene = id_loaderControl.item
+        id_txtMeasureTime.text = scene.measureTime + " s "
     }
 }

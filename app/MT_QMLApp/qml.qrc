@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>Common.js</file>
+        <file>SortingControl.qml</file>
+        <file>DSAControl.qml</file>
+        <file>TreeControl.qml</file>
     </qresource>
 </RCC>
