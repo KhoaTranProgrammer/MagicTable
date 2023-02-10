@@ -38,8 +38,6 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
     MERGE_SORT = "MERGE";
     QUICK_SORT = "QUICK";
 
-    BINARY_SEARCH_TREE = "SEARCH";
-
     engine = new QQmlEngine;
     _animationtime = 0;
     this->_dsa_sorting = new MT_DSA_SortingBubble();
@@ -47,12 +45,7 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void MT_DSA_QML::paint(QPainter *painter)
 {
-    if(lines.size() > 0)
-    {
-        painter->setPen(QPen(Qt::white, 3));
-        painter->drawLines(lines);
-        lines.clear();
-    }
+
 }
 
 void MT_DSA_QML::addNewData(int value)
@@ -92,9 +85,6 @@ void MT_DSA_QML::drawData()
 {
     if (this->_dsa_sorting != NULL)
         this->_dsa_sorting->drawData();
-
-    if (this->_dsa_hierarchicaltree != NULL)
-        this->_dsa_hierarchicaltree->drawData();
 }
 
 void MT_DSA_QML::drawHistoryOneByOne()
@@ -142,9 +132,6 @@ void MT_DSA_QML::createTable(int col, int row)
 {
     if (this->_dsa_sorting != NULL)
         this->_dsa_sorting->createTable((int)this->width(), (int)this->height(), col, row);
-
-    if (this->_dsa_hierarchicaltree != NULL)
-        this->_dsa_hierarchicaltree->createTable((int)this->width(), (int)this->height(), col, row);
 }
 
 void MT_DSA_QML::clearData()
@@ -155,46 +142,4 @@ void MT_DSA_QML::clearData()
         delete this->_dsa_sorting;
         this->_dsa_sorting = NULL;
     }
-
-    if (this->_dsa_hierarchicaltree != NULL)
-    {
-        this->_dsa_hierarchicaltree->clearData();
-        delete this->_dsa_hierarchicaltree;
-        this->_dsa_hierarchicaltree = NULL;
-    }
-}
-
-QString MT_DSA_QML::getFeatureHierarchicalTree()
-{
-    QString result = "";
-    result += BINARY_SEARCH_TREE;
-
-    return result;
-}
-
-void MT_DSA_QML::setFeatureTree(QString feature)
-{
-    if (this->_dsa_hierarchicaltree != NULL)
-        delete this->_dsa_hierarchicaltree;
-
-    if (feature == BINARY_SEARCH_TREE)
-        this->_dsa_hierarchicaltree = new MT_DSA_HierarchicalTree();
-}
-
-void MT_DSA_QML::insertNewDataList(QString value)
-{
-    QStringList datalist = value.split(QLatin1Char(','));
-    for (int i = 0; i < datalist.count(); i++)
-    {
-        MT_DSA_QMLTreeObject *obj = new MT_DSA_QMLTreeObject(*engine, *this);
-        this->_dsa_hierarchicaltree->InsertWithEmptyNode(obj, datalist.at(i).toInt());
-    }
-    this->_dsa_hierarchicaltree->PreorderTraversal();
-}
-
-void MT_DSA_QML::drawLine(int startx, int starty, int endx, int endy)
-{
-    QLineF line(startx, starty, endx, endy);
-    lines.append(line);
-    update();
 }

@@ -45,12 +45,14 @@ SOURCES += \
         MT_DSA_QMLObject.cpp \
         MT_DSA_QML.cpp \
         MT_DSA_QMLPlugin.cpp \
+        MT_DSA_QMLTree.cpp \
         MT_DSA_QMLTreeObject.cpp
 
 HEADERS += \
         MT_DSA_QMLObject.h \
         MT_DSA_QML.h \
         MT_DSA_QMLPlugin.h \
+        MT_DSA_QMLTree.h \
         MT_DSA_QMLTreeObject.h
 
 DISTFILES = qmldir

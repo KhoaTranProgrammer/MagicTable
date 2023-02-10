@@ -79,7 +79,7 @@ void MT_DSA_QMLTreeObject::drawObject()
     MT_Position* parentposition = this->getParentPosition();
     if (parentposition != NULL)
     {
-        MT_DSA_QML* customeparent = qobject_cast<MT_DSA_QML*>(this->_parent);
+        MT_DSA_QMLTree* customeparent = qobject_cast<MT_DSA_QMLTree*>(this->_parent);
         customeparent->drawLine(this->getCurPosition()->getX() + (this->getCurPosition()->getW() / 2),
                                 this->getCurPosition()->getY() + (this->getCurPosition()->getH() / 2),
                                 parentposition->getX() + (parentposition->getW() / 2),

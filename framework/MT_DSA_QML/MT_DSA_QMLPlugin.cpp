@@ -32,6 +32,7 @@
 #include "MT_DSA_QMLPlugin.h"
 
 #include "MT_DSA_QML.h"
+#include "MT_DSA_QMLTree.h"
 
 #include <qqml.h>
 
@@ -39,5 +40,6 @@ void MT_DSA_QMLPlugin::registerTypes(const char *uri)
 {
     // @uri com.mtdsa.mtdsaqml
     qmlRegisterType<MT_DSA_QML>(uri, 1, 0, "MT_DSA_QML");
+    qmlRegisterType<MT_DSA_QMLTree>(uri, 1, 0, "MT_DSA_QMLTree");
 }
 

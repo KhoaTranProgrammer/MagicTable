@@ -40,7 +40,9 @@
 #include <QPropertyAnimation>
 #include "MT_DSA_TreeObject.h"
 #include "MT_DSA_QML.h"
+#include "MT_DSA_QMLTree.h"
 
+class MT_DSA_QMLTree;
 class MT_DSA_QML;
 class MT_DSA_QMLTreeObject : public MT_DSA_TreeObject
 {
