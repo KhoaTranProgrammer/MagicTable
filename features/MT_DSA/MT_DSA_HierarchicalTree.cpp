@@ -71,7 +71,6 @@ void MT_DSA_HierarchicalTree::PreorderTraversal()
     int col = getcol(h);
 
     printTree(this->_root, col/2, 0, h);
-
 }
 
 void MT_DSA_HierarchicalTree::printTree(MT_DSA_TreeObject *node, int col, int row, int height)
@@ -96,4 +95,157 @@ mt_void MT_DSA_HierarchicalTree::drawData()
 mt_void MT_DSA_HierarchicalTree::clearData()
 {
     this->_mttable.clearData();
+}
+
+mt_void MT_DSA_HierarchicalTree::Remove(int key)
+{
+    this->_root = Remove(this->_root, key);
+}
+
+MT_DSA_TreeObject *MT_DSA_HierarchicalTree::Remove(MT_DSA_TreeObject *node, int key)
+{
+    // The given node is not found in BST
+    if (node == NULL)
+        return NULL;
+
+    // Target node is found
+    if (node->getValue() == key)
+    {
+        // If the node is a leaf node. The node can be safely removed
+        if (node->_left == NULL && node->_right == NULL)
+        {
+            this->_mttable.removeObject(node);
+            node = NULL;
+        }
+        // The node have only one child at right
+        else if (node->_left == NULL && node->_right != NULL)
+        {
+            // The only child will be connected to the parent's of node directly
+            node->_right->_parent = node->_parent;
+
+            // Bypass node
+            this->_mttable.removeObject(node);
+            node = node->_right;
+        }
+        // The node have only one child at left
+        else if (node->_left != NULL && node->_right == NULL)
+        {
+            // The only child will be connected to
+            // the parent's of node directly
+            node->_left->_parent = node->_parent;
+
+            // Bypass node
+            this->_mttable.removeObject(node);
+            node = node->_left;
+        }
+        // The node have two children (left and right)
+        else
+        {
+            // Find successor or predecessor to avoid quarrel
+            int successorKey = Successor(key);
+
+            // Replace node's key with successor's key
+            node->setValue(successorKey);
+
+            // Delete the old successor's key
+            node->_right = Remove(node->_right, successorKey);
+        }
+    }
+    // Target node's key is smaller than
+    // the given key then search to right
+    else if (node->getValue() < key)
+    {
+        node->_right = Remove(node->_right, key);
+    }
+    // Target node's key is greater than
+    // the given key then search to left
+    else
+    {
+        node->_left = Remove(node->_left, key);
+    }
+
+    // Return the updated BST
+    return node;
+}
+
+mt_int MT_DSA_HierarchicalTree::Successor(int key)
+{
+    // Search the key's node first
+    MT_DSA_TreeObject *keyNode = Search(this->_root, key);
+
+    // Return the key.
+    // If the key is not found or
+    // successor is not found,
+    // return -1
+    return keyNode == NULL ? -1 : Successor(keyNode);
+}
+
+mt_int MT_DSA_HierarchicalTree::Successor(MT_DSA_TreeObject * node)
+{
+    // The successor is the minimum key value
+    // of right subtree
+    if (node->_right != NULL)
+    {
+        return FindMin(node->_right);
+    }
+    // If no any right subtree
+    else
+    {
+        MT_DSA_TreeObject *parentNode = node->_parent;
+        MT_DSA_TreeObject *currentNode = node;
+
+        // If currentNode is not root and
+        // currentNode is its right children
+        // continue moving up
+        while ((parentNode != NULL) && (currentNode == parentNode->_right))
+        {
+            currentNode = parentNode;
+            parentNode = currentNode->_parent;
+        }
+
+        // If parentNode is not NULL
+        // then the key of parentNode is
+        // the successor of node
+        return parentNode == NULL ? -1 : parentNode->getValue();
+    }
+}
+
+mt_int MT_DSA_HierarchicalTree::FindMin(MT_DSA_TreeObject *node)
+{
+    if(node == NULL)
+        return -1;
+    else if(node->_left == NULL)
+        return node->getValue();
+    else
+        return FindMin(node->_left);
+}
+
+mt_int MT_DSA_HierarchicalTree::FindMin()
+{
+    return FindMin(this->_root);
+}
+
+MT_DSA_TreeObject *MT_DSA_HierarchicalTree::Search(MT_DSA_TreeObject *node, int key)
+{
+    // The given key is not found in BST
+    if (node == NULL)
+        return NULL;
+    // The given key is found
+    else if(node->getValue() == key)
+        return node;
+    // The given is greater than current node's key
+    else if(node->getValue() < key)
+        return Search(node->_right, key);
+    // The given is smaller than current node's key
+    else
+        return Search(node->_left, key);
+}
+
+mt_bool MT_DSA_HierarchicalTree::Search(int key)
+{
+    // Invoking Search() operation and passing root node
+    MT_DSA_TreeObject *result = Search(this->_root, key);
+
+    // If key is found, returns TRUE otherwise returns FALSE
+    return result == NULL ? false : true;
 }

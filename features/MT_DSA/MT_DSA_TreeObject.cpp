@@ -68,3 +68,12 @@ MT_Position* MT_DSA_TreeObject::getParentPosition()
     }
     return NULL;
 }
+
+MT_Position* MT_DSA_TreeObject::getParentNextPosition()
+{
+    if (this->_parent != NULL)
+    {
+        return this->_parent->getNextPosition();
+    }
+    return NULL;
+}

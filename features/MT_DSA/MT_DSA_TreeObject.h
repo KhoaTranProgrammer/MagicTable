@@ -49,6 +49,7 @@ public:
     int getValue();
 
     MT_Position* getParentPosition();
+    MT_Position* getParentNextPosition();
 
     // Properties use for Hierarchical Tree
     MT_DSA_TreeObject *_left = NULL;

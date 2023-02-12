@@ -48,15 +48,23 @@ protected:
     int height(MT_DSA_TreeObject *node);
     int getcol(int h);
     void printTree(MT_DSA_TreeObject *node, int col, int row, int height);
+    MT_DSA_TreeObject *Remove(MT_DSA_TreeObject *node, int key);
+    mt_int Successor(MT_DSA_TreeObject * node);
+    mt_int FindMin(MT_DSA_TreeObject *node);
+    MT_DSA_TreeObject *Search(MT_DSA_TreeObject *node, int key);
 
 public:
     MT_DSA_HierarchicalTree();
     mt_void createTable(int w, int h, int col, int row);
-    void InsertWithEmptyNode(MT_DSA_TreeObject *obj, int key);
-    void PrintTreeInOrder();
-    void PreorderTraversal();
+    mt_void InsertWithEmptyNode(MT_DSA_TreeObject *obj, int key);
+    mt_void PrintTreeInOrder();
+    mt_void PreorderTraversal();
     mt_void drawData();
     mt_void clearData();
+    mt_void Remove(int key);
+    mt_int Successor(int key);
+    mt_int FindMin();
+    mt_bool Search(int key);
 };
 
 #endif // MT_DSA_HIERARCHICALTREE_H
