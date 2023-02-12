@@ -72,6 +72,7 @@ public:
     mt_void drawHistoryAll();
     mt_void drawHistoryOne();
     mt_void clearData();
+    mt_void removeObject(MT_Object* obj);
 };
 
 #endif // MT_TABLE_H

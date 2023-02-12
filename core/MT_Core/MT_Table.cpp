@@ -214,3 +214,17 @@ mt_void MT_Table::clearData()
         this->_objectlist.pop_back();
     }
 }
+
+mt_void MT_Table::removeObject(MT_Object* obj)
+{
+    for (mt_uint i = this->_objectlist.size(); i > 0;)
+    {
+        --i;
+        if(this->_objectlist.at(i) == obj)
+        {
+            this->_objectlist.erase(this->_objectlist.begin() + i);
+            delete obj;
+            return;
+        }
+    }
+}
