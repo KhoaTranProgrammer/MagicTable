@@ -64,6 +64,17 @@ void MT_Table::createTable(mt_uint w, mt_uint h, mt_uint col, mt_uint row)
     }
 }
 
+mt_void MT_Table::updateTable(mt_uint neww, mt_uint newh, mt_uint newcol, mt_uint newrow)
+{
+    for (mt_uint row = 0; row < this->_row; row++)
+    {
+        for (mt_uint col = 0; col < this->_column; col++)
+        {
+
+        }
+    }
+}
+
 void MT_Table::addObject(mt_uint col, mt_uint row)
 {
     MT_Position* objpos = this->getPositionAt(col, row);

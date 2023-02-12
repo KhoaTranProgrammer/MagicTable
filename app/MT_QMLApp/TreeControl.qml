@@ -5,6 +5,8 @@ import MT_DSA_QML 1.0
 DSAControl {
 
     property int key_remove: 15
+    property int key_insert: 50
+
     Rectangle {
         id: id_rec_control
         anchors {
@@ -96,6 +98,61 @@ DSAControl {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: key_remove
+                font.pointSize: 10
+                color: "black"
+                focus: true
+            }
+        }
+
+    }
+
+    Rectangle {
+        id: id_rec_insert
+        anchors {
+            top: id_rec_control.top
+            left: id_rec_remove.right
+            bottom: id_rec_control.bottom
+            margins: 2
+        }
+        width: 100
+        color: "transparent"
+        border.width: 1
+        border.color: "white"
+
+        Button {
+            id: id_txt_insert
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                margins: 2
+            }
+            text: "Insert"
+            onClicked: {
+                if (isNaN(id_txtEdit_insert.text)) {
+                    console.log(id_txtEdit_insert.text + " is not number")
+                } else {
+                    key_insert = parseInt(id_txtEdit_insert.text)
+                }
+
+                console.log(key_insert)
+                myTable.insertData(key_insert)
+                myTable.drawData()
+            }
+        }
+
+        Rectangle {
+            anchors {
+                left: id_txt_insert.right
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                margins: 2
+            }
+            TextEdit {
+                id: id_txtEdit_insert
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: key_insert
                 font.pointSize: 10
                 color: "black"
                 focus: true

@@ -53,6 +53,8 @@ public:
     mt_uint getY();
     mt_uint getW();
     mt_uint getH();
+
+    mt_void updatePosition();
 };
 
 #endif // MT_POSITION_H
