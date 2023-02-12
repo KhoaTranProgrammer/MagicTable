@@ -57,6 +57,7 @@ public slots:
     void setFeatureTree(QString feature);
     void insertNewDataList(QString value); // 23,12,31,3,15,7,29,88,53
     void drawLine(int startx, int starty, int endx, int endy);
+    void Remove(int key);
 
 private:
     MT_DSA_HierarchicalTree* _dsa_hierarchicaltree = NULL;

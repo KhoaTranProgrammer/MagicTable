@@ -89,9 +89,48 @@ void MT_DSA_QMLTreeObject::drawObject()
 
 void MT_DSA_QMLTreeObject::move()
 {
-    _quickitem->setProperty("x", this->getNextPosition()->getX());
-    _quickitem->setProperty("y", this->getNextPosition()->getY());
-    QObject* idname = _quickitem->findChild<QObject*>("id_name");
-    if (idname)
-        idname->setProperty("color", "blue");
+    if (this->_quickitem != NULL)
+        delete this->_quickitem;
+    if (this->_component != NULL)
+        delete this->_component;
+
+    QString text = "\"" + QString::number(this->getValue()) + "\"";
+    QString iconUrl = "\"\"";
+    QString data = "import QtQuick 2.0; "
+                    "Item { "
+                        "id: temp; "
+                        "x: " + QString::number(this->getNextPosition()->getX()) + ";"
+                        "y: " + QString::number(this->getNextPosition()->getY()) + ";"
+                        "width: " + QString::number(this->getNextPosition()->getW()) + ";"
+                        "height: " + QString::number(this->getNextPosition()->getH()) + ";"
+                        "Rectangle { "
+                            "id: id_name; "
+                            "objectName: \"id_name\";"
+                            "color: \"red\";"
+                            "anchors.fill: parent; "
+                            "anchors.margins: 5; "
+                            "Text { "
+                                "anchors.centerIn: parent; "
+                                "text: " + text + ";"
+                                "font.pointSize: 9; "
+                            "}"
+                        "}"
+                        "Behavior on x { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
+                        "Behavior on y { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
+                    "}";
+    _component = new QQmlComponent(this->_engine);
+    _component->setData(data.toUtf8(), QUrl());
+    _quickitem = qobject_cast<QQuickItem*>(_component->create());
+    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
+    _quickitem->setParentItem(myparent);
+
+    MT_Position* parentposition = this->getParentNextPosition();
+    if (parentposition != NULL)
+    {
+        MT_DSA_QMLTree* customeparent = qobject_cast<MT_DSA_QMLTree*>(this->_parent);
+        customeparent->drawLine(this->getNextPosition()->getX() + (this->getNextPosition()->getW() / 2),
+                                this->getNextPosition()->getY() + (this->getNextPosition()->getH() / 2),
+                                parentposition->getX() + (parentposition->getW() / 2),
+                                parentposition->getY() + (parentposition->getH() / 2));
+    }
 }

@@ -39,12 +39,18 @@ MT_DSA_QMLTree::MT_DSA_QMLTree(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void MT_DSA_QMLTree::paint(QPainter *painter)
 {
-    if(lines.size() > 0)
+    if(lines.size() == 0)
+    {
+        QRectF r1(0, 0, this->width(), this->height());
+        painter->fillRect(r1, QColor("transparent"));
+    }
+    else
     {
         painter->setPen(QPen(Qt::white, 3));
         painter->drawLines(lines);
         lines.clear();
     }
+
 }
 
 void MT_DSA_QMLTree::drawData()
@@ -104,4 +110,11 @@ void MT_DSA_QMLTree::drawLine(int startx, int starty, int endx, int endy)
     QLineF line(startx, starty, endx, endy);
     lines.append(line);
     update();
+}
+
+void MT_DSA_QMLTree::Remove(int key)
+{
+    update();
+    this->_dsa_hierarchicaltree->Remove(key);
+    this->_dsa_hierarchicaltree->PreorderTraversal();
 }
