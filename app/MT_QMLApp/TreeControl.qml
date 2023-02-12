@@ -4,6 +4,7 @@ import MT_DSA_QML 1.0
 
 DSAControl {
 
+    property int key_remove: 15
     Rectangle {
         id: id_rec_control
         anchors {
@@ -46,6 +47,61 @@ DSAControl {
             feature = currentText
             execute()
         }
+    }
+
+    Rectangle {
+        id: id_rec_remove
+        anchors {
+            top: id_rec_control.top
+            left: id_cmbox_sorting.right
+            bottom: id_rec_control.bottom
+            margins: 2
+        }
+        width: 100
+        color: "transparent"
+        border.width: 1
+        border.color: "white"
+
+        Button {
+            id: id_txt_remove
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                margins: 2
+            }
+            text: "Remove"
+            onClicked: {
+                if (isNaN(id_txtEdit_remove.text)) {
+                    console.log(id_txtEdit_remove.text + " is not number")
+                } else {
+                    key_remove = parseInt(id_txtEdit_remove.text)
+                }
+
+                console.log(key_remove)
+                myTable.Remove(key_remove)
+                myTable.drawData()
+            }
+        }
+
+        Rectangle {
+            anchors {
+                left: id_txt_remove.right
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                margins: 2
+            }
+            TextEdit {
+                id: id_txtEdit_remove
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: key_remove
+                font.pointSize: 10
+                color: "black"
+                focus: true
+            }
+        }
+
     }
 
     ListModel {
