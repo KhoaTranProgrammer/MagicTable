@@ -13,5 +13,5 @@ Item {
     // Signal to announce when control information are updated
     signal controlInfor
     signal controlMeasureTime
-
+    signal controlResolution
 }

@@ -307,6 +307,7 @@ Rectangle {
 
                             scene.controlInfor.connect(controlInformationUpdate)
                             scene.controlMeasureTime.connect(updateMeasureTime)
+                            scene.controlResolution.connect(updateResolution)
                             scene.execute()
                         }
                     }
@@ -389,5 +390,12 @@ Rectangle {
         var scene = null
         scene = id_loaderControl.item
         id_txtMeasureTime.text = scene.measureTime + " s "
+    }
+
+    function updateResolution() {
+        var scene = null
+        scene = id_loaderControl.item
+        id_txtEdit_resolution_rows.text = scene.rows
+        id_txtEdit_resolution_cols.text = scene.columns
     }
 }
