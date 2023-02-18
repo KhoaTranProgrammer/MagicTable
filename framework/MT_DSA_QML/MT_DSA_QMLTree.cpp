@@ -105,6 +105,13 @@ void MT_DSA_QMLTree::insertNewDataList(QString value)
     this->_dsa_hierarchicaltree->PreorderTraversal();
 }
 
+void MT_DSA_QMLTree::insertData(int value)
+{
+    MT_DSA_QMLTreeObject *obj = new MT_DSA_QMLTreeObject(*engine, *this);
+    this->_dsa_hierarchicaltree->InsertWithEmptyNode(obj, value);
+    this->_dsa_hierarchicaltree->PreorderTraversal();
+}
+
 void MT_DSA_QMLTree::drawLine(int startx, int starty, int endx, int endy)
 {
     QLineF line(startx, starty, endx, endy);
@@ -117,4 +124,14 @@ void MT_DSA_QMLTree::Remove(int key)
     update();
     this->_dsa_hierarchicaltree->Remove(key);
     this->_dsa_hierarchicaltree->PreorderTraversal();
+}
+
+int MT_DSA_QMLTree::getColumn()
+{
+    return this->_dsa_hierarchicaltree->getColumn();
+}
+
+int MT_DSA_QMLTree::getHeight()
+{
+    return this->_dsa_hierarchicaltree->getHeight();
 }
