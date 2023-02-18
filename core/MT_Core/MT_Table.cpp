@@ -64,6 +64,37 @@ void MT_Table::createTable(mt_uint w, mt_uint h, mt_uint col, mt_uint row)
     }
 }
 
+mt_void MT_Table::updateTable(mt_uint newcol, mt_uint newrow)
+{
+    // Remove old data
+    for (mt_uint row = 0; row < this->_row; row++)
+    {
+        this->_matrixposition.at(row).clear();
+    }
+    this->_matrixposition.clear();
+
+    // Update table
+    this->_row = newrow;
+    this->_column = newcol;
+    this->_position_width = this->_actual_width / this->_column;
+    this->_position_height = this->_actual_height / this->_row;
+
+    // Create the table with the matrix of position
+    for (mt_uint row = 0; row < this->_row; row++)
+    {
+        vector<MT_Position*> onerow;
+        for (mt_uint col = 0; col < this->_column; col++)
+        {
+            MT_Position* onepos = new MT_Position( col * this->_position_width, row * this->_position_height,
+                                                   this->_position_width, this->_position_height,
+                                                   col, row);
+
+            onerow.push_back(onepos);
+        }
+        this->_matrixposition.push_back(onerow);
+    }
+}
+
 void MT_Table::addObject(mt_uint col, mt_uint row)
 {
     MT_Position* objpos = this->getPositionAt(col, row);

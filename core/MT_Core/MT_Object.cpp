@@ -93,6 +93,7 @@ mt_void MT_Object::draw()
     {
         this->move();
         this->_state = MT_OBJECT_DRAWING;
+        this->_pos = this->_nextpos;
     }
 }
 

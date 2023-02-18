@@ -55,6 +55,7 @@ public:
     MT_Table();
 
     mt_void createTable(mt_uint w, mt_uint h, mt_uint col, mt_uint row);
+    mt_void updateTable(mt_uint newcol, mt_uint newrow);
     mt_void addObject(mt_uint col, mt_uint row);
     mt_void addObject(MT_Object& obj, mt_uint col, mt_uint row);
     mt_void addObject(MT_Object& obj);
