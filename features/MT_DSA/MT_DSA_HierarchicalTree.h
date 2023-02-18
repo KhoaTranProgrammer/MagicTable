@@ -40,6 +40,8 @@ class MT_DSA_HierarchicalTree
 {
 private:
     MT_DSA_TreeObject *_root;
+    mt_uint _column;
+    mt_uint _height;
 
 protected:
     MT_Table _mttable;
@@ -65,6 +67,8 @@ public:
     mt_int Successor(int key);
     mt_int FindMin();
     mt_bool Search(int key);
+    mt_uint getColumn();
+    mt_uint getHeight();
 };
 
 #endif // MT_DSA_HIERARCHICALTREE_H

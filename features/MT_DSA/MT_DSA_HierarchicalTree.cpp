@@ -3,7 +3,8 @@
 
 MT_DSA_HierarchicalTree::MT_DSA_HierarchicalTree() : _root(NULL)
 {
-
+    _column = 0;
+    _height = 0;
 }
 
 mt_void MT_DSA_HierarchicalTree::createTable(int w, int h, int col, int row)
@@ -70,7 +71,11 @@ void MT_DSA_HierarchicalTree::PreorderTraversal()
     int h = height(this->_root);
     int col = getcol(h);
 
-    printTree(this->_root, col/2, 0, h);
+    this->_column = col;
+    this->_height = h;
+
+    this->_mttable.updateTable(col, h);
+    printTree(this->_root, col / 2, 0, h);
 }
 
 void MT_DSA_HierarchicalTree::printTree(MT_DSA_TreeObject *node, int col, int row, int height)
@@ -248,4 +253,14 @@ mt_bool MT_DSA_HierarchicalTree::Search(int key)
 
     // If key is found, returns TRUE otherwise returns FALSE
     return result == NULL ? false : true;
+}
+
+mt_uint MT_DSA_HierarchicalTree::getColumn()
+{
+    return this->_column;
+}
+
+mt_uint MT_DSA_HierarchicalTree::getHeight()
+{
+    return this->_height;
 }
