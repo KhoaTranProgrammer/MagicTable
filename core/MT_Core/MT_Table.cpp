@@ -230,7 +230,7 @@ mt_void MT_Table::drawHistoryOne()
         {
             MT_Object* obj = this->_history.at(this->_index_history).at(j)->getObject();
             obj->updatePosition(*(this->_history.at(this->_index_history).at(j)->getPosition()));
-            obj->draw();
+            obj->drawWithAnimation();
         }
         this->_index_history++;
     }

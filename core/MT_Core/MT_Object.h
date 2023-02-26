@@ -46,6 +46,7 @@ private:
 
     MT_OBJECT_STATE _state;
 
+    mt_bool _isDrawWithAnimation;
     mt_uint64 _animationtime; // Time (ms) use when performing animation on object
 
 public:
@@ -58,12 +59,14 @@ public:
     MT_Position* getCurPosition();
     MT_Position* getNextPosition();
 
-    mt_void draw();
+    mt_void draw(); // Normal draw without animation
+    mt_void drawWithAnimation(); // Draw with animation
     virtual mt_void drawObject();
     virtual mt_void move();
 
     mt_void setAnimationTime(mt_uint64 animationtime);
     mt_uint64 getAnimationTime();
+    mt_bool getDrawAnimationStatus(); // True: animation - False: without animation
 };
 
 #endif // MT_OBJECT_H

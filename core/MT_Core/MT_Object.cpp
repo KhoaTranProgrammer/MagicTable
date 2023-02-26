@@ -42,6 +42,7 @@ enum MT_OBJECT_STATE : short
 MT_Object::MT_Object()
 {
     this->_state = MT_OBJECT_INIT;
+    this->_isDrawWithAnimation = false;
     this->_animationtime = 0;
 }
 
@@ -49,6 +50,7 @@ MT_Object::MT_Object(MT_Position& pos)
 {
     this->_state = MT_OBJECT_INIT;
     this->_pos = &pos;
+    this->_isDrawWithAnimation = false;
     this->_animationtime = 0;
 }
 
@@ -83,6 +85,24 @@ mt_void MT_Object::move()
 
 mt_void MT_Object::draw()
 {
+    this->_isDrawWithAnimation = false;
+    if (this->_state == MT_OBJECT_STARTPOSITION)
+    {
+        this->drawObject();
+        this->_state = MT_OBJECT_DRAWING;
+        this->isDraw = true;
+    }
+    else if (this->_state == MT_OBJECT_NEWPOSITION)
+    {
+        this->move();
+        this->_state = MT_OBJECT_DRAWING;
+        this->_pos = this->_nextpos;
+    }
+}
+
+mt_void MT_Object::drawWithAnimation() // Draw with animation
+{
+    this->_isDrawWithAnimation = true;
     if (this->_state == MT_OBJECT_STARTPOSITION)
     {
         this->drawObject();
@@ -115,4 +135,9 @@ mt_void MT_Object::setAnimationTime(mt_uint64 animationtime)
 mt_uint64 MT_Object::getAnimationTime()
 {
     return this->_animationtime;
+}
+
+mt_bool MT_Object::getDrawAnimationStatus()
+{
+    return this->_isDrawWithAnimation;
 }
