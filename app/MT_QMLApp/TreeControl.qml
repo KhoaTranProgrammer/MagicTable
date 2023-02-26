@@ -79,9 +79,16 @@ DSAControl {
                     key_remove = parseInt(id_txtEdit_remove.text)
                 }
 
-                console.log(key_remove)
                 myTable.Remove(key_remove)
-                myTable.drawData()
+                rows = myTable.getHeight()
+                columns = myTable.getColumn()
+                controlResolution()
+                if(!isAnimation) {
+                    id_TimerDrawHistory.running = false
+                    myTable.drawData()
+                } else {
+                    id_TimerDrawHistory.running = true
+                }
             }
         }
 
@@ -138,7 +145,12 @@ DSAControl {
                 rows = myTable.getHeight()
                 columns = myTable.getColumn()
                 controlResolution()
-                myTable.drawData()
+                if(!isAnimation) {
+                    id_TimerDrawHistory.running = false
+                    myTable.drawData()
+                } else {
+                    id_TimerDrawHistory.running = true
+                }
             }
         }
 
@@ -180,6 +192,10 @@ DSAControl {
             controlResolution()
         } else {
             id_TimerDrawHistory.running = false
+            myTable.setFeatureTree(feature)
+            myTable.createTable(columns, rows)
+            myTable.setObjectAnimationTime(elapsetime)
+            myTable.insertNewDataList(datalist)
             id_TimerDrawHistory.running = true
         }
     }
@@ -197,7 +213,7 @@ DSAControl {
         interval: elapsetime; running: false; repeat: true
 
         onTriggered: {
-
+            myTable.drawHistoryOneByOne()
         }
     }
 }

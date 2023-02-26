@@ -210,7 +210,7 @@ Rectangle {
                     right: parent.right
                     leftMargin: 4
                 }
-                text: "0.9"
+                text: "0.5"
                 font.pointSize: 10
                 color: "white"
                 focus: true
