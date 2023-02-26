@@ -51,6 +51,7 @@ signals:
 public slots:
     void createTable(int col, int row);
     void drawData();
+    void drawHistoryOneByOne();
     void clearData();
 
     QString getFeatureHierarchicalTree();
@@ -61,6 +62,7 @@ public slots:
     void Remove(int key);
     int getColumn();
     int getHeight();
+    void setObjectAnimationTime(ulong animationtime);
 
 private:
     MT_DSA_HierarchicalTree* _dsa_hierarchicaltree = NULL;
@@ -71,6 +73,7 @@ private:
     int _endy = 0;
     QVector<QLineF> lines;
     QString BINARY_SEARCH_TREE;
+    ulong _animationtime;
 };
 
 #endif // MT_DSA_QMLTREE_H

@@ -39,24 +39,23 @@ MT_DSA_QMLTree::MT_DSA_QMLTree(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void MT_DSA_QMLTree::paint(QPainter *painter)
 {
-    if(lines.size() == 0)
-    {
-        QRectF r1(0, 0, this->width(), this->height());
-        painter->fillRect(r1, QColor("transparent"));
-    }
-    else
-    {
-        painter->setPen(QPen(Qt::white, 3));
-        painter->drawLines(lines);
-        lines.clear();
-    }
 
 }
 
 void MT_DSA_QMLTree::drawData()
 {
     if (this->_dsa_hierarchicaltree != NULL)
+    {
         this->_dsa_hierarchicaltree->drawData();
+    }
+}
+
+void MT_DSA_QMLTree::drawHistoryOneByOne()
+{
+    if (this->_dsa_hierarchicaltree != NULL)
+    {
+        _dsa_hierarchicaltree->drawHistoryOne();
+    }
 }
 
 void MT_DSA_QMLTree::createTable(int col, int row)
@@ -100,6 +99,7 @@ void MT_DSA_QMLTree::insertNewDataList(QString value)
     for (int i = 0; i < datalist.count(); i++)
     {
         MT_DSA_QMLTreeObject *obj = new MT_DSA_QMLTreeObject(*engine, *this);
+        obj->setAnimationTime(this->_animationtime);
         this->_dsa_hierarchicaltree->InsertWithEmptyNode(obj, datalist.at(i).toInt());
     }
     this->_dsa_hierarchicaltree->PreorderTraversal();
@@ -134,4 +134,9 @@ int MT_DSA_QMLTree::getColumn()
 int MT_DSA_QMLTree::getHeight()
 {
     return this->_dsa_hierarchicaltree->getHeight();
+}
+
+void MT_DSA_QMLTree::setObjectAnimationTime(ulong animationtime)
+{
+    this->_animationtime = animationtime;
 }

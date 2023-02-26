@@ -57,7 +57,12 @@ private:
     QQmlEngine* _engine;
     QObject* _parent;
     QQmlComponent* _component = NULL;
+    QQmlComponent* _componentLine = NULL;
     QQuickItem* _quickitem = NULL;
+    QQuickItem* _quickitemLine = NULL;
+
+    void createObject(int x, int y, int w, int h, int animationTime);
+    void createLine(int x0, int y0, int x1, int y1);
 };
 
 #endif // MT_DSA_QMLTREEOBJECT_H

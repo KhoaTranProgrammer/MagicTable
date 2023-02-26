@@ -42,101 +42,144 @@ MT_DSA_QMLTreeObject::~MT_DSA_QMLTreeObject()
         delete this->_quickitem;
     if (this->_component != NULL)
         delete this->_component;
+    if (this->_quickitemLine != NULL)
+        delete this->_quickitemLine;
+    if (this->_componentLine != NULL)
+        delete this->_componentLine;
 }
 
 void MT_DSA_QMLTreeObject::drawObject()
 {
-    QString text = "\"" + QString::number(this->getValue()) + "\"";
-    QString iconUrl = "\"\"";
-    QString data = "import QtQuick 2.0; "
-                    "Item { "
-                        "id: temp; "
-                        "x: " + QString::number(this->getCurPosition()->getX()) + ";"
-                        "y: " + QString::number(this->getCurPosition()->getY()) + ";"
-                        "width: " + QString::number(this->getCurPosition()->getW()) + ";"
-                        "height: " + QString::number(this->getCurPosition()->getH()) + ";"
-                        "Rectangle { "
-                            "id: id_name; "
-                            "objectName: \"id_name\";"
-                            "color: \"red\";"
-                            "anchors.verticalCenter: parent.verticalCenter; "
-                            "anchors.horizontalCenter: parent.horizontalCenter; "
-                            "anchors.margins: 5; "
-                            "width: 20; "
-                            "height: width; "
-                            "Text { "
-                                "anchors.centerIn: parent; "
-                                "text: " + text + ";"
-                                "font.pointSize: 9; "
-                            "}"
-                        "}"
-                        "Behavior on x { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
-                        "Behavior on y { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
-                    "}";
-    _component = new QQmlComponent(this->_engine);
-    _component->setData(data.toUtf8(), QUrl());
-    _quickitem = qobject_cast<QQuickItem*>(_component->create());
-    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
-    _quickitem->setParentItem(myparent);
+    this->createObject(this->getCurPosition()->getX(), this->getCurPosition()->getY(),
+                       this->getCurPosition()->getW(), this->getCurPosition()->getH(),
+                       this->getAnimationTime());
 
     MT_Position* parentposition = this->getParentPosition();
     if (parentposition != NULL)
     {
-        MT_DSA_QMLTree* customeparent = qobject_cast<MT_DSA_QMLTree*>(this->_parent);
-        customeparent->drawLine(this->getCurPosition()->getX() + (this->getCurPosition()->getW() / 2),
-                                this->getCurPosition()->getY() + (this->getCurPosition()->getH() / 2),
-                                parentposition->getX() + (parentposition->getW() / 2),
-                                parentposition->getY() + (parentposition->getH() / 2));
+        this->createLine(
+            this->getCurPosition()->getX() + (this->getCurPosition()->getW() / 2),
+            this->getCurPosition()->getY() + (this->getCurPosition()->getH() / 2),
+            parentposition->getX() + (parentposition->getW() / 2),
+            parentposition->getY() + (parentposition->getH() / 2));
     }
 }
 
 void MT_DSA_QMLTreeObject::move()
+{
+    if (this->getDrawAnimationStatus() == true)
+    {
+        // Set node value
+        QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateText", Q_ARG(QVariant, QString::number(this->getValue())));
+
+        _quickitem->setProperty("x", this->getNextPosition()->getX());
+        _quickitem->setProperty("y", this->getNextPosition()->getY());
+        _quickitem->setProperty("width", this->getNextPosition()->getW());
+        _quickitem->setProperty("height", this->getNextPosition()->getH());
+
+        MT_Position* parentposition = this->getParentPosition();
+        if (parentposition != NULL)
+        {
+            this->createLine(
+                this->getNextPosition()->getX() + (this->getNextPosition()->getW() / 2),
+                this->getNextPosition()->getY() + (this->getNextPosition()->getH() / 2),
+                parentposition->getX() + (parentposition->getW() / 2),
+                parentposition->getY() + (parentposition->getH() / 2));
+        }
+    }
+    else
+    {
+        this->createObject(this->getNextPosition()->getX(), this->getNextPosition()->getY(),
+                           this->getNextPosition()->getW(), this->getNextPosition()->getH(),
+                           this->getAnimationTime());
+
+        MT_Position* parentposition = this->getParentNextPosition();
+        if (parentposition != NULL)
+        {
+            this->createLine(
+                this->getNextPosition()->getX() + (this->getNextPosition()->getW() / 2),
+                this->getNextPosition()->getY() + (this->getNextPosition()->getH() / 2),
+                parentposition->getX() + (parentposition->getW() / 2),
+                parentposition->getY() + (parentposition->getH() / 2));
+        }
+    }
+}
+
+void MT_DSA_QMLTreeObject::createObject(int x, int y, int w, int h, int animationTime)
 {
     if (this->_quickitem != NULL)
         delete this->_quickitem;
     if (this->_component != NULL)
         delete this->_component;
 
-    QString text = "\"" + QString::number(this->getValue()) + "\"";
     QString iconUrl = "\"\"";
     QString data = "import QtQuick 2.0; "
                     "Item { "
-                        "id: temp; "
-                        "x: " + QString::number(this->getNextPosition()->getX()) + ";"
-                        "y: " + QString::number(this->getNextPosition()->getY()) + ";"
-                        "width: " + QString::number(this->getNextPosition()->getW()) + ";"
-                        "height: " + QString::number(this->getNextPosition()->getH()) + ";"
+                        "x: " + QString::number(x) + ";"
+                        "y: " + QString::number(y) + ";"
+                        "width: " + QString::number(w) + ";"
+                        "height: " + QString::number(h) + ";"
                         "Rectangle { "
                             "id: id_name; "
                             "objectName: \"id_name\";"
                             "color: \"red\";"
                             "anchors.verticalCenter: parent.verticalCenter; "
                             "anchors.horizontalCenter: parent.horizontalCenter; "
-                            "anchors.margins: 5; "
                             "width: 20; "
                             "height: width; "
                             "Text { "
+                                "id: id_txt; "
                                 "anchors.centerIn: parent; "
-                                "text: " + text + ";"
                                 "font.pointSize: 9; "
                             "}"
                         "}"
-                        "Behavior on x { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
-                        "Behavior on y { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
+                        "function updateText(mytext) { id_txt.text = mytext; } "
+                        "Behavior on x { NumberAnimation { duration: " + QString::number(animationTime) + "}}"
+                        "Behavior on y { NumberAnimation { duration: " + QString::number(animationTime) + "}}"
                     "}";
     _component = new QQmlComponent(this->_engine);
     _component->setData(data.toUtf8(), QUrl());
     _quickitem = qobject_cast<QQuickItem*>(_component->create());
     QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
-    _quickitem->setParentItem(myparent);
 
-    MT_Position* parentposition = this->getParentNextPosition();
-    if (parentposition != NULL)
-    {
-        MT_DSA_QMLTree* customeparent = qobject_cast<MT_DSA_QMLTree*>(this->_parent);
-        customeparent->drawLine(this->getNextPosition()->getX() + (this->getNextPosition()->getW() / 2),
-                                this->getNextPosition()->getY() + (this->getNextPosition()->getH() / 2),
-                                parentposition->getX() + (parentposition->getW() / 2),
-                                parentposition->getY() + (parentposition->getH() / 2));
-    }
+    // Set node value
+    QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateText", Q_ARG(QVariant, QString::number(this->getValue())));
+
+    _quickitem->setParentItem(myparent);
+}
+
+void MT_DSA_QMLTreeObject::createLine(int x0, int y0, int x1, int y1)
+{
+    if (this->_quickitemLine != NULL)
+        delete this->_quickitemLine;
+    if (this->_componentLine != NULL)
+        delete this->_componentLine;
+
+    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
+
+    QString data_line = "";
+    data_line = "import QtQuick 2.0; "
+                        "Canvas { "
+                            "id: mycanvas; "
+                            "anchors.fill: parent; "
+                            "z: -1; "
+                            "onPaint: { "
+                                "var ctx = getContext('2d'); "
+                                "ctx.beginPath(); "
+                                "ctx.strokeStyle = \"white\"; "
+                                "ctx.lineWidth = 3; "
+                                "ctx.moveTo(" + QString::number(x0) + "," +
+                                                QString::number(y0) + "); "
+                                "ctx.lineTo(" + QString::number(x1) + "," +
+                                                QString::number(y1) + "); "
+                                "ctx.stroke(); "
+                                "ctx.closePath(); "
+                            "}"
+                        "}";
+    _componentLine = new QQmlComponent(this->_engine);
+    _componentLine->setData(data_line.toUtf8(), QUrl());
+    _quickitemLine = qobject_cast<QQuickItem*>(_componentLine->create());
+
+    // Set parent for new items
+    _quickitemLine->setParentItem(myparent);
 }
