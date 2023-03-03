@@ -89,6 +89,8 @@ DSAControl {
                 } else {
                     id_TimerDrawHistory.running = true
                 }
+                measureTime = myTable.getExecutionTime()
+                controlMeasureTime()
             }
         }
 
@@ -151,6 +153,8 @@ DSAControl {
                 } else {
                     id_TimerDrawHistory.running = true
                 }
+                measureTime = myTable.getExecutionTime()
+                controlMeasureTime()
             }
         }
 
@@ -198,6 +202,8 @@ DSAControl {
             myTable.insertNewDataList(datalist)
             id_TimerDrawHistory.running = true
         }
+        measureTime = myTable.getExecutionTime()
+        controlMeasureTime()
     }
 
     Component.onCompleted: {
