@@ -37,6 +37,10 @@
 #include <QPainter>
 #include "MT_DSA_QMLTreeObject.h"
 #include "MT_DSA_HierarchicalTree.h"
+#include <chrono>
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
+using std::chrono::system_clock;
 
 class MT_DSA_QMLTree : public QQuickPaintedItem
 {
@@ -63,17 +67,15 @@ public slots:
     int getColumn();
     int getHeight();
     void setObjectAnimationTime(ulong animationtime);
+    double getExecutionTime();
 
 private:
     MT_DSA_HierarchicalTree* _dsa_hierarchicaltree = NULL;
     QQmlEngine* engine;
-    int _startx = 0;
-    int _starty = 0;
-    int _endx = 0;
-    int _endy = 0;
     QVector<QLineF> lines;
     QString BINARY_SEARCH_TREE;
     ulong _animationtime;
+    double _elapseTime;
 };
 
 #endif // MT_DSA_QMLTREE_H

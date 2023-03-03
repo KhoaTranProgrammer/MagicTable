@@ -35,6 +35,7 @@ MT_DSA_QMLTree::MT_DSA_QMLTree(QQuickItem *parent) : QQuickPaintedItem(parent)
     BINARY_SEARCH_TREE = "SEARCH";
 
     engine = new QQmlEngine;
+    _elapseTime = 0;
 }
 
 void MT_DSA_QMLTree::paint(QPainter *painter)
@@ -95,6 +96,7 @@ void MT_DSA_QMLTree::setFeatureTree(QString feature)
 
 void MT_DSA_QMLTree::insertNewDataList(QString value)
 {
+    system_clock::time_point t0 = system_clock::now();
     QStringList datalist = value.split(QLatin1Char(','));
     for (int i = 0; i < datalist.count(); i++)
     {
@@ -103,13 +105,18 @@ void MT_DSA_QMLTree::insertNewDataList(QString value)
         this->_dsa_hierarchicaltree->InsertWithEmptyNode(obj, datalist.at(i).toInt());
     }
     this->_dsa_hierarchicaltree->PreorderTraversal();
+    system_clock::time_point t1 = system_clock::now();
+    this->_elapseTime = double(duration_cast<milliseconds>(t1 - t0).count()) / 1000;
 }
 
 void MT_DSA_QMLTree::insertData(int value)
 {
+    system_clock::time_point t0 = system_clock::now();
     MT_DSA_QMLTreeObject *obj = new MT_DSA_QMLTreeObject(*engine, *this);
     this->_dsa_hierarchicaltree->InsertWithEmptyNode(obj, value);
     this->_dsa_hierarchicaltree->PreorderTraversal();
+    system_clock::time_point t1 = system_clock::now();
+    this->_elapseTime = double(duration_cast<milliseconds>(t1 - t0).count()) / 1000;
 }
 
 void MT_DSA_QMLTree::drawLine(int startx, int starty, int endx, int endy)
@@ -139,4 +146,9 @@ int MT_DSA_QMLTree::getHeight()
 void MT_DSA_QMLTree::setObjectAnimationTime(ulong animationtime)
 {
     this->_animationtime = animationtime;
+}
+
+double_t MT_DSA_QMLTree::getExecutionTime()
+{
+    return this->_elapseTime;
 }
