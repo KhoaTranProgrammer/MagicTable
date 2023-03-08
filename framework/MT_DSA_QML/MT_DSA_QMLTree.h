@@ -37,6 +37,7 @@
 #include <QPainter>
 #include "MT_DSA_QMLTreeObject.h"
 #include "MT_DSA_HierarchicalTree.h"
+#include "MT_DSA_BSTADT.h"
 #include <chrono>
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;

@@ -89,9 +89,9 @@ void MT_DSA_QMLTree::setFeatureTree(QString feature)
         delete this->_dsa_hierarchicaltree;
 
     if (feature == BINARY_SEARCH_TREE)
-        this->_dsa_hierarchicaltree = new MT_DSA_HierarchicalTree();
+        this->_dsa_hierarchicaltree = new MT_DSA_BSTADT();
     else
-        this->_dsa_hierarchicaltree = new MT_DSA_HierarchicalTree();
+        this->_dsa_hierarchicaltree = new MT_DSA_BSTADT();
 }
 
 void MT_DSA_QMLTree::insertNewDataList(QString value)
