@@ -40,6 +40,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    MT_DSA_BSTADT.cpp \
     MT_DSA_HierarchicalTree.cpp \
     MT_DSA_Object.cpp \
     MT_DSA_Sorting.cpp \
@@ -51,6 +52,7 @@ SOURCES += \
     MT_DSA_TreeObject.cpp
 
 HEADERS += \
+    MT_DSA_BSTADT.h \
     MT_DSA_HierarchicalTree.h \
     MT_DSA_Object.h \
     MT_DSA_Sorting.h \

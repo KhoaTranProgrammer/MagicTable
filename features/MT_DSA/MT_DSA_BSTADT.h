@@ -25,51 +25,22 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This class supports Hierarchical Tree Structure Algorithm        *
+ * This class supports Binary Search Tree ADT                       *
  *******************************************************************/
 
-#ifndef MT_DSA_HIERARCHICALTREE_H
-#define MT_DSA_HIERARCHICALTREE_H
+#ifndef MT_DSA_BSTADT_H
+#define MT_DSA_BSTADT_H
 
-#include "MT_Table.h"
-#include "MT_Object.h"
-#include "MT_DSA_TreeObject.h"
-#include <math.h>
+#include "MT_DSA_HierarchicalTree.h"
 
-class MT_DSA_HierarchicalTree
+class MT_DSA_BSTADT : public MT_DSA_HierarchicalTree
 {
-protected:
-    MT_DSA_TreeObject *_root;
-    mt_uint _column;
-    mt_uint _height;
-    MT_Table _mttable;
-
-    virtual MT_DSA_TreeObject *Insert(MT_DSA_TreeObject *node, MT_DSA_TreeObject *obj, int key);
-    virtual MT_DSA_TreeObject *Remove(MT_DSA_TreeObject *node, int key);
-
-    void PrintTreeInOrder(MT_DSA_TreeObject *node);
-    int height(MT_DSA_TreeObject *node);
-    int getcol(int h);
-    void printTree(MT_DSA_TreeObject *node, int col, int row, int height);
-    mt_int Successor(MT_DSA_TreeObject * node);
-    mt_int FindMin(MT_DSA_TreeObject *node);
-    MT_DSA_TreeObject *Search(MT_DSA_TreeObject *node, int key);
-
 public:
-    MT_DSA_HierarchicalTree();
-    mt_void createTable(int w, int h, int col, int row);
-    mt_void InsertWithEmptyNode(MT_DSA_TreeObject *obj, int key);
-    mt_void PrintTreeInOrder();
-    mt_void PreorderTraversal();
-    mt_void drawData();
-    mt_void drawHistoryOne();
-    mt_void clearData();
-    mt_void Remove(int key);
-    mt_int Successor(int key);
-    mt_int FindMin();
-    mt_bool Search(int key);
-    mt_uint getColumn();
-    mt_uint getHeight();
+    MT_DSA_BSTADT();
+
+    MT_DSA_TreeObject *Insert(MT_DSA_TreeObject *node, MT_DSA_TreeObject *obj, int key);
+    MT_DSA_TreeObject *Remove(MT_DSA_TreeObject *node, int key);
+
 };
 
-#endif // MT_DSA_HIERARCHICALTREE_H
+#endif // MT_DSA_BSTADT_H
