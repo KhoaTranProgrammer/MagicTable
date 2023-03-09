@@ -60,6 +60,16 @@ int MT_DSA_TreeObject::getValue()
     return this->_value;
 }
 
+void MT_DSA_TreeObject::setHeight(int value)
+{
+    this->_height = value;
+}
+
+int MT_DSA_TreeObject::getHeight()
+{
+    return this->_height;
+}
+
 MT_Position* MT_DSA_TreeObject::getParentPosition()
 {
     if (this->_parent != NULL)

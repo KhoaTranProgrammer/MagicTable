@@ -25,42 +25,27 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This class stores Node data from Hierarchical Tree               *
+ * This class supports AVL ADT                                      *
  *******************************************************************/
 
-#ifndef MT_DSA_TREEOBJECT_H
-#define MT_DSA_TREEOBJECT_H
+#ifndef MT_DSA_AVLADT_H
+#define MT_DSA_AVLADT_H
 
-#include "MT_Object.h"
+#include "MT_DSA_HierarchicalTree.h"
 
-class MT_DSA_TreeObject : public MT_Object
+class MT_DSA_AVLADT : public MT_DSA_HierarchicalTree
 {
 private:
-    int _value;
-    int _height;
+    MT_DSA_TreeObject * RotateLeft(MT_DSA_TreeObject * node);
+    MT_DSA_TreeObject * RotateRight(MT_DSA_TreeObject * node);
+    mt_int GetHeightOfNode(MT_DSA_TreeObject * node);
 
 public:
-    MT_DSA_TreeObject();
-    ~MT_DSA_TreeObject();
+    MT_DSA_AVLADT();
 
-    void drawObject();
-    void move();
+    MT_DSA_TreeObject *Insert(MT_DSA_TreeObject *node, MT_DSA_TreeObject *obj, int key);
+    MT_DSA_TreeObject *Remove(MT_DSA_TreeObject *node, int key);
 
-    void setValue(int value);
-    int getValue();
-
-    void setHeight(int value);
-    int getHeight();
-
-    MT_Position* getParentPosition();
-    MT_Position* getParentNextPosition();
-
-    // Properties use for Hierarchical Tree
-    MT_DSA_TreeObject *_left = NULL;
-    MT_DSA_TreeObject *_right = NULL;
-    MT_DSA_TreeObject *_parent = NULL;
-    int _row;
-    int _col;
 };
 
-#endif // MT_DSA_TREEOBJECT_H
+#endif // MT_DSA_AVLADT_H
