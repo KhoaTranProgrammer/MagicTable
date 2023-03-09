@@ -38,6 +38,7 @@
 #include "MT_DSA_QMLTreeObject.h"
 #include "MT_DSA_HierarchicalTree.h"
 #include "MT_DSA_BSTADT.h"
+#include "MT_DSA_AVLADT.h"
 #include <chrono>
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
@@ -75,6 +76,7 @@ private:
     QQmlEngine* engine;
     QVector<QLineF> lines;
     QString BINARY_SEARCH_TREE;
+    QString AVL_TREE;
     ulong _animationtime;
     double _elapseTime;
 };

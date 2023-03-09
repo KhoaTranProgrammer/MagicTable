@@ -33,6 +33,7 @@
 MT_DSA_QMLTree::MT_DSA_QMLTree(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     BINARY_SEARCH_TREE = "SEARCH";
+    AVL_TREE = "AVL";
 
     engine = new QQmlEngine;
     _elapseTime = 0;
@@ -78,7 +79,8 @@ void MT_DSA_QMLTree::clearData()
 QString MT_DSA_QMLTree::getFeatureHierarchicalTree()
 {
     QString result = "";
-    result += BINARY_SEARCH_TREE;
+    result += BINARY_SEARCH_TREE; result += "-";
+    result += AVL_TREE;
 
     return result;
 }
@@ -90,6 +92,8 @@ void MT_DSA_QMLTree::setFeatureTree(QString feature)
 
     if (feature == BINARY_SEARCH_TREE)
         this->_dsa_hierarchicaltree = new MT_DSA_BSTADT();
+    else if(feature == AVL_TREE)
+        this->_dsa_hierarchicaltree = new MT_DSA_AVLADT();
     else
         this->_dsa_hierarchicaltree = new MT_DSA_BSTADT();
 }
