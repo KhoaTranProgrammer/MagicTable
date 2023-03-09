@@ -210,5 +210,113 @@ MT_DSA_TreeObject *MT_DSA_AVLADT::Insert(MT_DSA_TreeObject *node, MT_DSA_TreeObj
 
 MT_DSA_TreeObject *MT_DSA_AVLADT::Remove(MT_DSA_TreeObject *node, int key)
 {
+    // The given node is
+    // not found in AVL tree
+    if (node == NULL)
+        return NULL;
 
+    // Target node is found
+    if (node->getValue() == key)
+    {
+        // If the node is a leaf node
+        // The node can be safely removed
+        if (node->_left == NULL && node->_right == NULL)
+        {
+            this->_mttable.removeObject(node);
+            node = NULL;
+        }
+        // The node have only one child at right
+        else if (node->_left == NULL && node->_right != NULL)
+        {
+            // The only child will be connected to
+            // the parent's of node directly
+            node->_right->_parent = node->_parent;
+
+            // Bypass node
+            this->_mttable.removeObject(node);
+            node = node->_right;
+        }
+        // The node have only one child at left
+        else if (node->_left != NULL && node->_right == NULL)
+        {
+            // The only child will be connected to
+            // the parent's of node directly
+            node->_left->_parent = node->_parent;
+
+            // Bypass node
+            node = node->_left;
+        }
+        // The node have two children (left and right)
+        else
+        {
+            // Find successor or predecessor to avoid quarrel
+            int successorKey = Successor(key);
+
+            // Replace node's key with successor's key
+            node->setValue(successorKey);
+
+            // Delete the old successor's key
+            node->_right = Remove(node->_right, successorKey);
+        }
+    }
+    // Target node's key is smaller than
+    // the given key then search to right
+    else if (node->getValue() < key)
+        node->_right = Remove(node->_right, key);
+    // Target node's key is greater than
+    // the given key then search to left
+    else
+        node->_left = Remove(node->_left, key);
+
+    // Only perform rotation if node is not NULL
+    if (node != NULL)
+    {
+        // Get the balance
+        int balance =
+            GetHeightOfNode(node->_left) - GetHeightOfNode(node->_right);
+
+        // If left heavy
+        if (balance == 2)
+        {
+            // Get left subtree's height
+            int balance2 =
+                GetHeightOfNode(node->_left->_left) -
+                GetHeightOfNode(node->_left->_right);
+
+            if (balance2 == 1)
+            {
+                node = RotateRight(node);
+            }
+            else
+            {
+                node->_left = RotateLeft(node->_left);
+                node = RotateRight(node);
+            }
+        }
+        // If right heavy
+        else if (balance == -2)
+        {
+            // Get right subtree's height
+            int balance2 =
+                GetHeightOfNode(node->_right->_left) -
+                GetHeightOfNode(node->_right->_right);
+
+            if (balance2 == -1)
+                node = RotateLeft(node);
+            else
+            { // 1
+                node->_right = RotateRight(node->_right);
+                node = RotateLeft(node);
+            }
+        }
+
+        // Refresh node's height
+        node->setHeight(std::max(
+            GetHeightOfNode(node->_left),
+            GetHeightOfNode(node->_right)) + 1);
+
+    }
+
+    // Return the updated AVL tree
+    return node;
 }
