@@ -55,7 +55,6 @@ Rectangle {
             id: id_txtdata
             anchors.fill: parent
             text: "23,12,31,3,15,7,29,88,53"
-            font.pointSize: 10
             color: "black"
             focus: true
         }
@@ -93,7 +92,6 @@ Rectangle {
                 }
                 text: "Resolution"
                 color: "white"
-                font.pointSize: 10
             }
 
             Text
@@ -106,7 +104,6 @@ Rectangle {
                     left: parent.left
                     leftMargin: 4
                 }
-                font.pointSize: 10
             }
 
             TextEdit {
@@ -119,7 +116,6 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: id_root.rows
-                font.pointSize: 10
                 color: "white"
                 focus: true
             }
@@ -134,7 +130,6 @@ Rectangle {
                     left: parent.left
                     leftMargin: 4
                 }
-                font.pointSize: 10
             }
 
             TextEdit {
@@ -147,7 +142,6 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: id_root.columns
-                font.pointSize: 10
                 color: "white"
                 focus: true
             }
@@ -175,7 +169,6 @@ Rectangle {
                 }
                 text: "Animation"
                 color: "white"
-                font.pointSize: 10
             }
 
             Switch {
@@ -198,7 +191,6 @@ Rectangle {
                     left: parent.left
                     leftMargin: 4
                 }
-                font.pointSize: 10
             }
 
             TextEdit {
@@ -211,7 +203,6 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: "0.5"
-                font.pointSize: 10
                 color: "white"
                 focus: true
             }
@@ -238,7 +229,6 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: "Execution Time"
-                font.pointSize: 10
                 color: "white"
             }
 
@@ -250,7 +240,6 @@ Rectangle {
                     leftMargin: 4
                 }
                 text: ""
-                font.pointSize: 10
                 color: "white"
             }
         }
@@ -275,9 +264,8 @@ Rectangle {
                     left: parent.left
                     leftMargin: 4
                 }
-                text: "Data S and A"
+                text: "Data Structure"
                 color: "white"
-                font.pointSize: 10
             }
 
             ComboBox {

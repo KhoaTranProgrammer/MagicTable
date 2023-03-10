@@ -107,7 +107,6 @@ DSAControl {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: key_remove
-                font.pointSize: 10
                 color: "black"
                 focus: true
             }
@@ -171,7 +170,6 @@ DSAControl {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: key_insert
-                font.pointSize: 10
                 color: "black"
                 focus: true
             }
