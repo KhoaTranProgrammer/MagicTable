@@ -130,7 +130,6 @@ void MT_DSA_QMLTreeObject::createObject(int x, int y, int w, int h, int animatio
                             "Text { "
                                 "id: id_txt; "
                                 "anchors.centerIn: parent; "
-                                "font.pointSize: 9; "
                             "}"
                         "}"
                         "function updateText(mytext) { id_txt.text = mytext; } "

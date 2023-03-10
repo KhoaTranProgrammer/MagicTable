@@ -64,7 +64,6 @@ void MT_DSA_QMLObject::drawObject()
                             "Text { "
                                 "anchors.centerIn: parent; "
                                 "text: " + text + ";"
-                                "font.pointSize: 13; "
                             "}"
                         "}"
                         "Behavior on x { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
