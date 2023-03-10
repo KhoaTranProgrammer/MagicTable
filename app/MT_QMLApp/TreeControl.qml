@@ -194,6 +194,7 @@ DSAControl {
             controlResolution()
         } else {
             id_TimerDrawHistory.running = false
+            myTable.clearData()
             myTable.setFeatureTree(feature)
             myTable.createTable(columns, rows)
             myTable.setObjectAnimationTime(elapsetime)
