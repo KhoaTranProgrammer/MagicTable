@@ -35,16 +35,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    QQuickView view;
-
-    // Set main qml screen
-    view.setSource(QUrl("qrc:///main.qml"));
-
-    // Set application size
-    view.setMinimumSize(QSize(700, 500));
-
-    // Display application
-    view.show();
+    QQmlApplicationEngine engine("qrc:///main.qml");
 
     return app.exec();
 }

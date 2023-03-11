@@ -32,310 +32,317 @@ import QtQuick 2.12
 import QtQuick.Controls 1.4
 import "Common.js" as Common
 
-Rectangle {
-    id: id_root
-    anchors.fill: parent
-    color: "black"
+import QtQuick.Window 2.12
 
-    property int rows: 10
-    property int columns: 15
-    property var ctx
+Window {
+    visible: true
+    visibility: "Maximized"
 
     Rectangle {
-        id: id_inputdata
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            margins: 2
-        }
-        height: parent.height * 0.1
-
-        TextEdit {
-            id: id_txtdata
-            anchors.fill: parent
-            text: "23,12,31,3,15,7,29,88,53"
-            color: "black"
-            focus: true
-        }
-    }
-
-    Rectangle {
-        id: id_information_area
-        anchors {
-            left: parent.left
-            bottom: parent.bottom
-            top: id_inputdata.bottom
-        }
-        width: parent.width * 0.15
+        id: id_root
+        anchors.fill: parent
         color: "black"
 
+        property int rows: 10
+        property int columns: 15
+        property var ctx
+
         Rectangle {
-            id: id_rec_tableresolution
+            id: id_inputdata
             anchors {
+                left: parent.left
+                right: parent.right
                 top: parent.top
-                left: parent.left
-                right: parent.right
                 margins: 2
             }
-            height: 50
-            color: "transparent"
-            border.width: 1
-            border.color: "white"
-
-            Text {
-                id: id_txt_resolution
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    leftMargin: 4
-                }
-                text: "Resolution"
-                color: "white"
-            }
-
-            Text
-            {
-                id: id_txt_resolution_rows
-                color: "white"
-                text: "Rows"
-                anchors {
-                    top: id_txt_resolution.bottom
-                    left: parent.left
-                    leftMargin: 4
-                }
-            }
+            height: parent.height * 0.1
 
             TextEdit {
-                id: id_txtEdit_resolution_rows
-                anchors {
-                    top: id_txt_resolution.bottom
-                    left: id_txt_resolution_rows.right
-                    bottom: parent.bottom
-                    right: parent.right
-                    leftMargin: 4
-                }
-                text: id_root.rows
-                color: "white"
-                focus: true
-            }
-
-            Text
-            {
-                id: id_txt_resolution_cols
-                color: "white"
-                text: "Columns"
-                anchors {
-                    top: id_txt_resolution_rows.bottom
-                    left: parent.left
-                    leftMargin: 4
-                }
-            }
-
-            TextEdit {
-                id: id_txtEdit_resolution_cols
-                anchors {
-                    top: id_txt_resolution_rows.bottom
-                    left: id_txt_resolution_cols.right
-                    bottom: parent.bottom
-                    right: parent.right
-                    leftMargin: 4
-                }
-                text: id_root.columns
-                color: "white"
+                id: id_txtdata
+                anchors.fill: parent
+                text: "23,12,31,3,15,7,29,88,53"
+                color: "black"
                 focus: true
             }
         }
 
         Rectangle {
-            id: id_rec_animation
+            id: id_information_area
             anchors {
-                top: id_rec_tableresolution.bottom
                 left: parent.left
-                right: parent.right
-                margins: 2
+                bottom: parent.bottom
+                top: id_inputdata.bottom
             }
-            height: 70
-            color: "transparent"
-            border.width: 1
-            border.color: "white"
-
-            Text {
-                id: id_txtAnimation
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    leftMargin: 4
-                }
-                text: "Animation"
-                color: "white"
-            }
-
-            Switch {
-                id: id_animationEnabled
-                anchors {
-                    top: id_txtAnimation.bottom
-                    left: parent.left
-                    leftMargin: 4
-                }
-                checked: false
-            }
-
-            Text
-            {
-                id: id_txt_elapse
-                color: "white"
-                text: "Elapse (second)"
-                anchors {
-                    top: id_animationEnabled.bottom
-                    left: parent.left
-                    leftMargin: 4
-                }
-            }
-
-            TextEdit {
-                id: id_txtEdit_elapse
-                anchors {
-                    top: id_txt_elapse.bottom
-                    left: parent.left
-                    bottom: parent.bottom
-                    right: parent.right
-                    leftMargin: 4
-                }
-                text: "0.5"
-                color: "white"
-                focus: true
-            }
-        }
-
-        Rectangle {
-            id: id_rec_executiontime
-            anchors {
-                top: id_rec_animation.bottom
-                left: parent.left
-                right: parent.right
-                margins: 2
-            }
-            height: 40
-            color: "transparent"
-            border.width: 1
-            border.color: "white"
-
-            Text {
-                id: id_txt_executiontime
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    leftMargin: 4
-                }
-                text: "Execution Time"
-                color: "white"
-            }
-
-            Text {
-                id: id_txtMeasureTime
-                anchors {
-                    top: id_txt_executiontime.bottom
-                    left: parent.left
-                    leftMargin: 4
-                }
-                text: ""
-                color: "white"
-            }
-        }
-
-        Rectangle {
-            id: id_rec_datastructure
-            anchors {
-                right: parent.right
-                left: parent.left
-                top: id_rec_executiontime.bottom
-                margins: 2
-            }
-            height: 50
+            width: parent.width * 0.15
             color: "black"
-            border.width: 1
-            border.color: "white"
 
-            Text {
-                id: id_txt_sorting
+            Rectangle {
+                id: id_rec_tableresolution
                 anchors {
                     top: parent.top
                     left: parent.left
-                    leftMargin: 4
+                    right: parent.right
+                    margins: 2
                 }
-                text: "Data Structure"
-                color: "white"
+                height: 50
+                color: "transparent"
+                border.width: 1
+                border.color: "white"
+
+                Text {
+                    id: id_txt_resolution
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: "Resolution"
+                    color: "white"
+                }
+
+                Text
+                {
+                    id: id_txt_resolution_rows
+                    color: "white"
+                    text: "Rows"
+                    anchors {
+                        top: id_txt_resolution.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                }
+
+                TextEdit {
+                    id: id_txtEdit_resolution_rows
+                    anchors {
+                        top: id_txt_resolution.bottom
+                        left: id_txt_resolution_rows.right
+                        bottom: parent.bottom
+                        right: parent.right
+                        leftMargin: 4
+                    }
+                    text: id_root.rows
+                    color: "white"
+                    focus: true
+                }
+
+                Text
+                {
+                    id: id_txt_resolution_cols
+                    color: "white"
+                    text: "Columns"
+                    anchors {
+                        top: id_txt_resolution_rows.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                }
+
+                TextEdit {
+                    id: id_txtEdit_resolution_cols
+                    anchors {
+                        top: id_txt_resolution_rows.bottom
+                        left: id_txt_resolution_cols.right
+                        bottom: parent.bottom
+                        right: parent.right
+                        leftMargin: 4
+                    }
+                    text: id_root.columns
+                    color: "white"
+                    focus: true
+                }
             }
 
-            ComboBox {
-                id: id_cmbox_dsa
+            Rectangle {
+                id: id_rec_animation
                 anchors {
-                    top: id_txt_sorting.bottom
+                    top: id_rec_tableresolution.bottom
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
-                    margins: 4
+                    margins: 2
                 }
-                model: id_lstmod_dsa
+                height: 70
+                color: "transparent"
+                border.width: 1
+                border.color: "white"
 
-                onActivated: {
-                    for (var i = 0 ; i < Common.group_sorting_algorithm.length; i+=2 ) {
-                        if (Common.group_sorting_algorithm[i] === currentText) {
-                            console.log(Common.group_sorting_algorithm[i+1])
-                            // Setting new control
-                            id_loaderControl.source = Common.group_sorting_algorithm[i+1]
+                Text {
+                    id: id_txtAnimation
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: "Animation"
+                    color: "white"
+                }
 
-                            var scene = null
-                            scene = id_loaderControl.item
-                            scene.parent = id_root
-                            scene.anchors.fill = id_control_area
+                Switch {
+                    id: id_animationEnabled
+                    anchors {
+                        top: id_txtAnimation.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    checked: false
+                }
 
-                            controlInformationUpdate()
+                Text
+                {
+                    id: id_txt_elapse
+                    color: "white"
+                    text: "Elapse (second)"
+                    anchors {
+                        top: id_animationEnabled.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                }
 
-                            scene.controlInfor.connect(controlInformationUpdate)
-                            scene.controlMeasureTime.connect(updateMeasureTime)
-                            scene.controlResolution.connect(updateResolution)
-                            scene.execute()
+                TextEdit {
+                    id: id_txtEdit_elapse
+                    anchors {
+                        top: id_txt_elapse.bottom
+                        left: parent.left
+                        bottom: parent.bottom
+                        right: parent.right
+                        leftMargin: 4
+                    }
+                    text: "0.5"
+                    color: "white"
+                    focus: true
+                }
+            }
+
+            Rectangle {
+                id: id_rec_executiontime
+                anchors {
+                    top: id_rec_animation.bottom
+                    left: parent.left
+                    right: parent.right
+                    margins: 2
+                }
+                height: 40
+                color: "transparent"
+                border.width: 1
+                border.color: "white"
+
+                Text {
+                    id: id_txt_executiontime
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: "Execution Time"
+                    color: "white"
+                }
+
+                Text {
+                    id: id_txtMeasureTime
+                    anchors {
+                        top: id_txt_executiontime.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: ""
+                    color: "white"
+                }
+            }
+
+            Rectangle {
+                id: id_rec_datastructure
+                anchors {
+                    right: parent.right
+                    left: parent.left
+                    top: id_rec_executiontime.bottom
+                    margins: 2
+                }
+                height: 50
+                color: "black"
+                border.width: 1
+                border.color: "white"
+
+                Text {
+                    id: id_txt_sorting
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: "Data Structure"
+                    color: "white"
+                }
+
+                ComboBox {
+                    id: id_cmbox_dsa
+                    anchors {
+                        top: id_txt_sorting.bottom
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                        margins: 4
+                    }
+                    model: id_lstmod_dsa
+
+                    onActivated: {
+                        for (var i = 0 ; i < Common.group_sorting_algorithm.length; i+=2 ) {
+                            if (Common.group_sorting_algorithm[i] === currentText) {
+                                console.log(Common.group_sorting_algorithm[i+1])
+                                // Setting new control
+                                id_loaderControl.source = Common.group_sorting_algorithm[i+1]
+
+                                var scene = null
+                                scene = id_loaderControl.item
+                                scene.parent = id_root
+                                scene.anchors.fill = id_control_area
+
+                                controlInformationUpdate()
+
+                                scene.controlInfor.connect(controlInformationUpdate)
+                                scene.controlMeasureTime.connect(updateMeasureTime)
+                                scene.controlResolution.connect(updateResolution)
+                                scene.execute()
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    ListModel {
-        id: id_lstmod_dsa
-    }
-
-    ListModel {
-        id: id_lstmod_tree
-    }
-
-    // Using to open control
-    Loader {
-        id: id_loaderControl
-    }
-
-    Item {
-        id: id_control_area
-
-        anchors {
-            left: id_information_area.right
-            right: parent.right
-            top: id_inputdata.bottom
-            bottom: parent.bottom
+        ListModel {
+            id: id_lstmod_dsa
         }
-    }
 
-    Timer {
-        interval: 1000; running: true; repeat: false
+        ListModel {
+            id: id_lstmod_tree
+        }
 
-        onTriggered: {
-            for (var i = 0 ; i < Common.group_sorting_algorithm.length; i+=2 ) {
-                id_lstmod_dsa.append({"name": Common.group_sorting_algorithm[i]})
+        // Using to open control
+        Loader {
+            id: id_loaderControl
+        }
+
+        Item {
+            id: id_control_area
+
+            anchors {
+                left: id_information_area.right
+                right: parent.right
+                top: id_inputdata.bottom
+                bottom: parent.bottom
             }
-            id_cmbox_dsa.currentIndex = -1
+        }
+
+        Timer {
+            interval: 1000; running: true; repeat: false
+
+            onTriggered: {
+                for (var i = 0 ; i < Common.group_sorting_algorithm.length; i+=2 ) {
+                    id_lstmod_dsa.append({"name": Common.group_sorting_algorithm[i]})
+                }
+                id_cmbox_dsa.currentIndex = -1
+            }
         }
     }
 
