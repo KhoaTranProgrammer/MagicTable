@@ -35,11 +35,13 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QColor>
 #include <QPainter>
+#include <QQuickItemGrabResult>
 #include "MT_DSA_QMLTreeObject.h"
 #include "MT_DSA_HierarchicalTree.h"
 #include "MT_DSA_BSTADT.h"
 #include "MT_DSA_AVLADT.h"
 #include <chrono>
+
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 using std::chrono::system_clock;
@@ -72,6 +74,9 @@ public slots:
     double getExecutionTime();
 
 private:
+    void grabDone();
+    QSharedPointer<QQuickItemGrabResult> m_result;
+
     MT_DSA_HierarchicalTree* _dsa_hierarchicaltree = NULL;
     QQmlEngine* engine;
     QVector<QLineF> lines;

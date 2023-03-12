@@ -154,8 +154,6 @@ void MT_DSA_QMLTreeObject::createLine(int x0, int y0, int x1, int y1)
     if (this->_componentLine != NULL)
         delete this->_componentLine;
 
-    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
-
     QString data_line = "";
     data_line = "import QtQuick 2.0; "
                         "Canvas { "
@@ -178,6 +176,7 @@ void MT_DSA_QMLTreeObject::createLine(int x0, int y0, int x1, int y1)
     _componentLine = new QQmlComponent(this->_engine);
     _componentLine->setData(data_line.toUtf8(), QUrl());
     _quickitemLine = qobject_cast<QQuickItem*>(_componentLine->create());
+    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
 
     // Set parent for new items
     _quickitemLine->setParentItem(myparent);

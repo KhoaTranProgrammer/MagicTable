@@ -50,6 +50,16 @@ void MT_DSA_QMLTree::drawData()
     {
         this->_dsa_hierarchicaltree->drawData();
     }
+
+    m_result = this->grabToImage();
+    connect(m_result.data(), &QQuickItemGrabResult::ready, this,
+    &MT_DSA_QMLTree::grabDone);
+}
+
+void MT_DSA_QMLTree::grabDone()
+{
+    QImage img(m_result.data()->image());
+    img.save("D:\\file.png");
 }
 
 void MT_DSA_QMLTree::drawHistoryOneByOne()
