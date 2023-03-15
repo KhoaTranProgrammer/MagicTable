@@ -56,7 +56,7 @@ public:
     virtual mt_void sortDataWithHistory();
     mt_void sortDataWithMeasurement();
     mt_void drawHistoryAll();
-    mt_void drawHistoryOne();
+    mt_bool drawHistoryOne();
     mt_void drawData();
     mt_void startMeasure();
     mt_void stopMeasure();

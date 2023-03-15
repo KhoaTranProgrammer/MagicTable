@@ -77,9 +77,9 @@ mt_void MT_DSA_Sorting::drawHistoryAll()
     this->_mttable.drawHistoryAll();
 }
 
-mt_void MT_DSA_Sorting::drawHistoryOne()
+mt_bool MT_DSA_Sorting::drawHistoryOne()
 {
-    this->_mttable.drawHistoryOne();
+    return this->_mttable.drawHistoryOne();
 }
 
 mt_void MT_DSA_Sorting::drawData()

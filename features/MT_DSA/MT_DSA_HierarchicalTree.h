@@ -62,7 +62,7 @@ public:
     mt_void PrintTreeInOrder();
     mt_void PreorderTraversal();
     mt_void drawData();
-    mt_void drawHistoryOne();
+    mt_bool drawHistoryOne();
     mt_void clearData();
     mt_void Remove(int key);
     mt_int Successor(int key);

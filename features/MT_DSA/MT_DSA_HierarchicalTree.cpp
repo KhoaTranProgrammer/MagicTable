@@ -71,7 +71,7 @@ mt_void MT_DSA_HierarchicalTree::drawData()
     this->_mttable.drawObjects();
 }
 
-mt_void MT_DSA_HierarchicalTree::drawHistoryOne()
+mt_bool MT_DSA_HierarchicalTree::drawHistoryOne()
 {
     this->_mttable.drawHistoryOne();
 }
