@@ -56,7 +56,14 @@ void MT_DSA_QMLTree::drawHistoryOneByOne()
 {
     if (this->_dsa_hierarchicaltree != NULL)
     {
-        _dsa_hierarchicaltree->drawHistoryOne();
+        if (_dsa_hierarchicaltree->drawHistoryOne())
+        {
+
+        }
+        else
+        {
+
+        }
     }
 }
 

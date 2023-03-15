@@ -89,7 +89,17 @@ void MT_DSA_QML::drawData()
 
 void MT_DSA_QML::drawHistoryOneByOne()
 {
-    _dsa_sorting->drawHistoryOne();
+    if (this->_dsa_sorting != NULL)
+    {
+        if (_dsa_sorting->drawHistoryOne())
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 }
 
 void MT_DSA_QML::setObjectAnimationTime(ulong animationtime)
