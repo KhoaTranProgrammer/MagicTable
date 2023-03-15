@@ -158,23 +158,14 @@ void MT_DSA_QMLTreeObject::createLine(int x0, int y0, int x1, int y1)
 
     QString data_line = "";
     data_line = "import QtQuick 2.0; "
-                        "Canvas { "
-                            "id: mycanvas; "
-                            "anchors.fill: parent; "
-                            "z: -1; "
-                            "onPaint: { "
-                                "var ctx = getContext('2d'); "
-                                "ctx.beginPath(); "
-                                "ctx.strokeStyle = \"white\"; "
-                                "ctx.lineWidth = 3; "
-                                "ctx.moveTo(" + QString::number(x0) + "," +
-                                                QString::number(y0) + "); "
-                                "ctx.lineTo(" + QString::number(x1) + "," +
-                                                QString::number(y1) + "); "
-                                "ctx.stroke(); "
-                                "ctx.closePath(); "
-                            "}"
-                        "}";
+                "import MT_DSA_QML 1.0; "
+                    "MT_DSA_QMLLineObject { "
+                        "anchors.fill: parent; "
+                        "z: -1; "
+                        "startX: " + QString::number(x0) + ";"
+                        "startY: " + QString::number(y0) + ";"
+                        "stopX: " + QString::number(x1) + ";"
+                        "stopY: " + QString::number(y1) + ";"                    "}";
     _componentLine = new QQmlComponent(this->_engine);
     _componentLine->setData(data_line.toUtf8(), QUrl());
     _quickitemLine = qobject_cast<QQuickItem*>(_componentLine->create());

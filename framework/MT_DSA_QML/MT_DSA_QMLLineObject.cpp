@@ -25,23 +25,45 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This is QML plugin used by QML application for Data Structure    *
- * and Algorithm                                                    *
+ * This is QML type to draw line object                             *
  *******************************************************************/
 
-#include "MT_DSA_QMLPlugin.h"
-
-#include "MT_DSA_QML.h"
-#include "MT_DSA_QMLTree.h"
 #include "MT_DSA_QMLLineObject.h"
 
-#include <qqml.h>
-
-void MT_DSA_QMLPlugin::registerTypes(const char *uri)
+MT_DSA_QMLLineObject::MT_DSA_QMLLineObject(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
-    // @uri com.mtdsa.mtdsaqml
-    qmlRegisterType<MT_DSA_QML>(uri, 1, 0, "MT_DSA_QML");
-    qmlRegisterType<MT_DSA_QMLTree>(uri, 1, 0, "MT_DSA_QMLTree");
-    qmlRegisterType<MT_DSA_QMLLineObject>(uri, 1, 0, "MT_DSA_QMLLineObject");
+    this->startX = 0;
+    this->startY = 0;
+    this->stopX = 0;
+    this->stopY = 0;
 }
 
+void MT_DSA_QMLLineObject::paint(QPainter *painter)
+{
+    QVector<QLineF> lines;
+    QLineF line(startX, startY, stopX, stopY);
+    lines.append(line);
+    painter->setPen(QPen(Qt::blue, 3));
+    painter->drawLines(lines);
+    lines.clear();
+}
+
+void MT_DSA_QMLLineObject::setStartX(int value)
+{
+    this->startX = value;
+}
+
+void MT_DSA_QMLLineObject::setStartY(int value)
+{
+    this->startY = value;
+}
+
+void MT_DSA_QMLLineObject::setStopX(int value)
+{
+    this->stopX = value;
+}
+
+void MT_DSA_QMLLineObject::setStopY(int value)
+{
+    this->stopY = value;
+}

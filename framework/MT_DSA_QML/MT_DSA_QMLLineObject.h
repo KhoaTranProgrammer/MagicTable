@@ -25,23 +25,39 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This is QML plugin used by QML application for Data Structure    *
- * and Algorithm                                                    *
+ * This is QML type to draw line object                             *
  *******************************************************************/
 
-#include "MT_DSA_QMLPlugin.h"
+#ifndef MT_DSA_QMLLINEOBJECT_H
+#define MT_DSA_QMLLINEOBJECT_H
 
-#include "MT_DSA_QML.h"
-#include "MT_DSA_QMLTree.h"
-#include "MT_DSA_QMLLineObject.h"
+#include <QQuickItem>
+#include <QtQuick/QQuickPaintedItem>
+#include <QColor>
+#include <QPainter>
 
-#include <qqml.h>
-
-void MT_DSA_QMLPlugin::registerTypes(const char *uri)
+class MT_DSA_QMLLineObject : public QQuickPaintedItem
 {
-    // @uri com.mtdsa.mtdsaqml
-    qmlRegisterType<MT_DSA_QML>(uri, 1, 0, "MT_DSA_QML");
-    qmlRegisterType<MT_DSA_QMLTree>(uri, 1, 0, "MT_DSA_QMLTree");
-    qmlRegisterType<MT_DSA_QMLLineObject>(uri, 1, 0, "MT_DSA_QMLLineObject");
-}
+    Q_OBJECT
+    Q_PROPERTY(int startX WRITE setStartX)
+    Q_PROPERTY(int startY WRITE setStartY)
+    Q_PROPERTY(int stopX WRITE setStopX)
+    Q_PROPERTY(int stopY WRITE setStopY)
 
+public:
+    MT_DSA_QMLLineObject(QQuickItem *parent = 0);
+    void paint(QPainter *painter);
+
+    void setStartX(int value);
+    void setStartY(int value);
+    void setStopX(int value);
+    void setStopY(int value);
+
+private:
+    int startX;
+    int startY;
+    int stopX;
+    int stopY;
+};
+
+#endif // MT_DSA_QMLLINEOBJECT_H
