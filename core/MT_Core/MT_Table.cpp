@@ -222,7 +222,7 @@ mt_void MT_Table::drawHistoryAll()
     }
 }
 
-mt_void MT_Table::drawHistoryOne()
+mt_bool MT_Table::drawHistoryOne()
 {
     if (this->_index_history < this->_history.size())
     {
@@ -233,7 +233,9 @@ mt_void MT_Table::drawHistoryOne()
             obj->drawWithAnimation();
         }
         this->_index_history++;
+        return true;
     }
+    return false;
 }
 
 mt_void MT_Table::clearData()

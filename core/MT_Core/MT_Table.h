@@ -71,7 +71,7 @@ public:
     bool checkValidPosition(mt_uint col, mt_uint row);
     mt_void clearHistory();
     mt_void drawHistoryAll();
-    mt_void drawHistoryOne();
+    mt_bool drawHistoryOne();
     mt_void clearData();
     mt_void removeObject(MT_Object* obj);
 };
