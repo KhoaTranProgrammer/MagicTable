@@ -84,7 +84,7 @@ Window {
                     right: parent.right
                     margins: 2
                 }
-                height: 50
+                height: childrenRect.height + 2
                 color: "transparent"
                 border.width: 1
                 border.color: "white"
@@ -117,7 +117,6 @@ Window {
                     anchors {
                         top: id_txt_resolution.bottom
                         left: id_txt_resolution_rows.right
-                        bottom: parent.bottom
                         right: parent.right
                         leftMargin: 4
                     }
@@ -143,7 +142,6 @@ Window {
                     anchors {
                         top: id_txt_resolution_rows.bottom
                         left: id_txt_resolution_cols.right
-                        bottom: parent.bottom
                         right: parent.right
                         leftMargin: 4
                     }
@@ -161,7 +159,7 @@ Window {
                     right: parent.right
                     margins: 2
                 }
-                height: 70
+                height: childrenRect.height + 2
                 color: "transparent"
                 border.width: 1
                 border.color: "white"
@@ -204,7 +202,6 @@ Window {
                     anchors {
                         top: id_txt_elapse.bottom
                         left: parent.left
-                        bottom: parent.bottom
                         right: parent.right
                         leftMargin: 4
                     }
@@ -222,7 +219,7 @@ Window {
                     right: parent.right
                     margins: 2
                 }
-                height: 40
+                height: childrenRect.height + 2
                 color: "transparent"
                 border.width: 1
                 border.color: "white"
@@ -258,7 +255,7 @@ Window {
                     top: id_rec_executiontime.bottom
                     margins: 2
                 }
-                height: 50
+                height: childrenRect.height + 2
                 color: "black"
                 border.width: 1
                 border.color: "white"
@@ -280,7 +277,6 @@ Window {
                         top: id_txt_sorting.bottom
                         left: parent.left
                         right: parent.right
-                        bottom: parent.bottom
                         margins: 4
                     }
                     model: id_lstmod_dsa
