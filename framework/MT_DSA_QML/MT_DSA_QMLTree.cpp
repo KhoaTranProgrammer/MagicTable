@@ -37,6 +37,7 @@ MT_DSA_QMLTree::MT_DSA_QMLTree(QQuickItem *parent) : QQuickPaintedItem(parent)
 
     engine = new QQmlEngine;
     _elapseTime = 0;
+    this->_grabIndex = 0;
 }
 
 void MT_DSA_QMLTree::paint(QPainter *painter)
@@ -52,19 +53,37 @@ void MT_DSA_QMLTree::drawData()
     }
 }
 
-void MT_DSA_QMLTree::drawHistoryOneByOne()
+void MT_DSA_QMLTree::drawHistoryOneByOne(bool issavefile, QString location)
 {
     if (this->_dsa_hierarchicaltree != NULL)
     {
         if (_dsa_hierarchicaltree->drawHistoryOne())
         {
-
+            if (issavefile)
+            {
+                this->_saveFileLocation = location;
+                this->_grabResult = this->grabToImage();
+                connect(this->_grabResult.data(), &QQuickItemGrabResult::ready, this, &MT_DSA_QMLTree::grabDone);
+            }
         }
         else
         {
-
+            this->_grabIndex = 0;
         }
     }
+}
+
+void MT_DSA_QMLTree::grabDone()
+{
+    QDate date = QDate::currentDate();
+    QString dateString = date.toString().replace(" ", "");;
+
+    QImage img(this->_grabResult.data()->image());
+    QString filename = this->_saveFileLocation + "/" + dateString + "_";
+    filename.append(QString::number(this->_grabIndex));
+    filename.append(".png");
+    img.save(filename);
+    this->_grabIndex++;
 }
 
 void MT_DSA_QMLTree::createTable(int col, int row)

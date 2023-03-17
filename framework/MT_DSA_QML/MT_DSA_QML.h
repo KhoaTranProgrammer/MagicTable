@@ -35,6 +35,8 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QColor>
 #include <QPainter>
+#include <QQuickItemGrabResult>
+#include <QDateTime>
 #include "MT_DSA_Sorting.h"
 #include "MT_DSA_SortingBubble.h"
 #include "MT_DSA_SortingSelection.h"
@@ -59,7 +61,7 @@ signals:
 public slots:
     void addNewData(int value);
     void addNewDataList(QString value); // 7,5,9,1,31,23,14
-    void drawHistoryOneByOne();
+    void drawHistoryOneByOne(bool issavefile, QString location);
     void setObjectAnimationTime(ulong animationtime);
     void createTable(int col, int row);
     QString getFeatureSorting();
@@ -71,6 +73,11 @@ public slots:
     void clearData();
 
 private:
+    void grabDone();
+    QSharedPointer<QQuickItemGrabResult> _grabResult;
+    uint _grabIndex;
+    QString _saveFileLocation;
+
     MT_DSA_Sorting* _dsa_sorting = NULL;
     QQmlEngine* engine;
     vector<MT_DSA_QMLObject*> _listSortObjects;

@@ -40,6 +40,7 @@ MT_DSA_QML::MT_DSA_QML(QQuickItem *parent) : QQuickPaintedItem(parent)
 
     engine = new QQmlEngine;
     _animationtime = 0;
+    this->_grabIndex = 0;
     this->_dsa_sorting = new MT_DSA_SortingBubble();
 }
 
@@ -87,19 +88,37 @@ void MT_DSA_QML::drawData()
         this->_dsa_sorting->drawData();
 }
 
-void MT_DSA_QML::drawHistoryOneByOne()
+void MT_DSA_QML::drawHistoryOneByOne(bool issavefile, QString location)
 {
     if (this->_dsa_sorting != NULL)
     {
         if (_dsa_sorting->drawHistoryOne())
         {
-
+            if (issavefile)
+            {
+                this->_saveFileLocation = location;
+                this->_grabResult = this->grabToImage();
+                connect(this->_grabResult.data(), &QQuickItemGrabResult::ready, this, &MT_DSA_QML::grabDone);
+            }
         }
         else
         {
-
+            this->_grabIndex = 0;
         }
     }
+}
+
+void MT_DSA_QML::grabDone()
+{
+    QDate date = QDate::currentDate();
+    QString dateString = date.toString().replace(" ", "");;
+
+    QImage img(this->_grabResult.data()->image());
+    QString filename = this->_saveFileLocation + "/" + dateString + "_";
+    filename.append(QString::number(this->_grabIndex));
+    filename.append(".png");
+    img.save(filename);
+    this->_grabIndex++;
 }
 
 void MT_DSA_QML::setObjectAnimationTime(ulong animationtime)

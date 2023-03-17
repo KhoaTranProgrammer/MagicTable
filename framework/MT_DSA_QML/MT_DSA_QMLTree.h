@@ -35,6 +35,8 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QColor>
 #include <QPainter>
+#include <QQuickItemGrabResult>
+#include <QDateTime>
 #include "MT_DSA_QMLTreeObject.h"
 #include "MT_DSA_HierarchicalTree.h"
 #include "MT_DSA_BSTADT.h"
@@ -57,7 +59,7 @@ signals:
 public slots:
     void createTable(int col, int row);
     void drawData();
-    void drawHistoryOneByOne();
+    void drawHistoryOneByOne(bool issavefile, QString location);
     void clearData();
 
     QString getFeatureHierarchicalTree();
@@ -72,6 +74,11 @@ public slots:
     double getExecutionTime();
 
 private:
+    void grabDone();
+    QSharedPointer<QQuickItemGrabResult> _grabResult;
+    uint _grabIndex;
+    QString _saveFileLocation;
+
     MT_DSA_HierarchicalTree* _dsa_hierarchicaltree = NULL;
     QQmlEngine* engine;
     QVector<QLineF> lines;
