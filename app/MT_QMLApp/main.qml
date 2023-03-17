@@ -30,6 +30,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 1.4
+import Qt.labs.platform 1.1
 import "Common.js" as Common
 
 import QtQuick.Window 2.12
@@ -212,9 +213,81 @@ Window {
             }
 
             Rectangle {
-                id: id_rec_executiontime
+                id: id_rec_savefile
                 anchors {
                     top: id_rec_animation.bottom
+                    left: parent.left
+                    right: parent.right
+                    margins: 2
+                }
+                height: childrenRect.height + 2
+                color: "transparent"
+                border.width: 1
+                border.color: "white"
+
+                Text {
+                    id: id_txt_savefile
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: "Save File"
+                    color: "white"
+                }
+
+                Switch {
+                    id: id_switch_savefile
+                    anchors {
+                        top: id_txt_savefile.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    checked: false
+                }
+
+                Text {
+                    id: id_txt_location
+                    anchors {
+                        top: id_switch_savefile.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: "Location"
+                    color: "white"
+                }
+
+                Button {
+                    anchors {
+                        top: id_switch_savefile.bottom
+                        left: id_txt_location.right
+                        leftMargin: 4
+                    }
+                    height: id_txt_location.height
+                    text: "Select"
+
+                    onClicked: {
+                        folderDialog.open()
+                    }
+                }
+
+                Text {
+                    id: id_txt_locationSelected
+                    anchors {
+                        top: id_txt_location.bottom
+                        left: parent.left
+                        leftMargin: 4
+                    }
+                    text: ""
+                    color: "white"
+                }
+
+            }
+
+            Rectangle {
+                id: id_rec_executiontime
+                anchors {
+                    top: id_rec_savefile.bottom
                     left: parent.left
                     right: parent.right
                     margins: 2
@@ -306,6 +379,16 @@ Window {
             }
         }
 
+        FolderDialog {
+            id: folderDialog
+
+            onAccepted: {
+                var path = folderDialog.folder.toString()
+                path = path.replace(/^(file:\/{3})/, "")
+                id_txt_locationSelected.text = decodeURIComponent(path)
+            }
+        }
+
         ListModel {
             id: id_lstmod_dsa
         }
@@ -362,6 +445,8 @@ Window {
         scene.columns = id_root.columns
         scene.rows = id_root.rows
         scene.datalist = id_txtdata.text
+        scene.savefilelocation = id_txt_locationSelected.text
+        scene.isSaveFile = id_switch_savefile.checked
 
         if(!id_animationEnabled.checked) {
             scene.isAnimation = false

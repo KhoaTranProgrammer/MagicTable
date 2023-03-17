@@ -9,6 +9,8 @@ Item {
     property double elapsetime
     property bool isAnimation: false
     property double measureTime: 0.0
+    property string savefilelocation: ""
+    property bool isSaveFile: false
 
     // Signal to announce when control information are updated
     signal controlInfor

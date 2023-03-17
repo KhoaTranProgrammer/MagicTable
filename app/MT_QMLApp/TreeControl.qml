@@ -218,7 +218,7 @@ DSAControl {
         interval: elapsetime; running: false; repeat: true
 
         onTriggered: {
-            myTable.drawHistoryOneByOne()
+            myTable.drawHistoryOneByOne(isSaveFile, savefilelocation)
         }
     }
 }
