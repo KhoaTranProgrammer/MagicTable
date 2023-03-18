@@ -61,7 +61,7 @@ void MT_DSA_QMLObject::drawObject()
                             "color: \"red\";"
                             "anchors.verticalCenter: parent.verticalCenter; "
                             "anchors.horizontalCenter: parent.horizontalCenter; "
-                            "width: parent.width * 0.8; "
+                            "width: parent.width < parent.height ? parent.width * 0.8 : parent.height * 0.8; "
                             "height: width; "
                             "Text { "
                                 "anchors.centerIn: parent; "
