@@ -43,6 +43,7 @@ SOURCES += \
     MT_DSA_AVLADT.cpp \
     MT_DSA_BSTADT.cpp \
     MT_DSA_HierarchicalTree.cpp \
+    MT_DSA_List.cpp \
     MT_DSA_Object.cpp \
     MT_DSA_Sorting.cpp \
     MT_DSA_SortingBubble.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     MT_DSA_AVLADT.h \
     MT_DSA_BSTADT.h \
     MT_DSA_HierarchicalTree.h \
+    MT_DSA_List.h \
     MT_DSA_Object.h \
     MT_DSA_Sorting.h \
     MT_DSA_SortingBubble.h \
