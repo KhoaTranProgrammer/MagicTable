@@ -43,6 +43,8 @@ win32 {
 # Input
 SOURCES += \
         MT_DSA_QMLLineObject.cpp \
+        MT_DSA_QMLList.cpp \
+        MT_DSA_QMLListObject.cpp \
         MT_DSA_QMLObject.cpp \
         MT_DSA_QML.cpp \
         MT_DSA_QMLPlugin.cpp \
@@ -51,6 +53,8 @@ SOURCES += \
 
 HEADERS += \
         MT_DSA_QMLLineObject.h \
+        MT_DSA_QMLList.h \
+        MT_DSA_QMLListObject.h \
         MT_DSA_QMLObject.h \
         MT_DSA_QML.h \
         MT_DSA_QMLPlugin.h \

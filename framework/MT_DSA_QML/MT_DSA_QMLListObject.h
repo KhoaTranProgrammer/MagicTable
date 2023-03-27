@@ -25,23 +25,31 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This is QML plugin used by QML application for Data Structure    *
- * and Algorithm                                                    *
+ * This is child class of MT_DSA_QMLListObject to define layout for *
+ * List object                                                      *
  *******************************************************************/
 
-#include "MT_DSA_QMLPlugin.h"
+#ifndef MT_DSA_QMLLISTOBJECT_H
+#define MT_DSA_QMLLISTOBJECT_H
 
-#include "MT_DSA_QML.h"
-#include "MT_DSA_QMLTree.h"
-#include "MT_DSA_QMLLineObject.h"
-#include "MT_DSA_QMLList.h"
-#include <qqml.h>
+#include <QObject>
+#include <QColor>
+#include <QPainter>
+#include <QQmlComponent>
+#include <QQmlEngine>
+#include <QQuickItem>
+#include <QPropertyAnimation>
+#include "MT_DSA_QMLObject.h"
 
-void MT_DSA_QMLPlugin::registerTypes(const char *uri)
+class MT_DSA_QMLListObject : public MT_DSA_QMLObject
 {
-    // @uri com.mtdsa.mtdsaqml
-    qmlRegisterType<MT_DSA_QML>(uri, 1, 0, "MT_DSA_QML");
-    qmlRegisterType<MT_DSA_QMLTree>(uri, 1, 0, "MT_DSA_QMLTree");
-    qmlRegisterType<MT_DSA_QMLLineObject>(uri, 1, 0, "MT_DSA_QMLLineObject");
-    qmlRegisterType<MT_DSA_QMLList>(uri, 1, 0, "MT_DSA_QMLList");
-}
+public:
+    MT_DSA_QMLListObject(QQmlEngine& engine, QObject& parent);
+    ~MT_DSA_QMLListObject();
+
+    void drawObject();
+    void move();
+    void createObject(int x, int y, int w, int h, int animationTime);
+};
+
+#endif // MT_DSA_QMLLISTOBJECT_H

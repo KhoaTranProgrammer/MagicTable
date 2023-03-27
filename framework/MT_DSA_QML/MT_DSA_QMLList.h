@@ -25,23 +25,51 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This is QML plugin used by QML application for Data Structure    *
- * and Algorithm                                                    *
+ * This is QML type for Lists                                       *
  *******************************************************************/
 
-#include "MT_DSA_QMLPlugin.h"
+#ifndef MT_DSA_QMLLIST_H
+#define MT_DSA_QMLLIST_H
 
-#include "MT_DSA_QML.h"
-#include "MT_DSA_QMLTree.h"
-#include "MT_DSA_QMLLineObject.h"
-#include "MT_DSA_QMLList.h"
-#include <qqml.h>
+#include <QQuickItem>
+#include <QtQuick/QQuickPaintedItem>
+#include <QColor>
+#include <QPainter>
+#include <QQuickItemGrabResult>
+#include <QDateTime>
+#include "MT_DSA_QMLListObject.h"
+#include "MT_DSA_List.h"
 
-void MT_DSA_QMLPlugin::registerTypes(const char *uri)
+class MT_DSA_QMLList : public QQuickPaintedItem
 {
-    // @uri com.mtdsa.mtdsaqml
-    qmlRegisterType<MT_DSA_QML>(uri, 1, 0, "MT_DSA_QML");
-    qmlRegisterType<MT_DSA_QMLTree>(uri, 1, 0, "MT_DSA_QMLTree");
-    qmlRegisterType<MT_DSA_QMLLineObject>(uri, 1, 0, "MT_DSA_QMLLineObject");
-    qmlRegisterType<MT_DSA_QMLList>(uri, 1, 0, "MT_DSA_QMLList");
-}
+    Q_OBJECT
+public:
+    MT_DSA_QMLList(QQuickItem *parent = 0);
+    void paint(QPainter *painter);
+
+signals:
+    void featuresChanged();
+
+public slots:
+    void addNewDataList(QString value); // 7,5,9,1,31,23,14
+    void setObjectAnimationTime(ulong animationtime);
+    void createTable(int col, int row);
+    void drawData();
+    void drawHistoryOneByOne(bool issavefile, QString location);
+    void updateDataLocationInTable();
+    void updateDataLocationInverseInTable();
+    void clearData();
+    void removeData(int index);
+    void insertData(int index, int value);
+    QString getFeatureList();
+    void setFeatureList(QString feature);
+
+private:
+    QQmlEngine* engine;
+    ulong _animationtime;
+    MT_DSA_List* _dsa_list = NULL;
+
+    QString LIST_LISTS;
+};
+
+#endif // MT_DSA_QMLLIST_H
