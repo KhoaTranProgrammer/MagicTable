@@ -48,8 +48,9 @@ public:
 
     void drawObject();
     void move();
+    virtual void createObject(int x, int y, int w, int h, int animationTime);
 
-private:
+protected:
     QQmlEngine* _engine;
     QObject* _parent;
     QQmlComponent* _component = NULL;

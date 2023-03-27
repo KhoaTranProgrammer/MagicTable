@@ -46,15 +46,45 @@ MT_DSA_QMLObject::~MT_DSA_QMLObject()
 
 void MT_DSA_QMLObject::drawObject()
 {
-    QString text = "\"" + QString::number(this->getValue()) + "\"";
+    this->createObject(this->getCurPosition()->getX(), this->getCurPosition()->getY(),
+                       this->getCurPosition()->getW(), this->getCurPosition()->getH(),
+                       this->getAnimationTime());
+}
+
+void MT_DSA_QMLObject::move()
+{
+    if (this->getDrawAnimationStatus() == true)
+    {
+        // Set node value
+        QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateText", Q_ARG(QVariant, QString::number(this->getValue())));
+
+        _quickitem->setProperty("x", this->getNextPosition()->getX());
+        _quickitem->setProperty("y", this->getNextPosition()->getY());
+        _quickitem->setProperty("width", this->getNextPosition()->getW());
+        _quickitem->setProperty("height", this->getNextPosition()->getH());
+    }
+    else
+    {
+        this->createObject(this->getNextPosition()->getX(), this->getNextPosition()->getY(),
+                           this->getNextPosition()->getW(), this->getNextPosition()->getH(),
+                           this->getAnimationTime());
+    }
+}
+
+void MT_DSA_QMLObject::createObject(int x, int y, int w, int h, int animationTime)
+{
+    if (this->_quickitem != NULL)
+        delete this->_quickitem;
+    if (this->_component != NULL)
+        delete this->_component;
+
     QString iconUrl = "\"\"";
     QString data = "import QtQuick 2.0; "
                     "Item { "
-                        "id: temp; "
-                        "x: " + QString::number(this->getCurPosition()->getX()) + ";"
-                        "y: " + QString::number(this->getCurPosition()->getY()) + ";"
-                        "width: " + QString::number(this->getCurPosition()->getW()) + ";"
-                        "height: " + QString::number(this->getCurPosition()->getH()) + ";"
+                        "x: " + QString::number(x) + ";"
+                        "y: " + QString::number(y) + ";"
+                        "width: " + QString::number(w) + ";"
+                        "height: " + QString::number(h) + ";"
                         "Rectangle { "
                             "id: id_name; "
                             "objectName: \"id_name\";"
@@ -64,25 +94,21 @@ void MT_DSA_QMLObject::drawObject()
                             "width: parent.width < parent.height ? parent.width * 0.8 : parent.height * 0.8; "
                             "height: width; "
                             "Text { "
+                                "id: id_txt; "
                                 "anchors.centerIn: parent; "
-                                "text: " + text + ";"
                             "}"
                         "}"
-                        "Behavior on x { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
-                        "Behavior on y { NumberAnimation { duration: " + QString::number(this->getAnimationTime()) + "}}"
+                        "function updateText(mytext) { id_txt.text = mytext; } "
+                        "Behavior on x { NumberAnimation { duration: " + QString::number(animationTime) + "}}"
+                        "Behavior on y { NumberAnimation { duration: " + QString::number(animationTime) + "}}"
                     "}";
     _component = new QQmlComponent(this->_engine);
     _component->setData(data.toUtf8(), QUrl());
     _quickitem = qobject_cast<QQuickItem*>(_component->create());
     QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
-    _quickitem->setParentItem(myparent);
-}
 
-void MT_DSA_QMLObject::move()
-{
-    _quickitem->setProperty("x", this->getNextPosition()->getX());
-    _quickitem->setProperty("y", this->getNextPosition()->getY());
-    QObject* idname = _quickitem->findChild<QObject*>("id_name");
-    if (idname)
-        idname->setProperty("color", "blue");
+    // Set node value
+    QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateText", Q_ARG(QVariant, QString::number(this->getValue())));
+
+    _quickitem->setParentItem(myparent);
 }
