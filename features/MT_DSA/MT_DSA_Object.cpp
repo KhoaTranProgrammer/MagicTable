@@ -59,3 +59,13 @@ int MT_DSA_Object::getValue()
 {
     return this->_value;
 }
+
+void MT_DSA_Object::setAddress(string value)
+{
+    this->_address = value;
+}
+
+string MT_DSA_Object::getAddress()
+{
+    return this->_address;
+}

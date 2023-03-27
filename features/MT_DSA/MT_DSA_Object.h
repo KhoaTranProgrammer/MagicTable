@@ -32,11 +32,14 @@
 #define MT_DSA_OBJECT_H
 
 #include "MT_Object.h"
+#include <sstream>
+#include <iostream>
 
 class MT_DSA_Object : public MT_Object
 {
 private:
     int _value;
+    string _address;
 
 public:
     MT_DSA_Object();
@@ -47,6 +50,9 @@ public:
 
     void setValue(int value);
     int getValue();
+
+    void setAddress(string value);
+    string getAddress();
 };
 
 #endif // MT_DSA_OBJECT_H
