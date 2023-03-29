@@ -5,7 +5,8 @@ import MT_DSA_QML 1.0
 DSAControl {
 
     property int key_remove: 2
-    property int key_insert: 3
+    property int key_insertindex: 3
+    property int key_insertvalue: 10
 
     Rectangle {
         id: id_rec_control
@@ -119,7 +120,7 @@ DSAControl {
             bottom: id_rec_control.bottom
             margins: 5
         }
-        width: 100
+        width: childrenRect.width + 5
         color: "transparent"
         border.width: 1
         border.color: "white"
@@ -133,13 +134,19 @@ DSAControl {
             }
             text: "Insert Index"
             onClicked: {
-                if (isNaN(id_txtEdit_insert.text)) {
-                    console.log(id_txtEdit_insert.text + " is not number")
+                if (isNaN(id_txtEdit_insertindex.text)) {
+                    console.log(id_txtEdit_insertindex.text + " is not number")
                 } else {
-                    key_insert = parseInt(id_txtEdit_insert.text)
+                    key_insertindex = parseInt(id_txtEdit_insertindex.text)
                 }
 
-                myTable.insertData(4, key_insert)
+                if (isNaN(id_txtEdit_insertvalue.text)) {
+                    console.log(id_txtEdit_insertvalue.text + " is not number")
+                } else {
+                    key_insertvalue = parseInt(id_txtEdit_insertvalue.text)
+                }
+
+                myTable.insertData(key_insertindex, key_insertvalue)
                 myTable.updateDataLocationInverseInTable()
                 if(!isAnimation) {
                     id_TimerDrawHistory.running = false
@@ -152,19 +159,53 @@ DSAControl {
         }
 
         Rectangle {
+            id: id_rec_index
             anchors {
                 left: id_txt_insert.right
                 top: parent.top
                 bottom: parent.bottom
-                right: parent.right
                 margins: 2
             }
+            width: 25
             TextEdit {
-                id: id_txtEdit_insert
+                id: id_txtEdit_insertindex
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: key_insert
+                text: key_insertindex
                 color: "black"
+                focus: true
+            }
+        }
+
+        Rectangle {
+            id: id_rec_value
+            anchors {
+                left: id_rec_index.right
+                top: parent.top
+                bottom: parent.bottom
+                margins: 2
+            }
+            width: childrenRect.width
+            Text {
+                id: id_txt_value
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: 2
+                }
+                text: "Value"
+                color: "black"
+            }
+            TextEdit {
+                id: id_txtEdit_insertvalue
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: id_txt_value.right
+                    leftMargin: 2
+                }
+                width: 25
+                text: key_insertvalue
+                color: "blue"
                 focus: true
             }
         }
