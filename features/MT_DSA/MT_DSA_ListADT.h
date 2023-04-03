@@ -25,36 +25,25 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This class supports Lists Algorithm                              *
+ * This class supports Lists ADT Algorithm                          *
  *******************************************************************/
 
-#ifndef MT_DSA_LIST_H
-#define MT_DSA_LIST_H
+#ifndef MT_DSA_LISTADT_H
+#define MT_DSA_LISTADT_H
 
-#include "MT_Table.h"
-#include "MT_DSA_Object.h"
+#include "MT_DSA_List.h"
 
-class MT_DSA_List
+class MT_DSA_ListADT : public MT_DSA_List
 {
-protected:
-    MT_Table _mttable;
-    mt_int _count;
-    mt_int *_items;
-    vector<MT_DSA_Object*> _listObjects;
-
 public:
-    MT_DSA_List();
+    MT_DSA_ListADT();
 
-    mt_void createTable(int w, int h, int col, int row);
-    mt_void drawData();
-    mt_bool drawHistoryOne();
-    mt_void clearData();
-
-    virtual mt_void updateDataLocationInTable();
-    virtual mt_void updateDataLocationInverseInTable();
-    virtual mt_void Insert(MT_DSA_Object &obj, int index, int val);
-    virtual mt_void Remove(int index);
-    mt_int Count();
+    mt_void updateDataLocationInTable();
+    mt_void updateDataLocationInverseInTable();
+    mt_void Insert(MT_DSA_Object &obj, int index, int val);
+    mt_void Remove(int index);
+    mt_int Get(int index);
+    mt_int Search(int val);
 };
 
-#endif // MT_DSA_LIST_H
+#endif // MT_DSA_LISTADT_H

@@ -38,59 +38,7 @@ MT_DSA_List::MT_DSA_List()
 
 mt_void MT_DSA_List::Insert(MT_DSA_Object &obj, int index, int val)
 {
-    // Check if the index is out of bound
-    if(index < 0 || index > this->_count)
-        return;
 
-    // Copy the current array
-    mt_int *oldArray = this->_items;
-    vector<MT_DSA_Object*> _oldListObjects = _listObjects;
-
-    // Increase the array length
-    this->_count++;
-
-    // Initialize a new array
-    this->_items = new mt_int[this->_count];
-    this->_listObjects.clear();
-
-    // Fill the new array with inserted data
-    for(int i=0, j=0; i < this->_count; ++i)
-    {
-        if(index == i)
-        {
-            this->_items[i] = val;
-
-            // Init new object
-            const int *ptr = &this->_items[i];
-            ostringstream oss;
-            oss << ptr;
-            string address_a = oss.str();
-            obj.setValue(val);
-            obj.setAddress(address_a);
-
-            this->_mttable.addObject(obj);
-            this->_listObjects.push_back(&obj);
-        }
-        else
-        {
-            this->_items[i] = oldArray[j];
-            _oldListObjects.at(j)->setValue(this->_items[i]);
-            const int *ptr = &this->_items[i];
-            ostringstream oss;
-            oss << ptr;
-            string address_a = oss.str();
-            _oldListObjects.at(j)->setAddress(address_a);
-            this->_listObjects.push_back(_oldListObjects.at(j));
-            ++j;
-        }
-    }
-
-    // Remove copied array
-    if (oldArray != NULL)
-    {
-        delete [] oldArray;
-        _oldListObjects.clear();
-    }
 }
 
 mt_void MT_DSA_List::createTable(int w, int h, int col, int row)
@@ -100,12 +48,6 @@ mt_void MT_DSA_List::createTable(int w, int h, int col, int row)
 
 mt_void MT_DSA_List::drawData()
 {
-    this->_mttable.clearHistory();
-    for(int i = 0; i < this->_listObjects.size(); i++)
-    {
-        this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
-    }
-
     this->_mttable.drawObjects();
 }
 
@@ -116,50 +58,18 @@ mt_bool MT_DSA_List::drawHistoryOne()
 
 mt_void MT_DSA_List::updateDataLocationInTable()
 {
-    this->_mttable.clearHistory();
-    for(int i = 0; i < this->_listObjects.size(); i++)
-    {
-        this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
-    }
+
 }
 
 mt_void MT_DSA_List::updateDataLocationInverseInTable()
 {
-    this->_mttable.clearHistory();
-    for(int i = this->_listObjects.size() - 1; i >= 0 ; i--)
-    {
-        this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
-    }
+
 }
 
 mt_void MT_DSA_List::clearData()
 {
     this->_listObjects.clear();
     this->_mttable.clearData();
-}
-
-mt_int MT_DSA_List::Get(int index)
-{
-    // Check if the index is out of bound
-    if(index < 0 || index > this->_count)
-        return -1;
-
-    return this->_items[index];
-}
-
-mt_int MT_DSA_List::Search(int val)
-{
-    // Looping through the array elements
-    // return the array index if value is found
-    for(int i=0; i < this->_count; ++i)
-    {
-        if(this->_items[i] == val)
-        {
-            return i;
-        }
-    }
-
-    return -1;
 }
 
 mt_void MT_DSA_List::Remove(int index)
