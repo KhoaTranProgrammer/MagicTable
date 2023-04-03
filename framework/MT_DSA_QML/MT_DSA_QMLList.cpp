@@ -90,9 +90,9 @@ void MT_DSA_QMLList::setFeatureList(QString feature)
         delete this->_dsa_list;
 
     if (feature == LIST_LISTS)
-        this->_dsa_list = new MT_DSA_List();
+        this->_dsa_list = new MT_DSA_ListADT();
     else
-        this->_dsa_list = new MT_DSA_List();
+        this->_dsa_list = new MT_DSA_ListADT();
 }
 
 QString MT_DSA_QMLList::getFeatureList()

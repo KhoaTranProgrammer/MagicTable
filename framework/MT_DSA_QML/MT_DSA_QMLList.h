@@ -39,6 +39,7 @@
 #include <QDateTime>
 #include "MT_DSA_QMLListObject.h"
 #include "MT_DSA_List.h"
+#include "MT_DSA_ListADT.h"
 
 class MT_DSA_QMLList : public QQuickPaintedItem
 {
