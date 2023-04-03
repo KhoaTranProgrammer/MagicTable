@@ -224,6 +224,7 @@ DSAControl {
             myTable.setFeatureList(feature)
             myTable.createTable(columns, rows)
             myTable.addNewDataList(datalist)
+            myTable.updateDataLocationInTable()
             myTable.drawData()
             id_TimerDrawHistory.running = false
             controlMeasureTime()
