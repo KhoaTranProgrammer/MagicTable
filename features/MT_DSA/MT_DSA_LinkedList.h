@@ -25,66 +25,38 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This class supports data processing for Data Structure/Algorithm *
+ * This class supports LinkedList ADT Algorithm                     *
  *******************************************************************/
 
-#include "MT_DSA_Object.h"
+#ifndef MT_DSA_LINKEDLIST_H
+#define MT_DSA_LINKEDLIST_H
 
-MT_DSA_Object::MT_DSA_Object() : MT_Object()
+#include "MT_DSA_List.h"
+
+class MT_DSA_LinkedList : public MT_DSA_List
 {
-    this->_next = NULL;
-}
+private:
+    // The first node in the list or null if empty
+    MT_DSA_Object *_head;
 
-MT_DSA_Object::~MT_DSA_Object()
-{
+    // The last node in the list or null if empty
+    MT_DSA_Object *_tail;
 
-}
+public:
+    MT_DSA_LinkedList();
 
-void MT_DSA_Object::drawObject()
-{
+    mt_void updateDataLocationInTable();
+    mt_void updateDataLocationInverseInTable();
 
-}
+    // Insert() operation
+    mt_void InsertHead(MT_DSA_Object &obj, int val);
+    mt_void InsertTail(MT_DSA_Object &obj, int val);
+    mt_void Insert(MT_DSA_Object &obj, int index, int val);
 
-void MT_DSA_Object::move()
-{
+    // Remove() operation
+    mt_void RemoveHead();
+    mt_void RemoveTail();
+    mt_void Remove(int index);
+};
 
-}
-
-void MT_DSA_Object::setValue(int value)
-{
-    this->_value = value;
-}
-
-int MT_DSA_Object::getValue()
-{
-    return this->_value;
-}
-
-void MT_DSA_Object::setAddress(string value)
-{
-    this->_address = value;
-}
-
-string MT_DSA_Object::getAddress()
-{
-    return this->_address;
-}
-
-MT_DSA_Object *MT_DSA_Object::getNextNode()
-{
-    return this->_next;
-}
-
-mt_void MT_DSA_Object::setNextNode(MT_DSA_Object *node)
-{
-    this->_next = node;
-}
-
-MT_Position* MT_DSA_Object::getNextNodePosition()
-{
-    if (this->_next != NULL)
-    {
-        return this->_next->getCurPosition();
-    }
-    return NULL;
-}
+#endif // MT_DSA_LINKEDLIST_H

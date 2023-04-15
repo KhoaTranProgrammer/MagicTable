@@ -43,6 +43,7 @@ SOURCES += \
     MT_DSA_AVLADT.cpp \
     MT_DSA_BSTADT.cpp \
     MT_DSA_HierarchicalTree.cpp \
+    MT_DSA_LinkedList.cpp \
     MT_DSA_List.cpp \
     MT_DSA_ListADT.cpp \
     MT_DSA_Object.cpp \
@@ -58,6 +59,7 @@ HEADERS += \
     MT_DSA_AVLADT.h \
     MT_DSA_BSTADT.h \
     MT_DSA_HierarchicalTree.h \
+    MT_DSA_LinkedList.h \
     MT_DSA_List.h \
     MT_DSA_ListADT.h \
     MT_DSA_Object.h \
