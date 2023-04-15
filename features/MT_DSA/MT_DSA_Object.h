@@ -40,6 +40,7 @@ class MT_DSA_Object : public MT_Object
 private:
     int _value;
     string _address;
+    MT_DSA_Object *_next;
 
 public:
     MT_DSA_Object();
@@ -53,6 +54,11 @@ public:
 
     void setAddress(string value);
     string getAddress();
+
+    MT_DSA_Object *getNextNode();
+    mt_void setNextNode(MT_DSA_Object *node);
+
+    MT_Position* getNextNodePosition();
 };
 
 #endif // MT_DSA_OBJECT_H

@@ -69,3 +69,22 @@ string MT_DSA_Object::getAddress()
 {
     return this->_address;
 }
+
+MT_DSA_Object *MT_DSA_Object::getNextNode()
+{
+    return this->_next;
+}
+
+mt_void MT_DSA_Object::setNextNode(MT_DSA_Object *node)
+{
+    this->_next = node;
+}
+
+MT_Position* MT_DSA_Object::getNextNodePosition()
+{
+    if (this->_next != NULL)
+    {
+        return this->_next->getCurPosition();
+    }
+    return NULL;
+}
