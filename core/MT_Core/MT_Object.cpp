@@ -127,6 +127,15 @@ MT_Position* MT_Object::getNextPosition()
     return this->_nextpos;
 }
 
+MT_Position* MT_Object::getPosition()
+{
+    if (this->isDraw == true)
+    {
+        return this->_nextpos;
+    }
+    return this->_pos;
+}
+
 mt_void MT_Object::setAnimationTime(mt_uint64 animationtime)
 {
     this->_animationtime = animationtime;

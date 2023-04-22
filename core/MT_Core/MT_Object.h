@@ -58,6 +58,7 @@ public:
 
     MT_Position* getCurPosition();
     MT_Position* getNextPosition();
+    MT_Position* getPosition();
 
     mt_void draw(); // Normal draw without animation
     mt_void drawWithAnimation(); // Draw with animation
