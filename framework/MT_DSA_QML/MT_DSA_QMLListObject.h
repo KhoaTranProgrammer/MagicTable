@@ -40,6 +40,7 @@
 #include <QQuickItem>
 #include <QPropertyAnimation>
 #include "MT_DSA_QMLObject.h"
+#include "MT_DSA_QMLArrowObject.h"
 
 class MT_DSA_QMLListObject : public MT_DSA_QMLObject
 {
@@ -50,6 +51,12 @@ public:
     void drawObject();
     void move();
     void createObject(int x, int y, int w, int h, int animationTime);
+    void createArrow(int x0, int y0, int x1, int y1);
+
+private:
+    QQmlComponent* _componentArrow = NULL;
+    QQuickItem* _quickitemArrow = NULL;
+    int _len;
 };
 
 #endif // MT_DSA_QMLLISTOBJECT_H

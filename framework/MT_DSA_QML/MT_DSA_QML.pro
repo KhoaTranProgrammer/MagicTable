@@ -42,6 +42,7 @@ win32 {
 
 # Input
 SOURCES += \
+        MT_DSA_QMLArrowObject.cpp \
         MT_DSA_QMLLineObject.cpp \
         MT_DSA_QMLList.cpp \
         MT_DSA_QMLListObject.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
         MT_DSA_QMLTreeObject.cpp
 
 HEADERS += \
+        MT_DSA_QMLArrowObject.h \
         MT_DSA_QMLLineObject.h \
         MT_DSA_QMLList.h \
         MT_DSA_QMLListObject.h \

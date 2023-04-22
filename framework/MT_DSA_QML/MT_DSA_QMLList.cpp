@@ -33,6 +33,7 @@
 MT_DSA_QMLList::MT_DSA_QMLList(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     LIST_LISTS = "LIST";
+    LINKEDLIST_LISTS = "LINKEDLIST";
     engine = new QQmlEngine;
 }
 
@@ -91,6 +92,8 @@ void MT_DSA_QMLList::setFeatureList(QString feature)
 
     if (feature == LIST_LISTS)
         this->_dsa_list = new MT_DSA_ListADT();
+    else if (feature == LINKEDLIST_LISTS)
+        this->_dsa_list = new MT_DSA_LinkedList();
     else
         this->_dsa_list = new MT_DSA_ListADT();
 }
@@ -98,7 +101,8 @@ void MT_DSA_QMLList::setFeatureList(QString feature)
 QString MT_DSA_QMLList::getFeatureList()
 {
     QString result = "";
-    result += LIST_LISTS;
+    result += LIST_LISTS; result += "-";
+    result += LINKEDLIST_LISTS;
 
     return result;
 }

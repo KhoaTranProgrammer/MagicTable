@@ -34,6 +34,7 @@
 #include "MT_DSA_QML.h"
 #include "MT_DSA_QMLTree.h"
 #include "MT_DSA_QMLLineObject.h"
+#include "MT_DSA_QMLArrowObject.h"
 #include "MT_DSA_QMLList.h"
 #include <qqml.h>
 
@@ -44,4 +45,5 @@ void MT_DSA_QMLPlugin::registerTypes(const char *uri)
     qmlRegisterType<MT_DSA_QMLTree>(uri, 1, 0, "MT_DSA_QMLTree");
     qmlRegisterType<MT_DSA_QMLLineObject>(uri, 1, 0, "MT_DSA_QMLLineObject");
     qmlRegisterType<MT_DSA_QMLList>(uri, 1, 0, "MT_DSA_QMLList");
+    qmlRegisterType<MT_DSA_QMLArrowObject>(uri, 1, 0, "MT_DSA_QMLArrowObject");
 }

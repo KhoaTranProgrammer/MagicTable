@@ -38,12 +38,25 @@ MT_DSA_QMLListObject::MT_DSA_QMLListObject(QQmlEngine& engine, QObject& parent) 
 
 MT_DSA_QMLListObject::~MT_DSA_QMLListObject()
 {
-
+    if (this->_quickitemArrow != NULL)
+        delete this->_quickitemArrow;
+    if (this->_componentArrow != NULL)
+        delete this->_componentArrow;
 }
 
 void MT_DSA_QMLListObject::drawObject()
 {
     MT_DSA_QMLObject::drawObject();
+
+    MT_Position* nextposition = this->getNextNodePosition();
+    if (nextposition != NULL)
+    {
+        this->createArrow(
+            this->getCurPosition()->getX() + (this->getCurPosition()->getW() / 2),
+            this->getCurPosition()->getY() + (this->getCurPosition()->getH() / 2),
+            nextposition->getX() + (nextposition->getW() / 2),
+            nextposition->getY() + (nextposition->getH() / 2));
+    }
 }
 
 void MT_DSA_QMLListObject::move()
@@ -55,6 +68,27 @@ void MT_DSA_QMLListObject::move()
         // Set node value
         QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateAddress", Q_ARG(QVariant, QString::fromStdString(this->getAddress())));
     }
+
+    if (this->_quickitemArrow != NULL)
+    {
+        delete this->_quickitemArrow;
+        this->_quickitemArrow = NULL;
+    }
+    if (this->_componentArrow != NULL)
+    {
+        delete this->_componentArrow;
+        this->_componentArrow = NULL;
+    }
+
+    MT_Position* nextposition = this->getNextNodePosition();
+    if (nextposition != NULL)
+    {
+        this->createArrow(
+            this->getPosition()->getX() + (this->getPosition()->getW() / 2),
+            this->getPosition()->getY() + (this->getPosition()->getH() / 2),
+            nextposition->getX() + (nextposition->getW() / 2),
+            nextposition->getY() + (nextposition->getH() / 2));
+    }
 }
 
 void MT_DSA_QMLListObject::createObject(int x, int y, int w, int h, int animationTime)
@@ -63,6 +97,8 @@ void MT_DSA_QMLListObject::createObject(int x, int y, int w, int h, int animatio
         delete this->_quickitem;
     if (this->_component != NULL)
         delete this->_component;
+
+    _len = w < h ? w * 0.8 : h * 0.8;
 
     QString iconUrl = "\"\"";
     QString data = "import QtQuick 2.0; "
@@ -77,7 +113,7 @@ void MT_DSA_QMLListObject::createObject(int x, int y, int w, int h, int animatio
                             "color: \"red\";"
                             "anchors.verticalCenter: parent.verticalCenter; "
                             "anchors.horizontalCenter: parent.horizontalCenter; "
-                            "width: parent.width < parent.height ? parent.width * 0.8 : parent.height * 0.8; "
+                            "width: " + QString::number(_len) + ";"
                             "height: width; "
                             "Text { "
                                 "id: id_txt; "
@@ -105,4 +141,28 @@ void MT_DSA_QMLListObject::createObject(int x, int y, int w, int h, int animatio
     QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateAddress", Q_ARG(QVariant, QString::fromStdString(this->getAddress())));
 
     _quickitem->setParentItem(myparent);
+}
+
+void MT_DSA_QMLListObject::createArrow(int x0, int y0, int x1, int y1)
+{
+    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
+
+    QString data_line = "";
+    data_line = "import QtQuick 2.0; "
+                "import MT_DSA_QML 1.0; "
+                    "MT_DSA_QMLArrowObject { "
+                        "anchors.fill: parent; "
+                        "z: -1; "
+                        "startX: " + QString::number(x0) + ";"
+                        "startY: " + QString::number(y0) + ";"
+                        "stopX: " + QString::number(x1) + ";"
+                        "stopY: " + QString::number(y1) + ";"
+                        "lengh: " + QString::number(_len / 2) + ";"
+                    "}";
+    _componentArrow = new QQmlComponent(this->_engine);
+    _componentArrow->setData(data_line.toUtf8(), QUrl());
+    _quickitemArrow = qobject_cast<QQuickItem*>(_componentArrow->create());
+
+    // Set parent for new items
+    _quickitemArrow->setParentItem(myparent);
 }
