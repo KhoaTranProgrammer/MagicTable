@@ -84,7 +84,7 @@ MT_Position* MT_DSA_Object::getNextNodePosition()
 {
     if (this->_next != NULL)
     {
-        return this->_next->getCurPosition();
+        return this->_next->getPosition();
     }
     return NULL;
 }

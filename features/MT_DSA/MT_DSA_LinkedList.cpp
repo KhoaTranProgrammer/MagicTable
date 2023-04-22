@@ -152,7 +152,14 @@ mt_void MT_DSA_LinkedList::updateDataLocationInTable()
     this->_mttable.clearHistory();
     for(int i = 0; i < this->_listObjects.size(); i++)
     {
-        this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
+        if ((i / this->_mttable.getCol()) % 2 == 0)
+        {
+            this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
+        }
+        else
+        {
+            this->_mttable.updateObjectPosition(*this->_listObjects.at(i), this->_mttable.getCol() - (i % this->_mttable.getCol()) - 1, i / this->_mttable.getCol());
+        }
     }
 }
 
@@ -161,7 +168,14 @@ mt_void MT_DSA_LinkedList::updateDataLocationInverseInTable()
     this->_mttable.clearHistory();
     for(int i = this->_listObjects.size() - 1; i >= 0 ; i--)
     {
-        this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
+        if ((i / this->_mttable.getCol()) % 2 == 0)
+        {
+            this->_mttable.updateObjectPosition(*this->_listObjects.at(i), i % this->_mttable.getCol(), i / this->_mttable.getCol());
+        }
+        else
+        {
+            this->_mttable.updateObjectPosition(*this->_listObjects.at(i), this->_mttable.getCol() - (i % this->_mttable.getCol()) - 1, i / this->_mttable.getCol());
+        }
     }
 }
 
