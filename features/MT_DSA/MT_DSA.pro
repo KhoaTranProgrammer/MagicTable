@@ -42,6 +42,7 @@ CONFIG += c++11
 SOURCES += \
     MT_DSA_AVLADT.cpp \
     MT_DSA_BSTADT.cpp \
+    MT_DSA_DoublyLinkedList.cpp \
     MT_DSA_HierarchicalTree.cpp \
     MT_DSA_LinkedList.cpp \
     MT_DSA_List.cpp \
@@ -58,6 +59,7 @@ SOURCES += \
 HEADERS += \
     MT_DSA_AVLADT.h \
     MT_DSA_BSTADT.h \
+    MT_DSA_DoublyLinkedList.h \
     MT_DSA_HierarchicalTree.h \
     MT_DSA_LinkedList.h \
     MT_DSA_List.h \

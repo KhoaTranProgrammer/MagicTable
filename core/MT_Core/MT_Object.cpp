@@ -91,6 +91,7 @@ mt_void MT_Object::draw()
         this->drawObject();
         this->_state = MT_OBJECT_DRAWING;
         this->isDraw = true;
+        this->_nextpos = this->_pos;
     }
     else if (this->_state == MT_OBJECT_NEWPOSITION)
     {

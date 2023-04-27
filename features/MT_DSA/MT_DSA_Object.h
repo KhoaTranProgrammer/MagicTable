@@ -41,6 +41,7 @@ private:
     int _value;
     string _address;
     MT_DSA_Object *_next;
+    MT_DSA_Object *_prev;
 
 public:
     MT_DSA_Object();
@@ -59,6 +60,11 @@ public:
     mt_void setNextNode(MT_DSA_Object *node);
 
     MT_Position* getNextNodePosition();
+
+    MT_DSA_Object *getPreviousNode();
+    mt_void setPreviousNode(MT_DSA_Object *node);
+
+    MT_Position* getPreviousNodePosition();
 };
 
 #endif // MT_DSA_OBJECT_H

@@ -42,6 +42,10 @@ MT_DSA_QMLListObject::~MT_DSA_QMLListObject()
         delete this->_quickitemArrow;
     if (this->_componentArrow != NULL)
         delete this->_componentArrow;
+    if (this->_quickitemSecondArrow != NULL)
+        delete this->_quickitemSecondArrow;
+    if (this->_componentSecondArrow != NULL)
+        delete this->_componentSecondArrow;
 }
 
 void MT_DSA_QMLListObject::drawObject()
@@ -56,6 +60,16 @@ void MT_DSA_QMLListObject::drawObject()
             this->getCurPosition()->getY() + (this->getCurPosition()->getH() / 2),
             nextposition->getX() + (nextposition->getW() / 2),
             nextposition->getY() + (nextposition->getH() / 2));
+    }
+
+    MT_Position* prevposition = this->getPreviousNodePosition();
+    if (prevposition != NULL)
+    {
+        this->createSecondArrow(
+            this->getCurPosition()->getX() + (this->getCurPosition()->getW() / 2),
+            this->getCurPosition()->getY() + (this->getCurPosition()->getH() / 2),
+            prevposition->getX() + (prevposition->getW() / 2),
+            prevposition->getY() + (prevposition->getH() / 2));
     }
 }
 
@@ -79,6 +93,16 @@ void MT_DSA_QMLListObject::move()
         delete this->_componentArrow;
         this->_componentArrow = NULL;
     }
+    if (this->_quickitemSecondArrow != NULL)
+    {
+        delete this->_quickitemSecondArrow;
+        this->_quickitemSecondArrow = NULL;
+    }
+    if (this->_componentSecondArrow != NULL)
+    {
+        delete this->_componentSecondArrow;
+        this->_componentSecondArrow = NULL;
+    }
 
     MT_Position* nextposition = this->getNextNodePosition();
     if (nextposition != NULL)
@@ -88,6 +112,16 @@ void MT_DSA_QMLListObject::move()
             this->getPosition()->getY() + (this->getPosition()->getH() / 2),
             nextposition->getX() + (nextposition->getW() / 2),
             nextposition->getY() + (nextposition->getH() / 2));
+    }
+
+    MT_Position* prevposition = this->getPreviousNodePosition();
+    if (prevposition != NULL)
+    {
+        this->createSecondArrow(
+            this->getPosition()->getX() + (this->getPosition()->getW() / 2),
+            this->getPosition()->getY() + (this->getPosition()->getH() / 2),
+            prevposition->getX() + (prevposition->getW() / 2),
+            prevposition->getY() + (prevposition->getH() / 2));
     }
 }
 
@@ -146,7 +180,6 @@ void MT_DSA_QMLListObject::createObject(int x, int y, int w, int h, int animatio
 void MT_DSA_QMLListObject::createArrow(int x0, int y0, int x1, int y1)
 {
     QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
-
     QString data_line = "";
     data_line = "import QtQuick 2.0; "
                 "import MT_DSA_QML 1.0; "
@@ -165,4 +198,27 @@ void MT_DSA_QMLListObject::createArrow(int x0, int y0, int x1, int y1)
 
     // Set parent for new items
     _quickitemArrow->setParentItem(myparent);
+}
+
+void MT_DSA_QMLListObject::createSecondArrow(int x0, int y0, int x1, int y1)
+{
+    QQuickItem* myparent = qobject_cast<QQuickItem*>(this->_parent);
+    QString data_line = "";
+    data_line = "import QtQuick 2.0; "
+                "import MT_DSA_QML 1.0; "
+                    "MT_DSA_QMLArrowObject { "
+                        "anchors.fill: parent; "
+                        "z: -1; "
+                        "startX: " + QString::number(x0) + ";"
+                        "startY: " + QString::number(y0) + ";"
+                        "stopX: " + QString::number(x1) + ";"
+                        "stopY: " + QString::number(y1) + ";"
+                        "lengh: " + QString::number(_len / 2) + ";"
+                    "}";
+    _componentSecondArrow = new QQmlComponent(this->_engine);
+    _componentSecondArrow->setData(data_line.toUtf8(), QUrl());
+    _quickitemSecondArrow = qobject_cast<QQuickItem*>(_componentSecondArrow->create());
+
+    // Set parent for new items
+    _quickitemSecondArrow->setParentItem(myparent);
 }

@@ -52,10 +52,13 @@ public:
     void move();
     void createObject(int x, int y, int w, int h, int animationTime);
     void createArrow(int x0, int y0, int x1, int y1);
+    void createSecondArrow(int x0, int y0, int x1, int y1);
 
 private:
     QQmlComponent* _componentArrow = NULL;
     QQuickItem* _quickitemArrow = NULL;
+    QQmlComponent* _componentSecondArrow = NULL;
+    QQuickItem* _quickitemSecondArrow = NULL;
     int _len;
 };
 

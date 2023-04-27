@@ -41,6 +41,7 @@
 #include "MT_DSA_List.h"
 #include "MT_DSA_ListADT.h"
 #include "MT_DSA_LinkedList.h"
+#include "MT_DSA_DoublyLinkedList.h"
 
 class MT_DSA_QMLList : public QQuickPaintedItem
 {
@@ -73,6 +74,7 @@ private:
 
     QString LIST_LISTS;
     QString LINKEDLIST_LISTS;
+    QString DOUBLYLINKEDLIST_LISTS;
 };
 
 #endif // MT_DSA_QMLLIST_H

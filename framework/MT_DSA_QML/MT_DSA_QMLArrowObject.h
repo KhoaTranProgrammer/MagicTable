@@ -25,86 +25,41 @@
 /********************************************************************
  * PURPOSE                                                          *
  ********************************************************************
- * This class supports data processing for Data Structure/Algorithm *
+ * This is QML type to draw arrow object                            *
  *******************************************************************/
 
-#include "MT_DSA_Object.h"
+#ifndef MT_DSA_QMLARROWOBJECT_H
+#define MT_DSA_QMLARROWOBJECT_H
 
-MT_DSA_Object::MT_DSA_Object() : MT_Object()
+#include <QQuickItem>
+#include <QtQuick/QQuickPaintedItem>
+#include <QColor>
+#include <QPainter>
+
+class MT_DSA_QMLArrowObject : public QQuickPaintedItem
 {
-    this->_next = NULL;
-    this->_prev = NULL;
-}
+    Q_OBJECT
+    Q_PROPERTY(int startX WRITE setStartX)
+    Q_PROPERTY(int startY WRITE setStartY)
+    Q_PROPERTY(int stopX WRITE setStopX)
+    Q_PROPERTY(int stopY WRITE setStopY)
+    Q_PROPERTY(int lengh WRITE setLengh)
 
-MT_DSA_Object::~MT_DSA_Object()
-{
+public:
+    MT_DSA_QMLArrowObject(QQuickItem *parent = 0);
+    void paint(QPainter *painter);
+    void setStartX(int value);
+    void setStartY(int value);
+    void setStopX(int value);
+    void setStopY(int value);
+    void setLengh(int value);
 
-}
+private:
+    int startX;
+    int startY;
+    int stopX;
+    int stopY;
+    int lengh;
+};
 
-void MT_DSA_Object::drawObject()
-{
-
-}
-
-void MT_DSA_Object::move()
-{
-
-}
-
-void MT_DSA_Object::setValue(int value)
-{
-    this->_value = value;
-}
-
-int MT_DSA_Object::getValue()
-{
-    return this->_value;
-}
-
-void MT_DSA_Object::setAddress(string value)
-{
-    this->_address = value;
-}
-
-string MT_DSA_Object::getAddress()
-{
-    return this->_address;
-}
-
-MT_DSA_Object *MT_DSA_Object::getNextNode()
-{
-    return this->_next;
-}
-
-mt_void MT_DSA_Object::setNextNode(MT_DSA_Object *node)
-{
-    this->_next = node;
-}
-
-MT_Position* MT_DSA_Object::getNextNodePosition()
-{
-    if (this->_next != NULL)
-    {
-        return this->_next->getPosition();
-    }
-    return NULL;
-}
-
-MT_DSA_Object *MT_DSA_Object::getPreviousNode()
-{
-    return this->_prev;
-}
-
-mt_void MT_DSA_Object::setPreviousNode(MT_DSA_Object *node)
-{
-    this->_prev = node;
-}
-
-MT_Position* MT_DSA_Object::getPreviousNodePosition()
-{
-    if (this->_prev != NULL)
-    {
-        return this->_prev->getPosition();
-    }
-    return NULL;
-}
+#endif // MT_DSA_QMLARROWOBJECT_H
