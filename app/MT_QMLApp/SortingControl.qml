@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 1.4
+import QtQuick.Controls
 import MT_DSA_QML 1.0
 
 DSAControl {
