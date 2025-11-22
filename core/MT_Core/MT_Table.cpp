@@ -250,14 +250,18 @@ mt_void MT_Table::clearData()
 
 mt_void MT_Table::removeObject(MT_Object* obj)
 {
+    mt_int remove_index = -1;
     for (mt_uint i = this->_objectlist.size(); i > 0;)
     {
         --i;
         if(this->_objectlist.at(i) == obj)
         {
-            this->_objectlist.erase(this->_objectlist.begin() + i);
+            remove_index = i;
             delete obj;
-            return;
+            break;
         }
     }
+
+    if (remove_index != -1)
+        this->_objectlist.erase(this->_objectlist.begin() + remove_index);
 }
