@@ -1,0 +1,56 @@
+#ifndef MT_CHESS_QML_H
+#define MT_CHESS_QML_H
+
+#include <QQuickItem>
+#include <QtQuick/QQuickPaintedItem>
+#include <QColor>
+#include <QPainter>
+#include <QQuickItemGrabResult>
+#include <QDateTime>
+#include "MT_Chess_QMLObject.h"
+#include "MT_Chess_QMLPositionObject.h"
+#include "MT_Chess.h"
+
+class MT_Chess_QML : public QQuickPaintedItem
+{
+    Q_OBJECT
+    QML_ELEMENT
+    Q_DISABLE_COPY(MT_Chess_QML)
+public:
+    MT_Chess_QML(QQuickItem *parent = nullptr);
+    void paint(QPainter *painter) override;
+    ~MT_Chess_QML() override;
+
+public slots:
+    void createTable(int col, int row);
+    void createPieces();
+    void drawData();
+    void addReviewData(QString filename);
+    void review();
+    bool isGameFinish();
+    QString getWhitePlayerName();
+    QString getBlackPlayerName();
+    QString getResult();
+    QString getInformation();
+    QString getWhiteImage();
+    QString getBlackImage();
+    QString getStepNumber();
+    QString getWhiteStep();
+    QString getBlackStep();
+    void setWhitePrison(QQuickItem *item);
+    void setBlackPrison(QQuickItem *item);
+
+private:
+    QQmlEngine* _mt_engine;
+    MT_Chess* _mt_chess = NULL;
+    vector<MT_Chess_QMLObject*> _listKingChessObjects;
+    QString _information = "";
+    QString _blackPlayer = "";
+    QString _whitePlayer = "";
+    QString _whiteImage = "";
+    QString _blackImage = "";
+    QQuickItem *_whitePrison = NULL;
+    QQuickItem *_blackPrison = NULL;
+};
+
+#endif // MT_CHESS_QML_H
