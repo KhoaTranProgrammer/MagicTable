@@ -265,3 +265,22 @@ mt_void MT_Table::removeObject(MT_Object* obj)
     if (remove_index != -1)
         this->_objectlist.erase(this->_objectlist.begin() + remove_index);
 }
+
+mt_bool MT_Table::checkFreePosition(MT_Position& pos)
+{
+    for (mt_uint i = this->_objectlist.size(); i > 0;)
+    {
+        --i;
+        MT_Object *obj = this->_objectlist.at(i);
+        MT_Position *current_pos = obj->getCurPosition();
+        if (current_pos != NULL)
+        {
+            if (current_pos->getColumn() == pos.getColumn() &&
+                current_pos->getRow() == pos.getRow())
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}

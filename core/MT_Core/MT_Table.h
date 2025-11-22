@@ -74,6 +74,7 @@ public:
     mt_bool drawHistoryOne();
     mt_void clearData();
     mt_void removeObject(MT_Object* obj);
+    mt_bool checkFreePosition(MT_Position& pos);
 };
 
 #endif // MT_TABLE_H

@@ -40,8 +40,8 @@ enum MT_OBJECT_STATE : short;
 class MT_Object : public MT_Atom
 {
 private:
-    MT_Position* _pos; // Current position
-    MT_Position* _nextpos; // Next position
+    MT_Position* _pos = NULL; // Current position
+    MT_Position* _nextpos = NULL; // Next position
     mt_bool isDraw = false;
 
     MT_OBJECT_STATE _state;
