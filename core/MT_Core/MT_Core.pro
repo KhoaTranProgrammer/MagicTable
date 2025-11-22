@@ -65,3 +65,14 @@ win32 {
     CONFIG(release, debug|release):targetLibrary.files += $$OUT_PWD/release/*.dll
     INSTALLS += targetLibrary
 }
+
+android {
+    # Copy the header to the folder as the plugin binary
+    targetHeader.path += $$PWD/../../build/include
+    targetHeader.files += $$PWD/*.h
+    INSTALLS += targetHeader
+
+    CONFIG(debug, debug|release):targetLibrary.files += $$OUT_PWD/*.so
+    targetLibrary.path += $$PWD/../../build/lib
+    INSTALLS += targetLibrary
+}
