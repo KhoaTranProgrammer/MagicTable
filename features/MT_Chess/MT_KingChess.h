@@ -14,9 +14,15 @@ private:
     MT_Chess_Object* _newPosition = NULL;
     MT_Chess_Object* _kingPosition = NULL;
 
+    // Previous move
+    string _prev_Move = "";
+    mt_int _prevPositionRow = -1;
+    mt_int _prevPositionCol = -1;
+
     vector<string> splitString(const string& str, char delimiter);
     mt_void castling(string side, string color);
     MT_Chess_Object* findPawnSpecificMove(string piece, string color, MT_Position& pos);
+    MT_Chess_Object* findPawnSpecificMove2(string piece, string color, MT_Position& pos, mt_int prev_Col);
     string removeSubString(string larger, string sub);
 
 public:

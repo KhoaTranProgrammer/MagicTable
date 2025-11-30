@@ -465,6 +465,10 @@ mt_void MT_KingChess::review()
 
             MT_Chess_Object *w_pie = this->findPieceFromMove(piece, color, *w_pos, prev_col, prev_row);
 
+            // Use for specific pawn moving
+            this->_prevPositionCol = w_pie->getCurPosition()->getColumn();
+            this->_prevPositionRow = w_pie->getCurPosition()->getRow();
+
             this->_oldPosition->updatePosition(*w_pie->getCurPosition());
             this->_oldPosition->drawObject();
             this->_newPosition->updatePosition(*w_pos);
@@ -503,6 +507,9 @@ mt_void MT_KingChess::review()
                 this->_kingPosition->clearDrawing();
             }
         }
+
+        // Use for specific pawn moving
+        this->_prev_Move = token;
     }
 }
 
@@ -516,11 +523,9 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
         {
             if (prev_Row != -1 && res->getCurPosition()->getRow() == prev_Row)
             {
-                cout << "Previous Row" << endl;
                 vector<MT_Position*> nextMoves = findNextMove(piece, color, *res->getCurPosition());
                 for (mt_uint l = 0; l < nextMoves.size(); l++)
                 {
-                    // cout << "next Col: " << nextMoves.at(l)->getColumn() << " - next Row: " << nextMoves.at(l)->getRow() << endl;
                     if (nextMoves.at(l)->getColumn() == pos.getColumn() && nextMoves.at(l)->getRow() == pos.getRow())
                     {
                         return res;
@@ -546,7 +551,6 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                 vector<MT_Position*> nextMoves = findNextMove(piece, color, *res->getCurPosition());
                 for (mt_uint l = 0; l < nextMoves.size(); l++)
                 {
-                    // cout << "next Col: " << nextMoves.at(l)->getColumn() << " - next Row: " << nextMoves.at(l)->getRow() << endl;
                     if (nextMoves.at(l)->getColumn() == pos.getColumn() && nextMoves.at(l)->getRow() == pos.getRow())
                     {
                         return res;
@@ -561,6 +565,11 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
         MT_Chess_Object* nextMovePie = findPawnSpecificMove(piece, color, pos);
         if (nextMovePie != NULL) {
             return nextMovePie;
+        }
+
+        MT_Chess_Object* nextMovePie2 = findPawnSpecificMove2(piece, color, pos, prev_Col);
+        if (nextMovePie2 != NULL) {
+            return nextMovePie2;
         }
     }
     return NULL;
@@ -698,6 +707,51 @@ MT_Chess_Object* MT_KingChess::findPawnSpecificMove(string piece, string color, 
 
         this->_mttable.removeObject(this->_listKingChessObjects.at(remove_index));
         this->_listKingChessObjects.erase(this->_listKingChessObjects.begin() + remove_index);
+    }
+
+    return obj;
+}
+
+MT_Chess_Object* MT_KingChess::findPawnSpecificMove2(string piece, string color, MT_Position& pos, mt_int prev_Col)
+{
+    cout << "MT_KingChess::findPawnSpecificMove2" << endl;
+    MT_Chess_Object * obj = NULL;
+
+    mt_int prev_column = this->_prevPositionCol;
+    mt_int prev_row = this->_prevPositionRow;
+
+    cout << "Prev move: " << this->_prev_Move << endl;
+    cout << "prev_column: " << prev_column << " - prev_row: " << prev_row << endl;
+    cout << "curr_column: " << pos.getColumn() << " - curr_row: " << pos.getRow() << endl;
+
+    if (color == "white") {
+        if (pos.getColumn() == prev_column &&
+            pos.getRow() - 1 == prev_row) {
+
+            for(mt_uint re_index = 0; re_index < this->_listKingChessObjects.size(); re_index++) {
+                MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(re_index);
+                MT_Position *cur_pie_pos = cur_pie->getCurPosition();
+
+                if ((cur_pie_pos->getColumn() == prev_Col) &&
+                    (cur_pie_pos->getRow() == getRowNumber(this->_prev_Move[2]))) {
+                    obj = cur_pie;
+                }
+            }
+        }
+    } else {
+        if (pos.getColumn() == prev_column &&
+            pos.getRow() + 1 == prev_row) {
+
+            for(mt_uint re_index = 0; re_index < this->_listKingChessObjects.size(); re_index++) {
+                MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(re_index);
+                MT_Position *cur_pie_pos = cur_pie->getCurPosition();
+
+                if ((cur_pie_pos->getColumn() == prev_Col) &&
+                    (cur_pie_pos->getRow() == getRowNumber(this->_prev_Move[2]))) {
+                    obj = cur_pie;
+                }
+            }
+        }
     }
 
     return obj;
