@@ -280,6 +280,8 @@ mt_void MT_KingChess::review()
                 this->_result = "black";
             } else if (result_token.find("B1-0") != std::string::npos) {
                 this->_result = "white";
+            } else {
+                this->_result = "draw";
             }
         }
 
