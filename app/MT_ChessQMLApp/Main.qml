@@ -49,7 +49,7 @@ Window {
         anchors.margins: id_whitePlayerPos.height * 0.1
         text: ""
         color: "white"
-        font.pointSize: 16
+        font.pointSize: 14
         font.bold: true
     }
 
@@ -61,7 +61,7 @@ Window {
         anchors.margins: parent.height * 0.02
         text: ""
         color: "Yellow"
-        font.pointSize: 14
+        font.pointSize: 12
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignRight
     }
@@ -73,7 +73,7 @@ Window {
         anchors.margins: id_blackPlayerPos.height * 0.1
         text: ""
         color: "white"
-        font.pointSize: 16
+        font.pointSize: 14
         font.bold: true
     }
 
@@ -289,6 +289,9 @@ Window {
                 id_blackPlayer.x = id_winnerPos.x
                 id_blackPlayer.y = id_winnerPos.y
                 id_winannounce.text = "Black is winner"
+            }
+            if (q_id_chesstable.getResult() === "draw") {
+                id_winannounce.text = "Draw 1/2-1/2"
             }
         }
     }
