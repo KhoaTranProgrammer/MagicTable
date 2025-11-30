@@ -150,7 +150,19 @@ void MT_Chess_QML::addReviewData(QString filename)
     this->_blackImage = in.readLine();
 
     line = in.readLine(); // Read empty line
+
     line = in.readLine(); // Read steps
+
+    // Read file line by line
+    while (!in.atEnd()) {
+        QString oneline = in.readLine();
+        line += " ";
+        line += oneline;
+    }
+    line.replace("1-0", "0. Result 1-0");
+    line.replace("0-1", "0. Result 0-1");
+    line.replace("1/2-1/2", "0. Result 1/2-1/2");
+    qDebug() << line;
 
     file.close();
 
