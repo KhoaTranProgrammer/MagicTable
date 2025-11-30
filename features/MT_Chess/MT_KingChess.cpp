@@ -395,6 +395,16 @@ mt_void MT_KingChess::review()
                     }
                     w_column = getColumnNumber(token[3]);
                     w_row = getRowNumber(token[4]);
+                } else if (token[3] == '=') { // We8=Q+
+                    // Pawn promotion
+                    w_column = getColumnNumber(token[1]);
+                    w_row = getRowNumber(token[2]);
+                    piece = "pawn";
+                    if (token[4] == 'N') pawnPromote = "knight";
+                    if (token[4] == 'B') pawnPromote = "bishop";
+                    if (token[4] == 'Q') pawnPromote = "queen";
+                    if (token[4] == 'R') pawnPromote = "rook";
+                    if (token[4] == 'K') pawnPromote = "king";
                 } else {
                     prev_col = getColumnNumber(token[2]);
                     w_column = getColumnNumber(token[3]);
