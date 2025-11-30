@@ -429,6 +429,19 @@ mt_void MT_KingChess::review()
             if (token[1] == 'R') piece = "rook";
             if (token[1] == 'K') piece = "king";
         }
+        else if (token.size() == 8 && token[7] == '+' && token[5] == '=') // Bcxd1=Q+
+        {
+            isKingCapture = true;
+            w_column = getColumnNumber(token[3]);
+            w_row = getRowNumber(token[4]);
+            prev_col = getColumnNumber(token[1]);
+            piece = "pawn";
+            if (token[6] == 'N') pawnPromote = "knight";
+            if (token[6] == 'B') pawnPromote = "bishop";
+            if (token[6] == 'Q') pawnPromote = "queen";
+            if (token[6] == 'R') pawnPromote = "rook";
+            if (token[6] == 'K') pawnPromote = "king";
+        }
 
         if (token[0] == 'W') {
             this->_stepNumber++;
