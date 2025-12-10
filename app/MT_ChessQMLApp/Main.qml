@@ -58,12 +58,12 @@ Window {
         anchors.right: id_table.left
         anchors.left: id_button.left
         anchors.verticalCenter: id_root.verticalCenter
-        anchors.margins: parent.height * 0.02
+        anchors.margins: parent.height * 0.01
         text: ""
         color: "Yellow"
         font.pointSize: 12
         wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignRight
+        horizontalAlignment: Text.AlignLeft
     }
 
     Text {
@@ -344,7 +344,7 @@ Window {
         id: fileDialog
         title: "Select a File"
         currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
-        nameFilters: ["Text files (*.txt)", "All files (*)"]
+        nameFilters: ["Text files (*.pgn)", "All files (*)"]
 
         onAccepted: {
             console.log("Selected file:", selectedFile)
