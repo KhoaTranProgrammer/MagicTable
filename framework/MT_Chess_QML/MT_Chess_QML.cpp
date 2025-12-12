@@ -314,3 +314,13 @@ void MT_Chess_QML::setBlackPrison(QQuickItem *item)
     this->_mt_chess->createBlackPrisonTable((int)item->width(), (int)item->height(), 8, 2);
     this->_blackPrison = item;
 }
+
+QString MT_Chess_QML::getWhiteClockTime()
+{
+    return QString::fromStdString(this->_mt_chess->getWhiteClockTime());
+}
+
+QString MT_Chess_QML::getBlackClockTime()
+{
+    return QString::fromStdString(this->_mt_chess->getBlackClockTime());
+}

@@ -40,6 +40,8 @@ public slots:
     QString getBlackStep();
     void setWhitePrison(QQuickItem *item);
     void setBlackPrison(QQuickItem *item);
+    QString getWhiteClockTime();
+    QString getBlackClockTime();
 
 private:
     QQmlEngine* _mt_engine;
