@@ -26,7 +26,9 @@ protected:
     string _result = "draw";
     mt_int _stepNumber = 0;
     string _whiteStep = "";
+    string _whiteClockTime = "";
     string _blackStep = "";
+    string _blackClockTime = "";
 
     // Use for prisoner
     string _piecePrisoner = "";
@@ -47,6 +49,8 @@ public:
     string getBlackStep();
     string getPiecePrisoner();
     string getColorPrisoner();
+    string getWhiteClockTime();
+    string getBlackClockTime();
 
     virtual mt_void addDefaultPiece(MT_Chess_Object& piece);
     virtual mt_void addReviewData(string filename);

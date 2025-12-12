@@ -139,3 +139,13 @@ string MT_Chess::getBlackStep()
     string result = this->_blackStep;
     return result.erase(0, 1);
 }
+
+string MT_Chess::getWhiteClockTime()
+{
+    return this->_whiteClockTime;
+}
+
+string MT_Chess::getBlackClockTime()
+{
+    return this->_blackClockTime;
+}

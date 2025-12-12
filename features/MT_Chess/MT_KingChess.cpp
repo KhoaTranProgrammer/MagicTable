@@ -305,6 +305,12 @@ mt_void MT_KingChess::review()
         string token = this->_move_steps_in_PGN.at(0);
         this->_move_steps_in_PGN.erase(this->_move_steps_in_PGN.begin());
 
+        string clocktime = "";
+        if (this->_time_clock.size() > 0) {
+            clocktime = this->_time_clock.at(0);
+            this->_time_clock.erase(this->_time_clock.begin());
+        }
+
         if (token.find("Result") != std::string::npos) {
             this->isFinished = true;
             string result_token = this->_move_steps_in_PGN.at(0);
@@ -492,10 +498,12 @@ mt_void MT_KingChess::review()
             this->_stepNumber++;
             this->_whiteStep = token;
             this->_blackStep = "";
+            this->_whiteClockTime = clocktime;
             color = "white";
         }
         else {
             this->_blackStep = token;
+            this->_blackClockTime = clocktime;
             color = "black";
         }
 
