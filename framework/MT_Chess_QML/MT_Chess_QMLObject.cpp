@@ -25,7 +25,6 @@ void MT_Chess_QMLObject::drawObject()
 
 void MT_Chess_QMLObject::move()
 {
-    cout << "MT_Chess_QMLObject::move" << endl;
     // this->createObject(this->getNextPosition()->getX(), this->getNextPosition()->getY(),
     //                    this->getNextPosition()->getW(), this->getNextPosition()->getH(),
     //                    this->getAnimationTime());
@@ -47,13 +46,6 @@ void MT_Chess_QMLObject::drawSpecific()
 
 void MT_Chess_QMLObject::createObject(int x, int y, int w, int h, int animationTime)
 {
-    // cout << "MT_Chess_QMLObject::createObject"
-    //      << " x: " << x
-    //      << " y: " << y
-    //      << " w: " << w
-    //      << " h: " << h
-    //      << endl;
-
     if (this->_quickitem != NULL)
         delete this->_quickitem;
     if (this->_component != NULL)

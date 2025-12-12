@@ -97,7 +97,6 @@ void MT_Chess_QML::drawData()
 {
     if (this->_mt_chess != NULL)
         this->_mt_chess->drawData();
-    cout << "MT_Chess_QML::drawData" << endl;
 }
 
 void MT_Chess_QML::addReviewData(QString filename)
@@ -169,24 +168,87 @@ void MT_Chess_QML::addReviewData(QString filename)
     this->_mt_chess->addReviewData(line.toStdString());
 }
 
+void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
+{
+    bool isHeaderComplete = false;
+    QString refine_name = filename;
+    refine_name.remove("file:///");
+
+    QFile file(refine_name);
+
+    // Try to open the file in read-only text mode
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qCritical() << "Cannot open file:" << file.errorString();
+    }
+
+    QTextStream in(&file);
+    QString line = "";
+
+    // Read file line by line
+    while (!in.atEnd()) {
+        QString oneline = in.readLine();
+        if (isHeaderComplete == false) {
+            if (oneline.contains("Event")) this->_information = this->_information + oneline + "\n";
+            if (oneline.contains("Site")) this->_information = this->_information + oneline + "\n";
+            if (oneline.contains("Date")) this->_information = this->_information + oneline + "\n";
+            if (oneline.contains("Round")) this->_information = this->_information + oneline + "\n";
+            if (oneline.contains("White ")) {
+                this->_whitePlayer = oneline;
+                this->_whitePlayer.remove("[White \"");
+                this->_whitePlayer.remove("\"]");
+            }
+            if (oneline.contains("Black ")) {
+                this->_blackPlayer = oneline;
+                this->_blackPlayer.remove("[Black \"");
+                this->_blackPlayer.remove("\"]");
+            }
+            if (oneline.contains("WhiteElo ")) {
+                this->_whiteElo = oneline;
+                this->_whiteElo.remove("[WhiteElo \"");
+                this->_whiteElo.remove("\"]");
+            }
+            if (oneline.contains("BlackElo ")) {
+                this->_blackElo = oneline;
+                this->_blackElo.remove("[BlackElo \"");
+                this->_blackElo.remove("\"]");
+            }
+
+            if (oneline == "") isHeaderComplete = true;
+        } else {
+            if (line != "") line += " ";
+            line += oneline;
+        }
+    }
+    line.replace("1-0", "0. Result 1-0");
+    line.replace("0-1", "0. Result 0-1");
+    line.replace("1/2-1/2", "0. Result 1/2-1/2");
+
+    qDebug() << this->_information;
+    qDebug() << line;
+
+    this->_mt_chess->addReviewDataWithTimeFormat(line.toStdString());
+}
+
 void MT_Chess_QML::review()
 {
     this->_mt_chess->review();
-    if (this->_mt_chess->getPiecePrisoner() != "" && this->_mt_chess->getColorPrisoner() != "") {
-        if (this->_mt_chess->getColorPrisoner() == "white") {
-            this->_mt_chess->addPieceToPrison(
-                *(new MT_Chess_QMLObject(*_mt_engine, *this->_whitePrison,
-                                         this->_mt_chess->getPiecePrisoner(),
-                                         this->_mt_chess->getColorPrisoner())));
-            this->_mt_chess->drawWhitePrison();
-        }
+    if (this->_whitePrison != NULL && this->_blackPrison != NULL) {
+        if (this->_mt_chess->getPiecePrisoner() != "" && this->_mt_chess->getColorPrisoner() != "") {
+            if (this->_mt_chess->getColorPrisoner() == "white") {
+                this->_mt_chess->addPieceToPrison(
+                    *(new MT_Chess_QMLObject(*_mt_engine, *this->_whitePrison,
+                                             this->_mt_chess->getPiecePrisoner(),
+                                             this->_mt_chess->getColorPrisoner())));
+                this->_mt_chess->drawWhitePrison();
+            }
 
-        if (this->_mt_chess->getColorPrisoner() == "black") {
-            this->_mt_chess->addPieceToPrison(
-                *(new MT_Chess_QMLObject(*_mt_engine, *this->_blackPrison,
-                                         this->_mt_chess->getPiecePrisoner(),
-                                         this->_mt_chess->getColorPrisoner())));
-            this->_mt_chess->drawBlackPrison();
+            if (this->_mt_chess->getColorPrisoner() == "black") {
+                this->_mt_chess->addPieceToPrison(
+                    *(new MT_Chess_QMLObject(*_mt_engine, *this->_blackPrison,
+                                             this->_mt_chess->getPiecePrisoner(),
+                                             this->_mt_chess->getColorPrisoner())));
+                this->_mt_chess->drawBlackPrison();
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ public slots:
     void createPieces();
     void drawData();
     void addReviewData(QString filename);
+    void addReviewDataWithTimeFormat(QString filename);
     void review();
     bool isGameFinish();
     QString getWhitePlayerName();
@@ -49,6 +50,8 @@ private:
     QString _whitePlayer = "";
     QString _whiteImage = "";
     QString _blackImage = "";
+    QString _whiteElo = "";
+    QString _blackElo = "";
     QQuickItem *_whitePrison = NULL;
     QQuickItem *_blackPrison = NULL;
 };
