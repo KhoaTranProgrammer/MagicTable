@@ -48,9 +48,17 @@ vector<string> MT_KingChess::splitString(const string& str, char delimiter)
     return tokens;
 }
 
+mt_int MT_KingChess::convertStringToSecond(const std::string &timeStr)
+{
+    int hours, minutes, seconds;
+    char sep1, sep2;
+    std::istringstream iss(timeStr);
+    iss >> hours >> sep1 >> minutes >> sep2 >> seconds;
+    return hours * 60 * 60 + minutes * 60 + seconds;
+}
+
 mt_void MT_KingChess::addRemarkPositions(MT_Chess_Object& oldpos, MT_Chess_Object& newpos)
 {
-    cout << "MT_KingChess::addRemarkPositions" << endl;
     this->_oldPosition = &oldpos;
     this->_newPosition = &newpos;
 }
@@ -234,11 +242,6 @@ mt_void MT_KingChess::addReviewData(string filename)
     vector<string> tokens(it, end);
     for (const auto& token : tokens) {
         if (!token.empty()) {
-            cout << "Token: " << token << endl;
-            // if (token.find("Result") != std::string::npos) {
-            //     cout << "End of game" << endl;
-            // }
-            // else {
             vector<string> steps = splitString(token, ' ');
             if (steps.size() == 2) {
                 this->_move_steps_in_PGN.push_back("W" + steps[0]);
@@ -246,7 +249,37 @@ mt_void MT_KingChess::addReviewData(string filename)
             } else {
                 this->_move_steps_in_PGN.push_back("W" + steps[0]);
             }
-            // }
+        }
+    }
+}
+
+mt_void MT_KingChess::addReviewDataWithTimeFormat(string input)
+{
+    string data = input;
+    data = " " + data;
+    regex re(" [0-9]+. | [0-9]+... "); // Matches spaces, dots, and numbers
+    sregex_token_iterator it(data.begin(), data.end(), re, -1);
+    sregex_token_iterator end;
+
+    mt_uint num_of_steps = 0;
+    vector<string> tokens(it, end);
+    for (const auto& token : tokens) {
+        if (!token.empty()) {
+            vector<string> steps = splitString(token, ' ');
+
+            if (steps.size() == 3) {
+                string timedata = steps[2];
+                size_t pos = timedata.find(']');
+                timedata.erase(pos, 2);
+                this->_time_clock.push_back(timedata);
+                cout << steps[0] << endl;
+                if (num_of_steps % 2 == 0) this->_move_steps_in_PGN.push_back("W" + steps[0]);
+                else this->_move_steps_in_PGN.push_back("B" + steps[0]);
+                num_of_steps++;
+            } else {
+                this->_move_steps_in_PGN.push_back("W" + steps[0]);
+                this->_move_steps_in_PGN.push_back("B" + steps[1]);
+            }
         }
     }
 }

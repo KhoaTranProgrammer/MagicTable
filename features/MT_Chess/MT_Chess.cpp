@@ -83,6 +83,11 @@ mt_void MT_Chess::addReviewData(string filename)
 
 }
 
+mt_void MT_Chess::addReviewDataWithTimeFormat(string input)
+{
+
+}
+
 mt_void MT_Chess::addRemarkPositions(MT_Chess_Object& oldpos, MT_Chess_Object& newpos)
 {
 

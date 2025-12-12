@@ -5,6 +5,9 @@
 #include <iostream>
 #include <regex>
 #include <string>
+#include <sstream>
+#include <iomanip>
+#include <ctime>
 
 class MT_KingChess : public MT_Chess
 {
@@ -24,6 +27,7 @@ private:
     MT_Chess_Object* findPawnSpecificMove(string piece, string color, MT_Position& pos);
     MT_Chess_Object* findPawnSpecificMove2(string piece, string color, MT_Position& pos, mt_int prev_Col);
     string removeSubString(string larger, string sub);
+    mt_int convertStringToSecond(const std::string &timeStr);
 
 public:
     MT_KingChess();
@@ -32,6 +36,7 @@ public:
     mt_void addRemarkPositions(MT_Chess_Object& oldpos, MT_Chess_Object& newpos);
     mt_void addKingHighlight(MT_Chess_Object& kinghighlight);
     mt_void addReviewData(string filename);
+    mt_void addReviewDataWithTimeFormat(string input);
     mt_void review();
     mt_bool isGameFinish();
     string getResult();

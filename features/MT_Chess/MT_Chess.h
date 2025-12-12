@@ -21,6 +21,7 @@ protected:
     MT_Table _mttableBlackPrison;
     vector<MT_RefObject*> _move_steps; // This is used for review feature
     vector<string> _move_steps_in_PGN;
+    vector<string> _time_clock;
     mt_bool isFinished = false;
     string _result = "draw";
     mt_int _stepNumber = 0;
@@ -49,6 +50,7 @@ public:
 
     virtual mt_void addDefaultPiece(MT_Chess_Object& piece);
     virtual mt_void addReviewData(string filename);
+    virtual mt_void addReviewDataWithTimeFormat(string input);
     virtual mt_void review();
     virtual mt_bool isGameFinish();
     virtual string getResult();
