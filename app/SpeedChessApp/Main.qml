@@ -10,6 +10,14 @@ Window {
 
     Component.onCompleted: {
         q_id_chesstable.addReviewDataWithTimeFormat("file:///C:/Users/admin/Downloads/Van Foreest, Jorden_vs_Jobava, Baadur_2025.11.30.pgn")
+        console.log(q_id_chesstable.getWhiteImage())
+        console.log(q_id_chesstable.getBlackImage())
+        id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
+        id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
+        id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
+        id_txt_blackplayer_elo.text = "Elo: " + q_id_chesstable.getBlackElo()
+        id_txt_whiteplayer.text = q_id_chesstable.getWhitePlayerName()
+        id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
     }
 
     Rectangle {
@@ -52,6 +60,118 @@ Window {
     }
 
     Rectangle {
+        id: id_rec_blackplayer
+        anchors {
+            left: id_root.left
+            bottom: id_table.top
+            margins: 5
+        }
+        width: id_root.width * 0.2
+        height: width
+        color: "black"
+
+        Image {
+            id: id_img_whitePlayerImage
+            source: ""
+            anchors.fill: parent
+            visible: true
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+
+    Text {
+        id: id_txt_blackplayer
+        anchors.left: id_rec_blackplayer.right
+        anchors.top: id_rec_blackplayer.top
+        anchors.margins: 2
+        text: ""
+        color: "black"
+        font.pointSize: 14
+        font.bold: true
+        font.family: "Helvetica"
+    }
+
+    Text {
+        id: id_txt_blackplayer_elo
+        anchors.left: id_rec_blackplayer.right
+        anchors.top: id_txt_blackplayer.bottom
+        anchors.margins: 2
+        text: ""
+        color: "black"
+        font.pointSize: 14
+        font.bold: true
+        font.family: "Helvetica"
+    }
+
+    Text {
+        id: id_txt_blackplayer_clock
+        anchors.right: id_root.right
+        anchors.top: id_rec_blackplayer.top
+        anchors.margins: 5
+        text: ""
+        color: "black"
+        font.pointSize: 14
+        font.bold: true
+        font.family: "DejaVu Sans Mono"
+    }
+
+    Rectangle {
+        id: id_rec_whiteplayer
+        anchors {
+            left: id_root.left
+            top: id_table.bottom
+            margins: 5
+        }
+        width: id_root.width * 0.2
+        height: width
+        color: "black"
+
+        Image {
+            id: id_img_blackPlayerImage
+            source: ""
+            anchors.fill: parent
+            visible: true
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+
+    Text {
+        id: id_txt_whiteplayer
+        anchors.left: id_rec_whiteplayer.right
+        anchors.top: id_rec_whiteplayer.top
+        anchors.margins: 2
+        text: ""
+        color: "black"
+        font.pointSize: 14
+        font.bold: true
+        font.family: "Helvetica"
+    }
+
+    Text {
+        id: id_txt_whiteplayer_elo
+        anchors.left: id_rec_whiteplayer.right
+        anchors.top: id_txt_whiteplayer.bottom
+        anchors.margins: 2
+        text: ""
+        color: "black"
+        font.pointSize: 14
+        font.bold: true
+        font.family: "Helvetica"
+    }
+
+    Text {
+        id: id_txt_whiteplayer_clock
+        anchors.right: id_root.right
+        anchors.top: id_rec_whiteplayer.top
+        anchors.margins: 5
+        text: ""
+        color: "black"
+        font.pointSize: 14
+        font.bold: true
+        font.family: "DejaVu Sans Mono"
+    }
+
+    Rectangle {
         id: id_button
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -67,9 +187,11 @@ Window {
                 q_id_chesstable.drawData()
 
                 if (q_id_chesstable.getBlackStep() === "") {
-                    console.log(q_id_chesstable.getStepNumber() + ": " + q_id_chesstable.getWhiteStep() + " - Clk: " + q_id_chesstable.getWhiteClockTime())
+                    // console.log(q_id_chesstable.getStepNumber() + ": " + q_id_chesstable.getWhiteStep() + " - Clk: " + q_id_chesstable.getWhiteClockTime())
+                    id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
                 } else {
-                    console.log(q_id_chesstable.getStepNumber() + ": " + q_id_chesstable.getBlackStep() + " - Clk: " + q_id_chesstable.getBlackClockTime())
+                    // console.log(q_id_chesstable.getStepNumber() + ": " + q_id_chesstable.getBlackStep() + " - Clk: " + q_id_chesstable.getBlackClockTime())
+                    id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
                 }
             }
         }
