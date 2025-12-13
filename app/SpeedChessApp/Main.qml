@@ -24,6 +24,10 @@ Window {
         id: id_root
         anchors.fill: parent
         color: "transparent"
+
+        Background {
+            anchors.fill: parent
+        }
     }
 
     Rectangle {
@@ -75,7 +79,7 @@ Window {
             source: ""
             anchors.fill: parent
             visible: true
-            fillMode: Image.PreserveAspectFit
+            // fillMode: Image.PreserveAspectFit
         }
     }
 
@@ -85,7 +89,7 @@ Window {
         anchors.top: id_rec_blackplayer.top
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -97,7 +101,7 @@ Window {
         anchors.top: id_txt_blackplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -106,10 +110,10 @@ Window {
     Text {
         id: id_txt_blackplayer_clock
         anchors.right: id_root.right
-        anchors.top: id_rec_blackplayer.top
+        anchors.bottom: id_table.top
         anchors.margins: 5
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "DejaVu Sans Mono"
@@ -131,7 +135,7 @@ Window {
             source: ""
             anchors.fill: parent
             visible: true
-            fillMode: Image.PreserveAspectFit
+            // fillMode: Image.PreserveAspectFit
         }
     }
 
@@ -141,7 +145,7 @@ Window {
         anchors.top: id_rec_whiteplayer.top
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -153,7 +157,7 @@ Window {
         anchors.top: id_txt_whiteplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -165,7 +169,7 @@ Window {
         anchors.top: id_rec_whiteplayer.top
         anchors.margins: 5
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "DejaVu Sans Mono"
@@ -173,11 +177,18 @@ Window {
 
     Rectangle {
         id: id_button
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: width * 0.2
+        anchors.top: id_root.top
+        anchors.right: id_root.right
+        anchors.margins: 5
+        width: id_root.width * 0.12
+        height: width
         color: "transparent"
+
+        Image {
+            source: Qt.resolvedUrl("icon/logo.png")
+            anchors.fill: parent
+        }
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
