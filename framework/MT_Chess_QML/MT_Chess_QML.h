@@ -7,6 +7,14 @@
 #include <QPainter>
 #include <QQuickItemGrabResult>
 #include <QDateTime>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QUrl>
+#include <QTextStream>
+#include <QObject>
+#include <iostream>
+
 #include "MT_Chess_QMLObject.h"
 #include "MT_Chess_QMLPositionObject.h"
 #include "MT_Chess.h"
@@ -56,6 +64,8 @@ private:
     QString _blackElo = "";
     QQuickItem *_whitePrison = NULL;
     QQuickItem *_blackPrison = NULL;
+
+    void readChessPlayerInfor();
 };
 
 #endif // MT_CHESS_QML_H

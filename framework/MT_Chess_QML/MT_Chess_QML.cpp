@@ -168,6 +168,58 @@ void MT_Chess_QML::addReviewData(QString filename)
     this->_mt_chess->addReviewData(line.toStdString());
 }
 
+void MT_Chess_QML::readChessPlayerInfor()
+{
+    // Example: Raw GitHub file URL (must be the "raw" link)
+    QUrl url("https://github.com/KhoaTranProgrammer/Common_Topics/blob/main/Chess_Players.json");
+
+    // Network manager for HTTP request
+    QNetworkAccessManager manager;
+    QNetworkRequest request(url);
+
+    // Send GET request
+    QNetworkReply *reply = manager.get(request);
+
+    // Use event loop to wait for the request to finish (synchronous for simplicity)
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Read file content
+    QByteArray data = reply->readAll();
+    QString fileContent = QString::fromUtf8(data);
+
+    // Basic split by comma
+    fileContent = fileContent.split("rawLines")[1];
+    fileContent = fileContent.split("stylingDirectives")[0];
+    fileContent.remove('\\');
+    fileContent.remove("\"");
+    fileContent.replace(":[{,", "{");
+    fileContent.replace(":[,", ":[");
+    fileContent.replace("},],}],", "}]}");
+    fileContent.replace(",,", ",\n");
+
+    reply->deleteLater();
+
+    // qDebug() << "File content:\n" << fileContent;
+    QStringList players_list = fileContent.split("\n");
+    for(int i = 0; i < players_list.count(); i++) {
+        // qDebug() << players_list[i];
+        QString player_name = players_list[i].split(", image: ")[0];
+        QString image_link = players_list[i].split(", image: ")[1];
+
+        image_link.remove("}]}");
+        image_link.remove("},");
+        image_link.remove("}");
+
+        if (player_name.contains(this->_whitePlayer)) this->_whiteImage = image_link;
+        if (player_name.contains(this->_blackPlayer)) this->_blackImage = image_link;
+    }
+
+    qDebug() << "White Player: " << this->_whitePlayer << " - Image: " << this->_whiteImage;
+    qDebug() << "Black Player: " << this->_blackPlayer << " - Image: " << this->_blackImage;
+}
+
 void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
 {
     bool isHeaderComplete = false;
@@ -227,6 +279,8 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
     qDebug() << line;
 
     this->_mt_chess->addReviewDataWithTimeFormat(line.toStdString());
+
+    this->readChessPlayerInfor();
 }
 
 void MT_Chess_QML::review()

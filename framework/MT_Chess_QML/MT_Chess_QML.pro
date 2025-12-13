@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = MT_Chess_QML
-QT += qml quick
+QT += qml quick network
 CONFIG += plugin c++11
 
 TARGET = $$qtLibraryTarget($$TARGET)
