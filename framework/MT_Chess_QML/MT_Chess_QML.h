@@ -50,6 +50,8 @@ public slots:
     void setBlackPrison(QQuickItem *item);
     QString getWhiteClockTime();
     QString getBlackClockTime();
+    QString getWhiteElo();
+    QString getBlackElo();
 
 private:
     QQmlEngine* _mt_engine;

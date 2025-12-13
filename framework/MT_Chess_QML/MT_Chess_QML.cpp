@@ -378,3 +378,13 @@ QString MT_Chess_QML::getBlackClockTime()
 {
     return QString::fromStdString(this->_mt_chess->getBlackClockTime());
 }
+
+QString MT_Chess_QML::getWhiteElo()
+{
+    return this->_whiteElo;
+}
+
+QString MT_Chess_QML::getBlackElo()
+{
+    return this->_blackElo;
+}
