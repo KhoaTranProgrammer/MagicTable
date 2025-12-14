@@ -39,7 +39,7 @@ set_target_properties(appSpeedChessApp PROPERTIES
 )
 
 target_link_libraries(appSpeedChessApp
-    PRIVATE Qt6::Quick
+    PRIVATE Qt6::Quick Qt6::Multimedia
 )
 
 include(GNUInstallDirs)
@@ -51,3 +51,17 @@ install(TARGETS appSpeedChessApp
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../../build/lib/)
 
+set_target_properties(appSpeedChessApp PROPERTIES
+    QT_ANDROID_EXTRA_LIBS
+    "${CMAKE_CURRENT_LIST_DIR}/../../build/lib/MT_Chess_QML/libMT_Chess_QML_arm64-v8a.so;${CMAKE_CURRENT_LIST_DIR}/../../build/lib/libMT_Core_arm64-v8a.so;${CMAKE_CURRENT_LIST_DIR}/../../build/lib/libMT_Chess_arm64-v8a.so"
+)
+
+set_target_properties(appSpeedChessApp PROPERTIES
+    QT_ANDROID_EXTRA_PLUGINS
+    "${CMAKE_CURRENT_LIST_DIR}/../../build/lib/MT_Chess_QML/"
+)
+
+set_target_properties(appSpeedChessApp PROPERTIES
+    QT_ANDROID_PACKAGE_SOURCE_DIR
+    "${CMAKE_CURRENT_LIST_DIR}/android"
+)

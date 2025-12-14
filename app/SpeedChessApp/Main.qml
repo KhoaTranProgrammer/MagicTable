@@ -6,21 +6,17 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    width: 480
-    height: 640
+    // visibility: Window.FullScreen
+    width: 720
+    height: 1544
+
     visible: true
     title: qsTr("Hello World")
 
     property bool isLoaded: false
 
     Component.onCompleted: {
-        // q_id_chesstable.addReviewDataWithTimeFormat("file:///C:/Users/admin/Downloads/Ju, Wenjun_vs_Hou, Yifan_2025.08.22.pgn")
-        // id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
-        // id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
-        // id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
-        // id_txt_blackplayer_elo.text = "Elo: " + q_id_chesstable.getBlackElo()
-        // id_txt_whiteplayer.text = q_id_chesstable.getWhitePlayerName()
-        // id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
+
     }
 
     Rectangle {
@@ -35,9 +31,10 @@ Window {
 
     Rectangle {
         id: id_table
-        width: id_root.width * 0.9
+        width: id_root.width * 0.98
         height: width
-        anchors.centerIn: id_root
+        anchors.verticalCenter: id_root.verticalCenter
+        anchors.horizontalCenter: id_root.horizontalCenter
         color: "transparent"
         Image {
             source: Qt.resolvedUrl("icon/table.png")
@@ -189,7 +186,7 @@ Window {
 
     Text {
         id: id_whitewinannounce
-        anchors.bottom: id_root.bottom
+        anchors.top: id_txt_whiteplayer_elo.bottom
         anchors.left: id_rec_whiteplayer.right
         anchors.margins: 2
         text: ""
@@ -209,7 +206,7 @@ Window {
 
     Text {
         id: id_txt_infor
-        anchors.bottom: id_root.bottom
+        anchors.top: id_txt_whiteplayer_elo.bottom
         anchors.right: id_root.right
         anchors.margins: 2
         text: ""
@@ -239,10 +236,10 @@ Window {
 
     Rectangle {
         id: id_button
-        anchors.top: id_root.top
+        anchors.top: id_rec_blackplayer.top
         anchors.right: id_root.right
         anchors.margins: 5
-        width: id_root.width * 0.12
+        width: id_root.width * 0.1
         height: width
         color: "transparent"
 
