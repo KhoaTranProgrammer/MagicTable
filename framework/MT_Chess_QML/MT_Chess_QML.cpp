@@ -241,7 +241,7 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
         QString oneline = in.readLine();
         if (isHeaderComplete == false) {
             if (oneline.contains("Event")) this->_information = this->_information + oneline + "\n";
-            if (oneline.contains("Site")) this->_information = this->_information + oneline + "\n";
+            if (oneline.contains("Site")) {};
             if (oneline.contains("Date")) this->_information = this->_information + oneline + "\n";
             if (oneline.contains("Round")) this->_information = this->_information + oneline + "\n";
             if (oneline.contains("White ")) {
