@@ -9,7 +9,7 @@ Window {
     title: qsTr("Hello World")
 
     Component.onCompleted: {
-        q_id_chesstable.addReviewDataWithTimeFormat("file:///C:/Users/admin/Downloads/Van Foreest, Jorden_vs_Jobava, Baadur_2025.11.30.pgn")
+        q_id_chesstable.addReviewDataWithTimeFormat("file:///C:/Users/admin/Downloads/Ju, Wenjun_vs_Hou, Yifan_2025.08.22.pgn")
         console.log(q_id_chesstable.getWhiteImage())
         console.log(q_id_chesstable.getBlackImage())
         id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
@@ -175,6 +175,46 @@ Window {
         font.family: "DejaVu Sans Mono"
     }
 
+    Text {
+        id: id_blackwinannounce
+        anchors.bottom: id_table.top
+        anchors.left: id_rec_blackplayer.right
+        anchors.margins: 2
+        text: ""
+        color: "yellow"
+        font.pointSize: 50
+        font.bold: true
+
+        PropertyAnimation on opacity {
+            from: 0.0
+            to: 1.0
+            duration: 2000
+            loops: Animation.Infinite
+            easing.type: Easing.InOutQuad
+            running: true
+        }
+    }
+
+    Text {
+        id: id_whitewinannounce
+        anchors.bottom: id_root.bottom
+        anchors.left: id_rec_whiteplayer.right
+        anchors.margins: 2
+        text: ""
+        color: "yellow"
+        font.pointSize: 50
+        font.bold: true
+
+        PropertyAnimation on opacity {
+            from: 0.0
+            to: 1.0
+            duration: 2000
+            loops: Animation.Infinite
+            easing.type: Easing.InOutQuad
+            running: true
+        }
+    }
+
     Rectangle {
         id: id_button
         anchors.top: id_root.top
@@ -194,16 +234,49 @@ Window {
             onClicked: {
                 // fileDialog.open()
 
-                q_id_chesstable.review()
-                q_id_chesstable.drawData()
+                // For debugging
+                // q_id_chesstable.review()
+                // q_id_chesstable.drawData()
 
-                if (q_id_chesstable.getBlackStep() === "") {
-                    // console.log(q_id_chesstable.getStepNumber() + ": " + q_id_chesstable.getWhiteStep() + " - Clk: " + q_id_chesstable.getWhiteClockTime())
-                    id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
-                } else {
-                    // console.log(q_id_chesstable.getStepNumber() + ": " + q_id_chesstable.getBlackStep() + " - Clk: " + q_id_chesstable.getBlackClockTime())
-                    id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+                // if (q_id_chesstable.getBlackStep() === "") {
+                //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
+                // } else {
+                //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+                // }
+
+                id_timer.running = true
+            }
+        }
+    }
+
+    Timer {
+        id: id_timer
+        interval: 1000; running: false; repeat: true
+
+        onTriggered: {
+            q_id_chesstable.review()
+
+            if (q_id_chesstable.getBlackStep() === "") {
+                id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
+            } else {
+                id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+            }
+
+            if (q_id_chesstable.isGameFinish()) {
+                id_timer.running = false
+
+                if (q_id_chesstable.getResult() === "white") {
+                    id_whitewinannounce.text = "WINNER"
                 }
+                if (q_id_chesstable.getResult() === "black") {
+                    id_blackwinannounce.text = "WINNER"
+                }
+                if (q_id_chesstable.getResult() === "draw") {
+                    id_whitewinannounce.text = "DRAW"
+                    id_blackwinannounce.text = "DRAW"
+                }
+            } else {
+                q_id_chesstable.drawData()
             }
         }
     }
