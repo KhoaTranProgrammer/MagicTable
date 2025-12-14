@@ -17,6 +17,7 @@
 
 #include "MT_Chess_QMLObject.h"
 #include "MT_Chess_QMLPositionObject.h"
+#include "MT_Chess_QMLEvalObject.h"
 #include "MT_Chess.h"
 
 class MT_Chess_QML : public QQuickPaintedItem

@@ -11,6 +11,7 @@ DESTDIR = $$PWD/../../build/lib/MT_Chess_QML
 # Input
 SOURCES += \
         MT_Chess_QML.cpp \
+        MT_Chess_QMLEvalObject.cpp \
         MT_Chess_QMLPlugin.cpp \
         MT_Chess_QMLObject.cpp \
         MT_Chess_QMLPositionObject.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
         MT_Chess_QML.h \
+        MT_Chess_QMLEvalObject.h \
         MT_Chess_QMLPlugin.h \
         MT_Chess_QMLObject.h \
         MT_Chess_QMLPositionObject.h \

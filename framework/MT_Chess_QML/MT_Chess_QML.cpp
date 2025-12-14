@@ -267,8 +267,18 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
 
             if (oneline == "") isHeaderComplete = true;
         } else {
-            if (line != "") line += " ";
-            line += oneline;
+            if (oneline.contains("Evaluate:")) {
+                oneline.remove("Evaluate:");
+                this->_mt_chess->addEvaluationData(oneline.toStdString());
+
+                // Add Evaluation Highlight
+                this->_mt_chess->addEvaluationHighlight(*(new MT_Chess_QMLEvalObject(*_mt_engine, *this)));
+            } else {
+                if (oneline != "") {
+                    if (line != "") line += " ";
+                    line += oneline;
+                }
+            }
         }
     }
     line.replace("1-0", "0. Result 1-0");
