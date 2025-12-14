@@ -1,4 +1,7 @@
 import QtQuick
+import QtQuick.Effects
+import QtMultimedia
+import QtQuick.Controls
 import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
@@ -8,16 +11,16 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+    property bool isLoaded: false
+
     Component.onCompleted: {
-        q_id_chesstable.addReviewDataWithTimeFormat("file:///C:/Users/admin/Downloads/Ju, Wenjun_vs_Hou, Yifan_2025.08.22.pgn")
-        console.log(q_id_chesstable.getWhiteImage())
-        console.log(q_id_chesstable.getBlackImage())
-        id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
-        id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
-        id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
-        id_txt_blackplayer_elo.text = "Elo: " + q_id_chesstable.getBlackElo()
-        id_txt_whiteplayer.text = q_id_chesstable.getWhitePlayerName()
-        id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
+        // q_id_chesstable.addReviewDataWithTimeFormat("file:///C:/Users/admin/Downloads/Ju, Wenjun_vs_Hou, Yifan_2025.08.22.pgn")
+        // id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
+        // id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
+        // id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
+        // id_txt_blackplayer_elo.text = "Elo: " + q_id_chesstable.getBlackElo()
+        // id_txt_whiteplayer.text = q_id_chesstable.getWhitePlayerName()
+        // id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
     }
 
     Rectangle {
@@ -49,17 +52,6 @@ Window {
             q_id_chesstable.createTable(8, 8)
             q_id_chesstable.createPieces()
             q_id_chesstable.drawData()
-        }
-    }
-
-    FileDialog {
-        id: fileDialog
-        title: "Select a File"
-        currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
-        nameFilters: ["Text files (*.pgn)", "All files (*)"]
-
-        onAccepted: {
-            console.log("Selected file:", selectedFile)
         }
     }
 
@@ -215,6 +207,36 @@ Window {
         }
     }
 
+    Text {
+        id: id_txt_infor
+        anchors.bottom: id_root.bottom
+        anchors.right: id_root.right
+        anchors.margins: 2
+        text: ""
+        color: "yellow"
+        font.pointSize: 10
+    }
+
+    FileDialog {
+        id: id_fid_selectpgn
+        title: "Select a File"
+        currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+        nameFilters: ["Text files (*.pgn)", "All files (*)"]
+
+        onAccepted: {
+            isLoaded = true
+            q_id_chesstable.addReviewDataWithTimeFormat(selectedFile)
+            id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
+            id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
+            id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
+            id_txt_blackplayer_elo.text = "Elo: " + q_id_chesstable.getBlackElo()
+            id_txt_whiteplayer.text = q_id_chesstable.getWhitePlayerName()
+            id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
+
+            id_txt_infor.text = q_id_chesstable.getInformation()
+        }
+    }
+
     Rectangle {
         id: id_button
         anchors.top: id_root.top
@@ -232,6 +254,12 @@ Window {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                if (isLoaded == false) {
+                    id_fid_selectpgn.open()
+                } else {
+                    id_timer.running = true
+                }
+
                 // fileDialog.open()
 
                 // For debugging
@@ -243,10 +271,14 @@ Window {
                 // } else {
                 //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
                 // }
-
-                id_timer.running = true
             }
         }
+    }
+
+    SoundEffect {
+        id: id_sde_chesshitting
+        source: Qt.resolvedUrl("res/move.wav")
+        volume: 0.8 // Adjust volume (0.0 to 1.0)
     }
 
     Timer {
@@ -275,8 +307,11 @@ Window {
                     id_whitewinannounce.text = "DRAW"
                     id_blackwinannounce.text = "DRAW"
                 }
+
+                id_txt_infor.text = ""
             } else {
                 q_id_chesstable.drawData()
+                id_sde_chesshitting.play()
             }
         }
     }

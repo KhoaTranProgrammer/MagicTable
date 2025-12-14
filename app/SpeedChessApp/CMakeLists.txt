@@ -4,7 +4,7 @@ project(SpeedChessApp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../../build/lib/)
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -24,6 +24,7 @@ qt_add_qml_module(appSpeedChessApp
         "icon/sparkleSize.png"
         "icon/star.png"
         "icon/logo.png"
+        "res/move.wav"
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
