@@ -22,6 +22,7 @@ protected:
     vector<MT_RefObject*> _move_steps; // This is used for review feature
     vector<string> _move_steps_in_PGN;
     vector<string> _time_clock;
+    vector<string> _evaluation;
     mt_bool isFinished = false;
     string _result = "draw";
     mt_int _stepNumber = 0;
@@ -55,6 +56,7 @@ public:
     virtual mt_void addDefaultPiece(MT_Chess_Object& piece);
     virtual mt_void addReviewData(string filename);
     virtual mt_void addReviewDataWithTimeFormat(string input);
+    virtual mt_void addEvaluationData(string data);
     virtual mt_void review();
     virtual mt_bool isGameFinish();
     virtual string getResult();
@@ -62,6 +64,7 @@ public:
     virtual mt_void addKingHighlight(MT_Chess_Object& kinghighlight);
     virtual MT_Chess_Object* findPieceFromMove(string piece, string color, MT_Position& pos, mt_int prev_Col, mt_int prev_Row);
     virtual vector<MT_Position*> findNextMove(string piece, string color, MT_Position& pos);
+    virtual mt_void addEvaluationHighlight(MT_Chess_Object& evahighlight);
 };
 
 #endif // MT_CHESS_H

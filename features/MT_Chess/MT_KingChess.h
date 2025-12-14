@@ -16,6 +16,7 @@ private:
     MT_Chess_Object* _oldPosition = NULL;
     MT_Chess_Object* _newPosition = NULL;
     MT_Chess_Object* _kingPosition = NULL;
+    MT_Chess_Object* _evalPosition = NULL;
 
     // Previous move
     string _prev_Move = "";
@@ -42,6 +43,8 @@ public:
     string getResult();
     MT_Chess_Object* findPieceFromMove(string piece, string color, MT_Position& pos, mt_int prev_Col, mt_int prev_Row);
     vector<MT_Position*> findNextMove(string piece, string color, MT_Position& pos);
+    mt_void addEvaluationData(string data);
+    mt_void addEvaluationHighlight(MT_Chess_Object& evahighlight);
 };
 
 #endif // MT_KINGCHESS_H

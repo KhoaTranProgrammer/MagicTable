@@ -272,7 +272,7 @@ mt_void MT_KingChess::addReviewDataWithTimeFormat(string input)
                 size_t pos = timedata.find(']');
                 timedata.erase(pos, 2);
                 this->_time_clock.push_back(timedata);
-                cout << steps[0] << endl;
+                // cout << steps[0] << endl;
                 if (num_of_steps % 2 == 0) this->_move_steps_in_PGN.push_back("W" + steps[0]);
                 else this->_move_steps_in_PGN.push_back("B" + steps[0]);
                 num_of_steps++;
@@ -539,6 +539,15 @@ mt_void MT_KingChess::review()
             this->_oldPosition->drawObject();
             this->_newPosition->updatePosition(*w_pos);
             this->_newPosition->drawObject();
+
+            // Set evaluation data
+            if (this->_evaluation.size() > 0) {
+                string pattern = this->_evaluation.at(0);
+                this->_evaluation.erase(this->_evaluation.begin());
+
+                this->_evalPosition->updatePosition(*w_pos);
+                this->_evalPosition->drawSpecific(pattern);
+            }
 
             w_pie->updatePosition(*w_pos);
             if (pawnPromote != "") {
@@ -1117,4 +1126,18 @@ mt_void MT_KingChess::castling(string side, string color)
         this->_listKingChessObjects.at(rook_index)->updatePosition(*new_rook_pos);
         this->_listKingChessObjects.at(king_index)->updatePosition(*new_king_pos);
     }
+}
+
+mt_void MT_KingChess::addEvaluationData(string data)
+{
+    this->_evaluation = splitString(data, ',');
+    // for(mt_uint index = 0; index < this->_evaluation.size(); index++)
+    // {
+    //     cout << this->_evaluation[index] << endl;
+    // }
+}
+
+mt_void MT_KingChess::addEvaluationHighlight(MT_Chess_Object& evahighlight)
+{
+    this->_evalPosition = &evahighlight;
 }

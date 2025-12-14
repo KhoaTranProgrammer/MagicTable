@@ -26,6 +26,7 @@ public:
     void move();
     virtual void clearDrawing();
     virtual void drawSpecific();
+    virtual void drawSpecific(string pattern);
     string getPiece();
     void setPiece(string pawnPromote);
     string getColor();

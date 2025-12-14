@@ -88,6 +88,11 @@ mt_void MT_Chess::addReviewDataWithTimeFormat(string input)
 
 }
 
+mt_void MT_Chess::addEvaluationData(string data)
+{
+
+}
+
 mt_void MT_Chess::addRemarkPositions(MT_Chess_Object& oldpos, MT_Chess_Object& newpos)
 {
 
@@ -148,4 +153,9 @@ string MT_Chess::getWhiteClockTime()
 string MT_Chess::getBlackClockTime()
 {
     return this->_blackClockTime;
+}
+
+mt_void MT_Chess::addEvaluationHighlight(MT_Chess_Object& evahighlight)
+{
+
 }

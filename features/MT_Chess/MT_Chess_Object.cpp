@@ -50,3 +50,8 @@ string MT_Chess_Object::getColor()
 {
     return this->_color;
 }
+
+void MT_Chess_Object::drawSpecific(string pattern)
+{
+
+}
