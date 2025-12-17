@@ -25,6 +25,7 @@ qt_add_qml_module(appSpeedChessApp
         "icon/star.png"
         "icon/logo.png"
         "res/move.wav"
+        "android/AndroidManifest.xml"
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

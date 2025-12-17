@@ -6,9 +6,9 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    // visibility: Window.FullScreen
-    width: 720
-    height: 1544
+    visibility: Window.FullScreen
+    // width: 720
+    // height: 1544
 
     visible: true
     title: qsTr("Hello World")
@@ -31,10 +31,10 @@ Window {
 
     Rectangle {
         id: id_table
-        width: id_root.width * 0.98
-        height: width
         anchors.verticalCenter: id_root.verticalCenter
         anchors.horizontalCenter: id_root.horizontalCenter
+        width: id_root.width * 0.92
+        height: id_root.width * 0.92
         color: "transparent"
         Image {
             source: Qt.resolvedUrl("icon/table.png")
@@ -48,37 +48,69 @@ Window {
         Component.onCompleted: {
             q_id_chesstable.createTable(8, 8)
             q_id_chesstable.createPieces()
-            q_id_chesstable.drawData()
+            // q_id_chesstable.drawData()
         }
     }
 
     Rectangle {
-        id: id_rec_blackplayer
+        id: id_blackPlayerPos
         anchors {
             left: id_root.left
             bottom: id_table.top
-            margins: 5
+            margins: 10
         }
         width: id_root.width * 0.2
         height: width
-        color: "black"
+        color: "transparent"
+    }
+
+    Rectangle {
+        id: id_rec_blackplayer
+        x: (id_root.width * 0.5) - (id_root.width * 0.5 * 0.1) - (id_blackPlayerPos.width * 2)
+        y: id_root.height * 0.3
+        width: id_blackPlayerPos.width * 2
+        height: id_blackPlayerPos.height * 2
+        anchors.margins: 5
+        z: 5
 
         Image {
-            id: id_img_whitePlayerImage
+            id: id_img_blackPlayerImage
             source: ""
             anchors.fill: parent
             visible: true
-            // fillMode: Image.PreserveAspectFit
         }
+
+        MultiEffect {
+            source: id_img_blackPlayerImage
+            anchors.fill: id_img_blackPlayerImage
+            maskEnabled: true
+            maskSource: id_blackmask
+        }
+
+        Item {
+            id: id_blackmask
+            anchors.fill: parent
+            layer.enabled: true
+            visible: false
+
+            Rectangle {
+                anchors.fill: parent
+                radius: width * 0.3
+                color: "black"
+            }
+        }
+        // Animation for smooth movement
+        Behavior on x { NumberAnimation { duration: 500 } }
+        Behavior on y { NumberAnimation { duration: 500 } }
     }
 
     Text {
         id: id_txt_blackplayer
-        anchors.left: id_rec_blackplayer.right
-        anchors.top: id_rec_blackplayer.top
+        anchors.horizontalCenter: id_rec_blackplayer.horizontalCenter
+        anchors.top: id_rec_blackplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "white"
+        color: "black"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -86,11 +118,11 @@ Window {
 
     Text {
         id: id_txt_blackplayer_elo
-        anchors.left: id_rec_blackplayer.right
+        anchors.left: id_txt_blackplayer.left
         anchors.top: id_txt_blackplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "white"
+        color: "black"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -98,7 +130,7 @@ Window {
 
     Text {
         id: id_txt_blackplayer_clock
-        anchors.right: id_root.right
+        anchors.right: id_table.right
         anchors.bottom: id_table.top
         anchors.margins: 5
         text: ""
@@ -109,32 +141,65 @@ Window {
     }
 
     Rectangle {
-        id: id_rec_whiteplayer
+        id: id_whitePlayerPos
         anchors {
             left: id_root.left
             top: id_table.bottom
-            margins: 5
+            margins: 10
         }
         width: id_root.width * 0.2
         height: width
-        color: "black"
+        color: "transparent"
+    }
+
+    Rectangle {
+        id: id_rec_whiteplayer
+        x: (id_root.width * 0.5) + (id_root.width * 0.5 * 0.1)
+        y: id_root.height * 0.3
+        width: id_whitePlayerPos.width * 2
+        height: id_whitePlayerPos.height * 2
+        anchors.margins: 5
+        z: 5
 
         Image {
-            id: id_img_blackPlayerImage
+            id: id_img_whitePlayerImage
             source: ""
             anchors.fill: parent
             visible: true
             // fillMode: Image.PreserveAspectFit
         }
+
+        MultiEffect {
+            source: id_img_whitePlayerImage
+            anchors.fill: id_img_whitePlayerImage
+            maskEnabled: true
+            maskSource: id_whitemask
+        }
+
+        Item {
+            id: id_whitemask
+            anchors.fill: parent
+            layer.enabled: true
+            visible: false
+
+            Rectangle {
+                anchors.fill: parent
+                radius: width * 0.3
+                color: "black"
+            }
+        }
+        // Animation for smooth movement
+        Behavior on x { NumberAnimation { duration: 500 } }
+        Behavior on y { NumberAnimation { duration: 500 } }
     }
 
     Text {
         id: id_txt_whiteplayer
-        anchors.left: id_rec_whiteplayer.right
-        anchors.top: id_rec_whiteplayer.top
+        anchors.horizontalCenter: id_rec_whiteplayer.horizontalCenter
+        anchors.top: id_rec_whiteplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "white"
+        color: "black"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -142,11 +207,11 @@ Window {
 
     Text {
         id: id_txt_whiteplayer_elo
-        anchors.left: id_rec_whiteplayer.right
+        anchors.left: id_txt_whiteplayer.left
         anchors.top: id_txt_whiteplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "white"
+        color: "black"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -154,8 +219,8 @@ Window {
 
     Text {
         id: id_txt_whiteplayer_clock
-        anchors.right: id_root.right
-        anchors.top: id_rec_whiteplayer.top
+        anchors.right: id_table.right
+        anchors.top: id_table.bottom
         anchors.margins: 5
         text: ""
         color: "white"
@@ -207,11 +272,14 @@ Window {
     Text {
         id: id_txt_infor
         anchors.top: id_txt_whiteplayer_elo.bottom
-        anchors.right: id_root.right
+        anchors.left: id_root.left
         anchors.margins: 2
+        width: id_root.width
         text: ""
-        color: "yellow"
-        font.pointSize: 10
+        color: "red"
+        font.pointSize: 30
+        font.bold: true
+        wrapMode: Text.WordWrap
     }
 
     FileDialog {
@@ -236,7 +304,7 @@ Window {
 
     Rectangle {
         id: id_button
-        anchors.top: id_rec_blackplayer.top
+        anchors.top: id_blackPlayerPos.top
         anchors.right: id_root.right
         anchors.margins: 5
         width: id_root.width * 0.1
@@ -254,6 +322,33 @@ Window {
                 if (isLoaded == false) {
                     id_fid_selectpgn.open()
                 } else {
+                    q_id_chesstable.drawData()
+
+                    id_rec_blackplayer.x = id_blackPlayerPos.x
+                    id_rec_blackplayer.y = id_blackPlayerPos.y
+                    id_rec_whiteplayer.x = id_whitePlayerPos.x
+                    id_rec_whiteplayer.y = id_whitePlayerPos.y
+
+                    id_rec_blackplayer.width = id_blackPlayerPos.width
+                    id_rec_blackplayer.height = id_blackPlayerPos.height
+                    id_rec_whiteplayer.width = id_whitePlayerPos.width
+                    id_rec_whiteplayer.height = id_whitePlayerPos.height
+
+                    id_txt_blackplayer.anchors.left = id_rec_blackplayer.right
+                    id_txt_blackplayer.anchors.top = id_rec_blackplayer.top
+                    id_txt_blackplayer.color = "white"
+                    id_txt_blackplayer_elo.color = "white"
+
+                    id_txt_whiteplayer.anchors.left = id_rec_whiteplayer.right
+                    id_txt_whiteplayer.anchors.top = id_rec_whiteplayer.top
+                    id_txt_whiteplayer.color = "white"
+                    id_txt_whiteplayer_elo.color = "white"
+
+                    id_txt_infor.anchors.left = id_rec_whiteplayer.right
+                    id_txt_infor.font.pointSize = 10
+                    id_txt_infor.font.bold = false
+                    id_txt_infor.color = "yellow"
+
                     id_timer.running = true
                 }
 
@@ -279,7 +374,7 @@ Window {
     }
 
     Timer {
-        id: id_timer
+        id: id_tim_play
         interval: 1000; running: false; repeat: true
 
         onTriggered: {
@@ -306,10 +401,48 @@ Window {
                 }
 
                 id_txt_infor.text = ""
+                id_txt_whiteplayer_clock.text = ""
+                id_txt_blackplayer_clock.text = ""
             } else {
                 q_id_chesstable.drawData()
                 id_sde_chesshitting.play()
             }
+        }
+    }
+
+    Timer {
+        id: id_timer
+        interval: 2000; running: false; repeat: false
+
+        onTriggered: {
+            id_tim_play.running = true
+            // q_id_chesstable.review()
+
+            // if (q_id_chesstable.getBlackStep() === "") {
+            //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
+            // } else {
+            //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+            // }
+
+            // if (q_id_chesstable.isGameFinish()) {
+            //     id_timer.running = false
+
+            //     if (q_id_chesstable.getResult() === "white") {
+            //         id_whitewinannounce.text = "WINNER"
+            //     }
+            //     if (q_id_chesstable.getResult() === "black") {
+            //         id_blackwinannounce.text = "WINNER"
+            //     }
+            //     if (q_id_chesstable.getResult() === "draw") {
+            //         id_whitewinannounce.text = "DRAW"
+            //         id_blackwinannounce.text = "DRAW"
+            //     }
+
+            //     id_txt_infor.text = ""
+            // } else {
+            //     q_id_chesstable.drawData()
+            //     id_sde_chesshitting.play()
+            // }
         }
     }
 }
