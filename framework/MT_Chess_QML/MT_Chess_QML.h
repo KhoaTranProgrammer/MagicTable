@@ -67,8 +67,10 @@ private:
     QString _blackElo = "";
     QQuickItem *_whitePrison = NULL;
     QQuickItem *_blackPrison = NULL;
+    QString _FEN = "";
 
     void readChessPlayerInfor();
+    string getPieceNameFromCharacter(char c);
 };
 
 #endif // MT_CHESS_QML_H

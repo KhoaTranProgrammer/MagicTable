@@ -41,49 +41,80 @@ void MT_Chess_QML::createTable(int col, int row)
 
 void MT_Chess_QML::createPieces()
 {
-    // King
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "king", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "king", "white")));
+    if (this->_FEN == "") {
+        // King
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "king", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "king", "white")));
 
-    // Queen
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "queen", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "queen", "white")));
+        // Queen
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "queen", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "queen", "white")));
 
-    // Rook
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "white")));
+        // Rook
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "white")));
 
-    // Knigh
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "white")));
+        // Knigh
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "knight", "white")));
 
-    // Bishop
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "white")));
+        // Bishop
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "bishop", "white")));
 
-    // Pawn
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
-    this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        // Pawn
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "black")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+        this->_mt_chess->addDefaultPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "pawn", "white")));
+    } else {
+        // this->_mt_chess->addPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, "rook", "black")), 0, 0);
+        // rkbqnrnb/pppppppp/8/8/8/8/PPPPPPPP/RKBQNRNB
+
+        QStringList FEN_list = this->_FEN.split("/");
+
+        // White piece
+        QString white_FEN_down = FEN_list[0];
+        for (int i = 0; i < white_FEN_down.size(); i++) {
+            string piece_name = getPieceNameFromCharacter(white_FEN_down[i].toLatin1());
+            this->_mt_chess->addPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, piece_name, "white")), i, 7);
+        }
+        QString white_FEN_up = FEN_list[1];
+        for (int i = 0; i < white_FEN_up.size(); i++) {
+            string piece_name = getPieceNameFromCharacter(white_FEN_up[i].toLatin1());
+            this->_mt_chess->addPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, piece_name, "white")), i, 6);
+        }
+
+        // Black piece
+        QString black_FEN_down = FEN_list[FEN_list.count() - 1];
+        for (int i = 0; i < black_FEN_down.size(); i++) {
+            string piece_name = getPieceNameFromCharacter(black_FEN_down[i].toLatin1());
+            this->_mt_chess->addPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, piece_name, "black")), i, 0);
+        }
+        QString black_FEN_white = FEN_list[FEN_list.count() - 2];
+        for (int i = 0; i < black_FEN_white.size(); i++) {
+            string piece_name = getPieceNameFromCharacter(black_FEN_white[i].toLatin1());
+            this->_mt_chess->addPiece(*(new MT_Chess_QMLObject(*_mt_engine, *this, piece_name, "black")), i, 1);
+        }
+    }
 
     // Add Remark Positions
     this->_mt_chess->addRemarkPositions(*(new MT_Chess_QMLPositionObject(*_mt_engine, *this)),
@@ -97,6 +128,18 @@ void MT_Chess_QML::drawData()
 {
     if (this->_mt_chess != NULL)
         this->_mt_chess->drawData();
+}
+
+string MT_Chess_QML::getPieceNameFromCharacter(char c)
+{
+    string piece_name = "";
+    if (c == 'k' || c == 'K') piece_name="king";
+    if (c == 'r' || c == 'R') piece_name="rook";
+    if (c == 'b' || c == 'B') piece_name="bishop";
+    if (c == 'q' || c == 'Q') piece_name="queen";
+    if (c == 'n' || c == 'N') piece_name="knight";
+    if (c == 'p' || c == 'P') piece_name="pawn";
+    return piece_name;
 }
 
 void MT_Chess_QML::addReviewData(QString filename)
@@ -264,6 +307,12 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
                 this->_blackElo.remove("[BlackElo \"");
                 this->_blackElo.remove("\"]");
             }
+            if (oneline.contains("FEN")) {
+                //[FEN "rkbqnrnb/pppppppp/8/8/8/8/PPPPPPPP/RKBQNRNB w FAfa - 0 1"]
+                this->_FEN = oneline;
+                this->_FEN.remove("[FEN \"");
+                this->_FEN = this->_FEN.split(" ")[0]; // rkbqnrnb/pppppppp/8/8/8/8/PPPPPPPP/RKBQNRNB
+            }
 
             if (oneline == "") isHeaderComplete = true;
         } else {
@@ -285,8 +334,8 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
     line.replace("0-1", "0. Result 0-1");
     line.replace("1/2-1/2", "0. Result 1/2-1/2");
 
-    qDebug() << this->_information;
-    qDebug() << line;
+    // qDebug() << this->_information;
+    // qDebug() << line;
 
     this->_mt_chess->addReviewDataWithTimeFormat(line.toStdString());
 
