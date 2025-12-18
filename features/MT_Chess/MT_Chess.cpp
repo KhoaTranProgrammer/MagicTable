@@ -159,3 +159,8 @@ mt_void MT_Chess::addEvaluationHighlight(MT_Chess_Object& evahighlight)
 {
 
 }
+
+mt_void MT_Chess::addPiece(MT_Chess_Object& piece, int col, int row)
+{
+
+}

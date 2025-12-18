@@ -45,6 +45,7 @@ public:
     vector<MT_Position*> findNextMove(string piece, string color, MT_Position& pos);
     mt_void addEvaluationData(string data);
     mt_void addEvaluationHighlight(MT_Chess_Object& evahighlight);
+    mt_void addPiece(MT_Chess_Object& piece, int col, int row);
 };
 
 #endif // MT_KINGCHESS_H

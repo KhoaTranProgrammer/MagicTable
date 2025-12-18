@@ -68,6 +68,13 @@ mt_void MT_KingChess::addKingHighlight(MT_Chess_Object& kinghighlight)
     this->_kingPosition = &kinghighlight;
 }
 
+mt_void MT_KingChess::addPiece(MT_Chess_Object& piece, int col, int row)
+{
+    this->_mttable.addObject(piece);
+    this->_listKingChessObjects.push_back(&piece);
+    this->_mttable.updateObjectPosition(piece, col, row);
+}
+
 mt_void MT_KingChess::addDefaultPiece(MT_Chess_Object& obj)
 {
     // cout << "MT_KingChess::addDefaultPiece " << obj.getPiece() << " " << obj.getColor() << endl;

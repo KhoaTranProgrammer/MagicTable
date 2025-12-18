@@ -53,6 +53,7 @@ public:
     string getWhiteClockTime();
     string getBlackClockTime();
 
+    virtual mt_void addPiece(MT_Chess_Object& piece, int col, int row);
     virtual mt_void addDefaultPiece(MT_Chess_Object& piece);
     virtual mt_void addReviewData(string filename);
     virtual mt_void addReviewDataWithTimeFormat(string input);
