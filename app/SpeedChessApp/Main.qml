@@ -6,9 +6,9 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    visibility: Window.FullScreen
-    // width: 720
-    // height: 1544
+    // visibility: Window.FullScreen
+    width: 720
+    height: 1544
 
     visible: true
     title: qsTr("Hello World")
@@ -33,8 +33,8 @@ Window {
         id: id_table
         anchors.verticalCenter: id_root.verticalCenter
         anchors.horizontalCenter: id_root.horizontalCenter
-        width: id_root.width * 0.92
-        height: id_root.width * 0.92
+        width: id_root.width * 0.98
+        height: width
         color: "transparent"
         Image {
             source: Qt.resolvedUrl("icon/table.png")
@@ -47,7 +47,7 @@ Window {
         anchors.fill: id_table
         Component.onCompleted: {
             q_id_chesstable.createTable(8, 8)
-            q_id_chesstable.createPieces()
+            // q_id_chesstable.createPieces()
             // q_id_chesstable.drawData()
         }
     }
@@ -277,7 +277,7 @@ Window {
         width: id_root.width
         text: ""
         color: "red"
-        font.pointSize: 30
+        font.pointSize: 45
         font.bold: true
         wrapMode: Text.WordWrap
     }
@@ -291,6 +291,7 @@ Window {
         onAccepted: {
             isLoaded = true
             q_id_chesstable.addReviewDataWithTimeFormat(selectedFile)
+            q_id_chesstable.createPieces()
             id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
             id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
             id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
@@ -350,19 +351,17 @@ Window {
                     id_txt_infor.color = "yellow"
 
                     id_timer.running = true
+
+                    // For debugging
+                    // q_id_chesstable.review()
+                    // q_id_chesstable.drawData()
+
+                    // if (q_id_chesstable.getBlackStep() === "") {
+                    //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
+                    // } else {
+                    //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+                    // }
                 }
-
-                // fileDialog.open()
-
-                // For debugging
-                // q_id_chesstable.review()
-                // q_id_chesstable.drawData()
-
-                // if (q_id_chesstable.getBlackStep() === "") {
-                //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
-                // } else {
-                //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
-                // }
             }
         }
     }
@@ -416,33 +415,6 @@ Window {
 
         onTriggered: {
             id_tim_play.running = true
-            // q_id_chesstable.review()
-
-            // if (q_id_chesstable.getBlackStep() === "") {
-            //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
-            // } else {
-            //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
-            // }
-
-            // if (q_id_chesstable.isGameFinish()) {
-            //     id_timer.running = false
-
-            //     if (q_id_chesstable.getResult() === "white") {
-            //         id_whitewinannounce.text = "WINNER"
-            //     }
-            //     if (q_id_chesstable.getResult() === "black") {
-            //         id_blackwinannounce.text = "WINNER"
-            //     }
-            //     if (q_id_chesstable.getResult() === "draw") {
-            //         id_whitewinannounce.text = "DRAW"
-            //         id_blackwinannounce.text = "DRAW"
-            //     }
-
-            //     id_txt_infor.text = ""
-            // } else {
-            //     q_id_chesstable.drawData()
-            //     id_sde_chesshitting.play()
-            // }
         }
     }
 }
