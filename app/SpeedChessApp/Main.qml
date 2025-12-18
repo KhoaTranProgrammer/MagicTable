@@ -6,9 +6,9 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    // visibility: Window.FullScreen
-    width: 720
-    height: 1544
+    visibility: Window.FullScreen
+    // width: 720
+    // height: 1544
 
     visible: true
     title: qsTr("Hello World")
@@ -277,7 +277,7 @@ Window {
         width: id_root.width
         text: ""
         color: "red"
-        font.pointSize: 45
+        font.pointSize: 35
         font.bold: true
         wrapMode: Text.WordWrap
     }
