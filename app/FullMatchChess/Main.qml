@@ -14,6 +14,9 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+    property string whiteStepEval: ""
+    property string blackStepEval: ""
+
     Component.onCompleted: {
         q_id_chesstable.accessPGNFolder("file:///C:/Worspace/temps")
     }
@@ -103,9 +106,15 @@ Window {
 
             } else {
                 if (q_id_chesstable.getBlackStep() === "") {
-                    id_ctrCharacterList.addItem(q_id_chesstable.getStepNumber(), q_id_chesstable.getWhiteStep(), q_id_chesstable.getBlackStep())
+                    whiteStepEval = q_id_chesstable.getMoveEval()
+                    id_ctrCharacterList.addItem(q_id_chesstable.getStepNumber(), q_id_chesstable.getWhiteStep(), whiteStepEval, q_id_chesstable.getBlackStep(), blackStepEval)
                 } else {
-                    id_ctrCharacterList.updateItem(q_id_chesstable.getStepNumber(), q_id_chesstable.getWhiteStep(), q_id_chesstable.getBlackStep())
+                    blackStepEval = q_id_chesstable.getMoveEval()
+                    id_ctrCharacterList.updateItem(q_id_chesstable.getStepNumber(), q_id_chesstable.getWhiteStep(), whiteStepEval, q_id_chesstable.getBlackStep(), blackStepEval)
+
+                    console.log(whiteStepEval + " - " + blackStepEval)
+                    whiteStepEval = ""
+                    blackStepEval = ""
                 }
             }
 
