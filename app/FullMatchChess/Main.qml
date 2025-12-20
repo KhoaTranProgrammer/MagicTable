@@ -81,6 +81,7 @@ Window {
                     console.log("Match is complete!")
                 } else {
                     q_id_chesstable.reset()
+                    id_ctrCharacterList.clearList()
                     q_id_chesstable.addReviewDataWithTimeFormat(selectedFile)
                     q_id_chesstable.createPieces()
                     q_id_chesstable.drawData()
@@ -97,6 +98,17 @@ Window {
         onTriggered: {
             q_id_chesstable.review()
 
+            // Get step
+            if (q_id_chesstable.getWhiteStep() === "Result") {
+
+            } else {
+                if (q_id_chesstable.getBlackStep() === "") {
+                    id_ctrCharacterList.addItem(q_id_chesstable.getStepNumber(), q_id_chesstable.getWhiteStep(), q_id_chesstable.getBlackStep())
+                } else {
+                    id_ctrCharacterList.updateItem(q_id_chesstable.getStepNumber(), q_id_chesstable.getWhiteStep(), q_id_chesstable.getBlackStep())
+                }
+            }
+
             if (q_id_chesstable.isGameFinish()) {
                 id_tim_playgame.running = false
 
@@ -107,6 +119,7 @@ Window {
                     console.log("Match is complete!")
                 } else {
                     q_id_chesstable.reset()
+                    id_ctrCharacterList.clearList()
                     q_id_chesstable.addReviewDataWithTimeFormat(selectedFile)
                     q_id_chesstable.createPieces()
                     q_id_chesstable.drawData()
@@ -138,6 +151,22 @@ Window {
                 q_id_chesstable.review()
                 q_id_chesstable.drawData()
             }
+        }
+    }
+
+    Rectangle {
+        id: id_rec_movingsteparea
+        anchors {
+            left: id_table.right
+            verticalCenter: parent.verticalCenter
+        }
+        width: id_table.width * 0.4
+        height: id_table.height * 0.6
+        color: "transparent"
+
+        MovingStep {
+            id: id_ctrCharacterList
+            anchors.fill: parent
         }
     }
 }
