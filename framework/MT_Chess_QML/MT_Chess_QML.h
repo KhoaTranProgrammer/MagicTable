@@ -56,6 +56,7 @@ public slots:
     void accessPGNFolder(QString folderPath);
     QString getNextPGN();
     void reset();
+    QString getMoveEval();
 
 private:
     QQmlEngine* _mt_engine;

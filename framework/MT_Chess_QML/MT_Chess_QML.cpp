@@ -483,3 +483,8 @@ void MT_Chess_QML::reset()
     this->_FEN = "";
     this->_mt_chess->reset();
 }
+
+QString MT_Chess_QML::getMoveEval()
+{
+    return QString::fromStdString(this->_mt_chess->getMoveEval());
+}
