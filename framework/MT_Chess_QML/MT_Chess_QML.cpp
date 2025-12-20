@@ -5,6 +5,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QDir>
+#include <QDirIterator>
 
 MT_Chess_QML::MT_Chess_QML(QQuickItem *parent)
     : QQuickPaintedItem(parent)
@@ -446,4 +448,38 @@ QString MT_Chess_QML::getWhiteElo()
 QString MT_Chess_QML::getBlackElo()
 {
     return this->_blackElo;
+}
+
+void MT_Chess_QML::accessPGNFolder(QString folderPath)
+{
+    QString refine_folderPath = folderPath;
+    refine_folderPath.remove("file:///");
+    QDir dir(refine_folderPath);
+    QStringList files = dir.entryList(QDir::Files);
+    for (const QString &file : files) {
+        this->_PGN_files.append(dir.absoluteFilePath(file));
+    }
+}
+
+QString MT_Chess_QML::getNextPGN()
+{
+    QString filename = "";
+    if (this->_games < this->_PGN_files.count()) {
+        filename = this->_PGN_files[this->_games];
+        this->_games++;
+    }
+    return filename;
+}
+
+void MT_Chess_QML::reset()
+{
+    this->_information = "";
+    this->_blackPlayer = "";
+    this->_whitePlayer = "";
+    this->_whiteImage = "";
+    this->_blackImage = "";
+    this->_whiteElo = "";
+    this->_blackElo = "";
+    this->_FEN = "";
+    this->_mt_chess->reset();
 }

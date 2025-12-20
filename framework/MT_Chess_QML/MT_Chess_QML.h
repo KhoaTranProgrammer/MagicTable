@@ -53,11 +53,13 @@ public slots:
     QString getBlackClockTime();
     QString getWhiteElo();
     QString getBlackElo();
+    void accessPGNFolder(QString folderPath);
+    QString getNextPGN();
+    void reset();
 
 private:
     QQmlEngine* _mt_engine;
     MT_Chess* _mt_chess = NULL;
-    vector<MT_Chess_QMLObject*> _listKingChessObjects;
     QString _information = "";
     QString _blackPlayer = "";
     QString _whitePlayer = "";
@@ -68,6 +70,8 @@ private:
     QQuickItem *_whitePrison = NULL;
     QQuickItem *_blackPrison = NULL;
     QString _FEN = "";
+    QStringList _PGN_files;
+    int _games = 0;
 
     void readChessPlayerInfor();
     string getPieceNameFromCharacter(char c);
