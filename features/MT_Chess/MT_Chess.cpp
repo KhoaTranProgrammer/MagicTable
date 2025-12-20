@@ -169,3 +169,8 @@ mt_void MT_Chess::reset()
 {
 
 }
+
+string MT_Chess::getMoveEval()
+{
+    return this->_step_eval;
+}

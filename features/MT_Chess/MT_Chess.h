@@ -23,6 +23,7 @@ protected:
     vector<string> _move_steps_in_PGN;
     vector<string> _time_clock;
     vector<string> _evaluation;
+    string _step_eval = "";
     mt_bool isFinished = false;
     string _result = "draw";
     mt_int _stepNumber = 0;
@@ -52,6 +53,7 @@ public:
     string getColorPrisoner();
     string getWhiteClockTime();
     string getBlackClockTime();
+    string getMoveEval();
 
     virtual mt_void addPiece(MT_Chess_Object& piece, int col, int row);
     virtual mt_void addDefaultPiece(MT_Chess_Object& piece);

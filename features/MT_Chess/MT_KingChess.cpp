@@ -550,6 +550,7 @@ mt_void MT_KingChess::review()
             // Set evaluation data
             if (this->_evaluation.size() > 0) {
                 string pattern = this->_evaluation.at(0);
+                this->_step_eval = pattern;
                 this->_evaluation.erase(this->_evaluation.begin());
 
                 this->_evalPosition->updatePosition(*w_pos);
@@ -1165,6 +1166,7 @@ mt_void MT_KingChess::reset()
     this->_prev_Move = "";
     this->_prevPositionRow = -1;
     this->_prevPositionCol = -1;
+    this->_step_eval = "";
 
     _move_steps_in_PGN.clear();
     _time_clock.clear();
