@@ -66,6 +66,7 @@ public:
     virtual MT_Chess_Object* findPieceFromMove(string piece, string color, MT_Position& pos, mt_int prev_Col, mt_int prev_Row);
     virtual vector<MT_Position*> findNextMove(string piece, string color, MT_Position& pos);
     virtual mt_void addEvaluationHighlight(MT_Chess_Object& evahighlight);
+    virtual mt_void reset();
 };
 
 #endif // MT_CHESS_H

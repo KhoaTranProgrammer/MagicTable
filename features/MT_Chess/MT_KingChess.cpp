@@ -1148,3 +1148,34 @@ mt_void MT_KingChess::addEvaluationHighlight(MT_Chess_Object& evahighlight)
 {
     this->_evalPosition = &evahighlight;
 }
+
+mt_void MT_KingChess::reset()
+{
+    cout << "MT_KingChess::reset" << endl;
+    this->_listKingChessObjects.clear();
+    this->_mttable.clearData();
+    delete this->_oldPosition;
+    this->_oldPosition = NULL;
+    delete this->_newPosition;
+    this->_newPosition = NULL;
+    delete this->_kingPosition;
+    this->_kingPosition = NULL;
+    delete this->_evalPosition;
+    this->_evalPosition = NULL;
+    this->_prev_Move = "";
+    this->_prevPositionRow = -1;
+    this->_prevPositionCol = -1;
+
+    _move_steps_in_PGN.clear();
+    _time_clock.clear();
+    _evaluation.clear();
+    isFinished = false;
+    _result = "draw";
+    _stepNumber = 0;
+    _whiteStep = "";
+    _whiteClockTime = "";
+    _blackStep = "";
+    _blackClockTime = "";
+    _piecePrisoner = "";
+    _colorPrisoner = "";
+}

@@ -164,3 +164,8 @@ mt_void MT_Chess::addPiece(MT_Chess_Object& piece, int col, int row)
 {
 
 }
+
+mt_void MT_Chess::reset()
+{
+
+}
