@@ -30,6 +30,8 @@ qt_add_qml_module(appFullMatchChess
         "icon/Neutral.png"
         "icon/sparkleSize.png"
         "icon/star.png"
+        "icon/draw.png"
+        "icon/winner.png"
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -113,8 +113,19 @@ Window {
 
             if (q_id_chesstable.isGameFinish()) {
                 id_tim_playgame.running = false
+
+                if (q_id_chesstable.getResult() === "white") {
+                    id_img_whitewinner.source = Qt.resolvedUrl("icon/winner.png")
+                }
+                if (q_id_chesstable.getResult() === "black") {
+                    id_img_blackwinner.source = Qt.resolvedUrl("icon/winner.png")
+                }
+                if (q_id_chesstable.getResult() === "draw") {
+                    id_img_whitewinner.source = Qt.resolvedUrl("icon/draw.png")
+                    id_img_blackwinner.source = Qt.resolvedUrl("icon/draw.png")
+                }
+
                 id_tim_stop.running = true
-                newGame()
             } else {
                 q_id_chesstable.drawData()
             }
@@ -171,6 +182,31 @@ Window {
         MovingStep {
             id: id_ctrCharacterList
             anchors.fill: parent
+        }
+    }
+
+    Image {
+        id: id_img_blackwinner
+        anchors {
+            right: id_blackPlayerPos.left
+            top: id_blackPlayerPos.top
+            bottom: id_blackPlayerPos.bottom
+        }
+        width: height
+
+        source: ""
+        opacity: 0.0
+        smooth: true
+
+        // Sequential fade in and fade out animation
+        SequentialAnimation on opacity {
+            loops: Animation.Infinite
+            running: true
+
+            NumberAnimation { from: 0.0; to: 1.0; duration: 200; easing.type: Easing.InOutQuad } // Fade in
+            PauseAnimation { duration: 200 } // Stay visible
+            NumberAnimation { from: 1.0; to: 0.0; duration: 200; easing.type: Easing.InOutQuad } // Fade out
+            PauseAnimation { duration: 200 } // Stay invisible
         }
     }
 
@@ -260,6 +296,31 @@ Window {
         font.pointSize: 14
         font.bold: true
         font.family: "DejaVu Sans Mono"
+    }
+
+    Image {
+        id: id_img_whitewinner
+        anchors {
+            left: id_whitePlayerPos.right
+            top: id_whitePlayerPos.top
+            bottom: id_whitePlayerPos.bottom
+        }
+        width: height
+
+        source: ""
+        opacity: 0.0
+        smooth: true
+
+        // Sequential fade in and fade out animation
+        SequentialAnimation on opacity {
+            loops: Animation.Infinite
+            running: true
+
+            NumberAnimation { from: 0.0; to: 1.0; duration: 200; easing.type: Easing.InOutQuad } // Fade in
+            PauseAnimation { duration: 200 } // Stay visible
+            NumberAnimation { from: 1.0; to: 0.0; duration: 200; easing.type: Easing.InOutQuad } // Fade out
+            PauseAnimation { duration: 200 } // Stay invisible
+        }
     }
 
     Rectangle {
@@ -380,8 +441,8 @@ Window {
             id_rec_whiteplayer.width = id_whitePlayerPos.width
             id_rec_whiteplayer.height = id_whitePlayerPos.height
 
-            // id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
-            // id_txt_blackplayer_elo.text = "Elo: " + q_id_chesstable.getBlackElo()
+            // id_img_whitewinner.source = ""
+            // id_img_blackwinner.source = ""
 
             id_tim_playgame.running = true
             q_id_chesstable.drawData()
@@ -390,7 +451,7 @@ Window {
 
     Timer {
         id: id_tim_stop
-        interval: 2000; running: false; repeat: false
+        interval: 3000; running: false; repeat: false
 
         onTriggered: {
             // id_rec_blackplayer.x = id_blackPlayerPos.x
@@ -403,6 +464,7 @@ Window {
             // id_rec_whiteplayer.width = id_whitePlayerPos.width
             // id_rec_whiteplayer.height = id_whitePlayerPos.height
 
+            newGame()
             id_tim_start.running = true
         }
     }
@@ -426,6 +488,9 @@ Window {
             id_txt_whiteplayer.text = q_id_chesstable.getWhitePlayerName()
             id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
             // id_txt_banner.text = q_id_chesstable.getEvent()
+
+            id_img_whitewinner.source = ""
+            id_img_blackwinner.source = ""
 
             q_id_chesstable.createPieces()
             // q_id_chesstable.drawData()
