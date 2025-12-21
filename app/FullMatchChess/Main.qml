@@ -22,6 +22,18 @@ Window {
         // q_id_chesstable.accessPGNFolder("file:///C:/Worspace/temps")
     }
 
+    SoundEffect {
+        id: id_soundEffect_background
+        source: Qt.resolvedUrl("res/background.wav")
+        volume: 0.8
+    }
+
+    SoundEffect {
+        id: id_sde_chesshitting
+        source: Qt.resolvedUrl("res/move.wav")
+        volume: 1.0 // Adjust volume (0.0 to 1.0)
+    }
+
     Rectangle {
         id: id_root
         anchors.fill: parent
@@ -99,6 +111,7 @@ Window {
             id_txt_banner.text = ""
             id_txt_infor.text = q_id_chesstable.getInformation()
             q_id_chesstable.review()
+            id_sde_chesshitting.play()
 
             // Get step
             if (q_id_chesstable.getWhiteStep() === "Result") {
@@ -118,6 +131,7 @@ Window {
 
             if (q_id_chesstable.isGameFinish()) {
                 id_tim_playgame.running = false
+                id_soundEffect_background.stop()
 
                 if (q_id_chesstable.getResult() === "white") {
                     id_img_whitewinner.source = Qt.resolvedUrl("icon/winner.png")
@@ -458,6 +472,7 @@ Window {
             // id_img_blackwinner.source = ""
 
             id_tim_playgame.running = true
+            id_soundEffect_background.play()
             q_id_chesstable.drawData()
         }
     }
