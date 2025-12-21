@@ -58,12 +58,14 @@ public slots:
     void reset();
     QString getMoveEval();
     QString getEvent();
+    QString getRound();
 
 private:
     QQmlEngine* _mt_engine;
     MT_Chess* _mt_chess = NULL;
     QString _information = "";
     QString _event = "";
+    QString _round = "";
     QString _blackPlayer = "";
     QString _whitePlayer = "";
     QString _whiteImage = "";

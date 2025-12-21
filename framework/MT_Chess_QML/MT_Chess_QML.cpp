@@ -293,7 +293,13 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
             }
             if (oneline.contains("Site")) {};
             if (oneline.contains("Date")) this->_information = this->_information + oneline + "\n";
-            if (oneline.contains("Round")) this->_information = this->_information + oneline + "\n";
+            if (oneline.contains("Round")) {
+                this->_information = this->_information + oneline + "\n";
+                this->_round = oneline;
+                this->_round.remove("[");
+                this->_round.remove("]");
+                this->_round.remove("\"");
+            }
             if (oneline.contains("White ")) {
                 this->_whitePlayer = oneline;
                 this->_whitePlayer.remove("[White \"");
@@ -497,4 +503,9 @@ QString MT_Chess_QML::getMoveEval()
 QString MT_Chess_QML::getEvent()
 {
     return this->_event;
+}
+
+QString MT_Chess_QML::getRound()
+{
+    return this->_round;
 }
