@@ -14,6 +14,9 @@ Window {
     property string whiteStepEval: ""
     property string blackStepEval: ""
     property bool isLoaded: false
+    property bool isMatchComplete: false
+    property string whiteStatus: ""
+    property string blackStatus: ""
 
     Component.onCompleted: {
         // q_id_chesstable.accessPGNFolder("file:///C:/Worspace/temps")
@@ -93,6 +96,8 @@ Window {
         interval: 1000; running: false; repeat: true
 
         onTriggered: {
+            id_txt_banner.text = ""
+            id_txt_infor.text = q_id_chesstable.getInformation()
             q_id_chesstable.review()
 
             // Get step
@@ -116,14 +121,22 @@ Window {
 
                 if (q_id_chesstable.getResult() === "white") {
                     id_img_whitewinner.source = Qt.resolvedUrl("icon/winner.png")
+                    whiteStatus = "winner"
+                    blackStatus = "loser"
                 }
                 if (q_id_chesstable.getResult() === "black") {
                     id_img_blackwinner.source = Qt.resolvedUrl("icon/winner.png")
+                    whiteStatus = "loser"
+                    blackStatus = "winner"
                 }
                 if (q_id_chesstable.getResult() === "draw") {
                     id_img_whitewinner.source = Qt.resolvedUrl("icon/draw.png")
                     id_img_blackwinner.source = Qt.resolvedUrl("icon/draw.png")
+                    whiteStatus = "draw"
+                    blackStatus = "draw"
                 }
+                id_rod_rounds.addItem(q_id_chesstable.getRound(), q_id_chesstable.getWhiteImage(), whiteStatus
+                                      , q_id_chesstable.getBlackImage(), blackStatus)
 
                 id_tim_stop.running = true
             } else {
@@ -428,7 +441,7 @@ Window {
 
     Timer {
         id: id_tim_start
-        interval: 2000; running: false; repeat: false
+        interval: 3000; running: false; repeat: false
 
         onTriggered: {
             id_rec_blackplayer.x = id_blackPlayerPos.x
@@ -465,7 +478,10 @@ Window {
             // id_rec_whiteplayer.height = id_whitePlayerPos.height
 
             newGame()
-            id_tim_start.running = true
+            if (isMatchComplete == false) {
+                id_tim_start.running = true
+                id_txt_banner.text = q_id_chesstable.getRound()
+            }
         }
     }
 
@@ -475,6 +491,7 @@ Window {
         console.log(selectedFile)
         if (selectedFile === "") {
             console.log("Match is complete!")
+            isMatchComplete = true
         } else {
             q_id_chesstable.reset()
             id_ctrCharacterList.clearList()
@@ -497,6 +514,35 @@ Window {
             // id_tim_playgame.running = true
 
             // id_tim_start.running = true
+        }
+    }
+
+    Text {
+        id: id_txt_infor
+        anchors.bottom: id_root.bottom
+        anchors.right: id_table.left
+        anchors.left: id_root.left
+        anchors.margins: 2
+        text: ""
+        color: "yellow"
+        font.pointSize: 12
+        font.bold: true
+        wrapMode: Text.WordWrap
+    }
+
+    Rectangle {
+        id: id_rec_roundarea
+        anchors {
+            right: id_table.left
+            verticalCenter: parent.verticalCenter
+        }
+        width: id_table.width * 0.4
+        height: id_table.height * 0.4
+        color: "transparent"
+
+        Rounds {
+            id: id_rod_rounds
+            anchors.fill: parent
         }
     }
 }
