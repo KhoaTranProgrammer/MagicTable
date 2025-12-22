@@ -310,6 +310,7 @@ mt_void MT_KingChess::review()
         this->_colorPrisoner = "";
 
         string token = this->_move_steps_in_PGN.at(0);
+        // cout << "Moving step: " << _stepNumber + 1 << " - " << token << endl;
         this->_move_steps_in_PGN.erase(this->_move_steps_in_PGN.begin());
 
         string clocktime = "";
@@ -852,8 +853,10 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
         {
             if (pos.getRow() == 1)
             {
-                positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1));
-                positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 2));
+                if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1))) {
+                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1));
+                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 2));
+                }
             }
             else
             {
@@ -872,8 +875,10 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
         {
             if (pos.getRow() == 6)
             {
-                positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1));
-                positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 2));
+                if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1))) {
+                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1));
+                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 2));
+                }
             }
             else
             {
