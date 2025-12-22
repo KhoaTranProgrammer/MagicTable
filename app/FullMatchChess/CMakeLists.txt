@@ -21,6 +21,7 @@ qt_add_qml_module(appFullMatchChess
         MovingStep.qml
         Background.qml
         Rounds.qml
+        GameScreen.qml
     RESOURCES
         "icon/logo.png"
         "icon/table.png"
