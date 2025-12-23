@@ -59,6 +59,8 @@ public slots:
     QString getMoveEval();
     QString getEvent();
     QString getRound();
+    QString getWinner();
+    QString getWinnerImage();
 
 private:
     QQmlEngine* _mt_engine;
@@ -77,9 +79,13 @@ private:
     QString _FEN = "";
     QStringList _PGN_files;
     int _games = 0;
+    QMap<QString, float> _result;
+    QMap<QString, QString> _playerImages;
+    QString _winner;
 
     void readChessPlayerInfor();
     string getPieceNameFromCharacter(char c);
+    void addResult(QString result);
 };
 
 #endif // MT_CHESS_QML_H

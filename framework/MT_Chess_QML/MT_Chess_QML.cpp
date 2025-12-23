@@ -261,6 +261,15 @@ void MT_Chess_QML::readChessPlayerInfor()
         if (player_name.contains(this->_blackPlayer)) this->_blackImage = image_link;
     }
 
+    if (!_playerImages.contains(this->_whitePlayer)) {
+        qDebug() << "Add image white player";
+        _playerImages.insert(this->_whitePlayer, this->_whiteImage);
+    }
+    if (!_playerImages.contains(this->_blackPlayer)) {
+        qDebug() << "Add image black player";
+        _playerImages.insert(this->_blackPlayer, this->_blackImage);
+    }
+
     qDebug() << "White Player: " << this->_whitePlayer << " - Image: " << this->_whiteImage;
     qDebug() << "Black Player: " << this->_blackPlayer << " - Image: " << this->_blackImage;
 }
@@ -325,6 +334,11 @@ void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
                 this->_FEN = oneline;
                 this->_FEN.remove("[FEN \"");
                 this->_FEN = this->_FEN.split(" ")[0]; // rkbqnrnb/pppppppp/8/8/8/8/PPPPPPPP/RKBQNRNB
+            }
+            if (oneline.contains("Result")) {   // [Result "1/2-1/2"]
+                QString refine_result = oneline.remove("[Result \"");
+                refine_result.remove("\"]");
+                this->addResult(refine_result);
             }
 
             if (oneline == "") isHeaderComplete = true;
@@ -492,6 +506,7 @@ void MT_Chess_QML::reset()
     this->_whiteElo = "";
     this->_blackElo = "";
     this->_FEN = "";
+    this->_winner = "";
     this->_mt_chess->reset();
 }
 
@@ -508,4 +523,53 @@ QString MT_Chess_QML::getEvent()
 QString MT_Chess_QML::getRound()
 {
     return this->_round;
+}
+
+void MT_Chess_QML::addResult(QString result)
+{
+    qDebug() << "MT_Chess_QML::addResult - " << result;
+    QString white_res = result.split("-")[0];
+    QString black_res = result.split("-")[1];
+
+    float fl_white_res = 0;
+    float fl_black_res = 0;
+
+    if (white_res == "0") fl_white_res = 0;
+    if (white_res == "1") fl_white_res = 1;
+    if (white_res == "1/2") fl_white_res = 0.5;
+
+    if (black_res == "0") fl_black_res = 0;
+    if (black_res == "1") fl_black_res = 1;
+    if (black_res == "1/2") fl_black_res = 0.5;
+
+    if (_result.contains(this->_whitePlayer)) {
+        _result[this->_whitePlayer] += fl_white_res;
+    } else {
+        _result.insert(this->_whitePlayer, fl_white_res);
+    }
+
+    if (_result.contains(this->_blackPlayer)) {
+        _result[this->_blackPlayer] += fl_black_res;
+    } else {
+        _result.insert(this->_blackPlayer, fl_black_res);
+    }
+}
+
+QString MT_Chess_QML::getWinner()
+{
+    QMapIterator<QString, float> i(_result);
+    float hightest_score = 0;
+    while (i.hasNext()) {
+        i.next();
+        if (i.value() > hightest_score) {
+            hightest_score = i.value();
+            _winner = i.key();
+        }
+    }
+    return _winner;
+}
+
+QString MT_Chess_QML::getWinnerImage()
+{
+    return _playerImages[_winner];
 }
