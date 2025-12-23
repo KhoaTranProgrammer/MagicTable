@@ -55,6 +55,8 @@ Window {
         onMatchComplete: {
             console.log("Match is complete!!!")
             id_gs_gamescreen.clearGame()
+            console.log(id_gs_gamescreen.mt_chess_qml.getWinner())
+            console.log(id_gs_gamescreen.mt_chess_qml.getWinnerImage())
         }
     }
 
