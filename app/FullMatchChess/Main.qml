@@ -22,6 +22,12 @@ Window {
 
     }
 
+    SoundEffect {
+        id: id_soundEffect_victory
+        source: Qt.resolvedUrl("res/end_game.wav")
+        volume: 0.8
+    }
+
     Rectangle {
         id: id_root
         anchors.fill: parent
@@ -56,7 +62,9 @@ Window {
             console.log("Match is complete!!!")
             id_gs_gamescreen.clearGame()
             console.log(id_gs_gamescreen.mt_chess_qml.getWinner())
-            console.log(id_gs_gamescreen.mt_chess_qml.getWinnerImage())
+            id_img_winner.source = id_gs_gamescreen.mt_chess_qml.getWinnerImage()
+            id_winannounce.visible = true
+            id_soundEffect_victory.play()
         }
     }
 
@@ -100,6 +108,50 @@ Window {
             onClicked: {
                 id_gs_gamescreen.newGame()
             }
+        }
+    }
+
+    Image {
+        id: id_img_winner
+        anchors {
+            verticalCenter: id_root.verticalCenter
+            horizontalCenter: id_root.horizontalCenter
+        }
+        height: id_root.height * 0.5
+        width: height
+
+        source: ""
+        opacity: 0.0
+        smooth: true
+
+        // Sequential fade in and fade out animation
+        SequentialAnimation on opacity {
+            loops: Animation.Infinite
+            running: true
+
+            NumberAnimation { from: 0.0; to: 1.0; duration: 2000; easing.type: Easing.InOutQuad } // Fade in
+            PauseAnimation { duration: 2000 } // Stay visible
+        }
+    }
+
+    Text {
+        id: id_winannounce
+        anchors.top: id_img_winner.bottom
+        anchors.horizontalCenter: id_root.horizontalCenter
+        anchors.margins: 10
+        text: "WINNER"
+        color: "yellow"
+        font.pointSize: 50
+        font.bold: true
+        visible: false
+
+        PropertyAnimation on opacity {
+            from: 0.0
+            to: 1.0
+            duration: 2000
+            loops: Animation.Infinite
+            easing.type: Easing.InOutQuad
+            running: true
         }
     }
 }

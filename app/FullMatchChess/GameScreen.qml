@@ -15,6 +15,8 @@ Item {
 
     property var mt_chess_qml
     property bool isStartComplete: false
+    property string whiteStatus: ""
+    property string blackStatus: ""
 
     Component.onCompleted: {
         mt_chess_qml = q_id_chesstable
@@ -344,10 +346,8 @@ Item {
                     whiteStatus = "draw"
                     blackStatus = "draw"
                 }
-                // id_rod_rounds.addItem(q_id_chesstable.getRound(), q_id_chesstable.getWhiteImage(), whiteStatus
-                //                       , q_id_chesstable.getBlackImage(), blackStatus)
-
-                // id_tim_stop.running = true
+                id_rod_rounds.addItem(q_id_chesstable.getRound(), q_id_chesstable.getWhiteImage(), whiteStatus
+                                      , q_id_chesstable.getBlackImage(), blackStatus)
 
                 id_tim_stopgame.running = true
             } else {
@@ -367,6 +367,34 @@ Item {
         font.pointSize: 12
         font.bold: true
         wrapMode: Text.WordWrap
+    }
+
+    Text {
+        id: id_txt_roundinfo
+        anchors.horizontalCenter: id_root.horizontalCenter
+        anchors.verticalCenter: id_blackPlayerPos.verticalCenter
+        anchors.margins: 5
+        text: ""
+        color: "yellow"
+        font.pointSize: 50
+        font.bold: true
+        font.family: "Helvetica"
+    }
+
+    Rectangle {
+        id: id_rec_roundarea
+        anchors {
+            right: id_table.left
+            verticalCenter: parent.verticalCenter
+        }
+        width: id_table.width * 0.4
+        height: id_table.height * 0.4
+        color: "transparent"
+
+        Rounds {
+            id: id_rod_rounds
+            anchors.fill: parent
+        }
     }
 
     Timer {
@@ -404,6 +432,8 @@ Item {
                 id_txt_whiteplayer.anchors.bottom = id_txt_whiteplayer_elo.top
                 id_txt_whiteplayer.color = "white"
                 id_txt_whiteplayer.font.pointSize = 12
+
+                id_txt_roundinfo.text = ""
 
                 isStartComplete = true
             } else {
@@ -469,16 +499,6 @@ Item {
             id_txt_whiteplayer.font.pointSize = 25
             id_txt_whiteplayer_elo.anchors.top = id_txt_whiteplayer.bottom
 
-            // id_rec_blackplayer.x = (id_root.width * 0.5) - (id_root.width * 0.5 * 0.1) - (id_blackPlayerPos.width * 2)
-            // id_rec_blackplayer.y = id_root.height * 0.3
-            // id_rec_blackplayer.width = id_blackPlayerPos.width * 2
-            // id_rec_blackplayer.height = id_blackPlayerPos.height * 2
-
-            // id_rec_whiteplayer.x = (id_root.width * 0.5) + (id_root.width * 0.5 * 0.1)
-            // id_rec_whiteplayer.y = id_root.height * 0.3
-            // id_rec_whiteplayer.width = id_whitePlayerPos.width * 2
-            // id_rec_whiteplayer.height = id_whitePlayerPos.height * 2
-
             q_id_chesstable.reset()
             id_ctrCharacterList.clearList()
             q_id_chesstable.addReviewDataWithTimeFormat(selectedFile)
@@ -496,6 +516,7 @@ Item {
             isStartComplete = false
 
             q_id_chesstable.createPieces()
+            id_txt_roundinfo.text = q_id_chesstable.getRound()
 
             id_tim_startgame.running = true
         }
