@@ -484,6 +484,7 @@ void MT_Chess_QML::accessPGNFolder(QString folderPath)
     for (const QString &file : files) {
         this->_PGN_files.append(dir.absoluteFilePath(file));
     }
+    readAllPlayersData();
 }
 
 QString MT_Chess_QML::getNextPGN()
@@ -572,4 +573,146 @@ QString MT_Chess_QML::getWinner()
 QString MT_Chess_QML::getWinnerImage()
 {
     return _playerImages[_winner];
+}
+
+void MT_Chess_QML::readAllPlayersData()
+{
+    qDebug() << "MT_Chess_QML::readAllPlayersData()";
+    for(int i = 0; i < _PGN_files.count(); i++) {
+        qDebug() << _PGN_files[i];
+        QString refine_name = _PGN_files[i];
+        refine_name.remove("file:///");
+
+        QFile file(refine_name);
+
+        // Try to open the file in read-only text mode
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qCritical() << "Cannot open file:" << file.errorString();
+        }
+
+        QTextStream in(&file);
+        QString line = "";
+        QString whiteP = "";
+        QString blackP = "";
+
+        // Read file line by line
+        while (!in.atEnd()) {
+            QString oneline = in.readLine();
+            if (oneline.contains("White ")) {
+                oneline.remove("[White \"");
+                oneline.remove("\"]");
+                whiteP = oneline;
+                if (!_allPlayerImages.contains(oneline)) {
+                    _allPlayerImages.insert(oneline, "");
+                }
+            }
+            if (oneline.contains("Black ")) {
+                oneline.remove("[Black \"");
+                oneline.remove("\"]");
+                blackP = oneline;
+                if (!_allPlayerImages.contains(oneline)) {
+                    _allPlayerImages.insert(oneline, "");
+                }
+            }
+
+            if (oneline.contains("Result")) {   // [Result "1/2-1/2"]
+                QString refine_result = oneline.remove("[Result \"");
+                refine_result.remove("\"]");
+
+                QString white_res = refine_result.split("-")[0];
+                QString black_res = refine_result.split("-")[1];
+
+                float fl_white_res = 0;
+                float fl_black_res = 0;
+
+                if (white_res == "0") fl_white_res = 0;
+                if (white_res == "1") fl_white_res = 1;
+                if (white_res == "1/2") fl_white_res = 0.5;
+
+                if (black_res == "0") fl_black_res = 0;
+                if (black_res == "1") fl_black_res = 1;
+                if (black_res == "1/2") fl_black_res = 0.5;
+
+                if (_allPlayerResult.contains(whiteP)) {
+                    _allPlayerResult[whiteP] += fl_white_res;
+                } else {
+                    _allPlayerResult.insert(whiteP, fl_white_res);
+                }
+
+                if (_allPlayerResult.contains(blackP)) {
+                    _allPlayerResult[blackP] += fl_black_res;
+                } else {
+                    _allPlayerResult.insert(blackP, fl_black_res);
+                }
+            }
+        }
+    }
+
+        // if (i.value() > hightest_score) {
+        //     hightest_score = i.value();
+        //     _winner = i.key();
+        // }
+
+    // Example: Raw GitHub file URL (must be the "raw" link)
+    QUrl url("https://github.com/KhoaTranProgrammer/Common_Topics/blob/main/Chess_Players.json");
+
+    // Network manager for HTTP request
+    QNetworkAccessManager manager;
+    QNetworkRequest request(url);
+
+    // Send GET request
+    QNetworkReply *reply = manager.get(request);
+
+    // Use event loop to wait for the request to finish (synchronous for simplicity)
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Read file content
+    QByteArray data = reply->readAll();
+    QString fileContent = QString::fromUtf8(data);
+
+    // Basic split by comma
+    fileContent = fileContent.split("rawLines")[1];
+    fileContent = fileContent.split("stylingDirectives")[0];
+    fileContent.remove('\\');
+    fileContent.remove("\"");
+    fileContent.replace(":[{,", "{");
+    fileContent.replace(":[,", ":[");
+    fileContent.replace("},],}],", "}]}");
+    fileContent.replace(",,", ",\n");
+
+    reply->deleteLater();
+
+    QStringList players_list = fileContent.split("\n");
+    for(int i = 0; i < players_list.count(); i++) {
+        // qDebug() << players_list[i];
+        QString player_name = players_list[i].split(", image: ")[0];
+        QString image_link = players_list[i].split(", image: ")[1];
+
+        image_link.remove("}]}");
+        image_link.remove("},");
+        image_link.remove("}");
+
+        QMapIterator<QString, QString> item(_allPlayerImages);
+        while (item.hasNext()) {
+            item.next();
+            if (player_name.contains(item.key())) _allPlayerImages[item.key()] = image_link;
+        }
+    }
+
+    QMapIterator<QString, float> item(_allPlayerResult);
+    float hightest_score = 0;
+    while (item.hasNext()) {
+        item.next();
+        if (item.value() > hightest_score) {
+            hightest_score = item.value();
+            _champion = item.key();
+        }
+    }
+}
+
+QString MT_Chess_QML::findChampion()
+{
+    return this->_champion;
 }

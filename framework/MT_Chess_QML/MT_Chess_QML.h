@@ -81,7 +81,14 @@ private:
     int _games = 0;
     QMap<QString, float> _result;
     QMap<QString, QString> _playerImages;
-    QString _winner;
+    QString _winner = "";
+
+    // Use for openning screen
+    QString _champion = "";
+    QMap<QString, QString> _allPlayerImages;
+    QMap<QString, float> _allPlayerResult;
+    void readAllPlayersData();
+    QString findChampion();
 
     void readChessPlayerInfor();
     string getPieceNameFromCharacter(char c);
