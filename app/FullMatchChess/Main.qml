@@ -46,6 +46,27 @@ Window {
         onAccepted: {
             id_gs_gamescreen.mt_chess_qml.accessPGNFolder(id_fod_folderDialog.selectedFolder)
             isLoaded = true
+            id_txt_event.text = id_gs_gamescreen.mt_chess_qml.getEvent()
+            id_img_winplayer.source = id_gs_gamescreen.mt_chess_qml.findChampion()
+            if (id_gs_gamescreen.mt_chess_qml.getNumberOfPlayers() > 2) {
+                id_pl.addItem(
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer()
+                )
+                id_pl.addItem(
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer()
+                )
+                id_pl.addItem(
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
+                    id_gs_gamescreen.mt_chess_qml.getNextPlayer()
+                )
+            } else {
+                id_img_oppplayer.source = id_gs_gamescreen.mt_chess_qml.getNextPlayer()
+            }
         }
     }
 
@@ -106,6 +127,10 @@ Window {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                id_pl.clearList()
+                id_img_winplayer.visible = false
+                id_img_oppplayer.visible = false
+                id_txt_event.visible = false
                 id_gs_gamescreen.newGame()
             }
         }
@@ -153,5 +178,54 @@ Window {
             easing.type: Easing.InOutQuad
             running: true
         }
+    }
+
+    Text {
+        id: id_txt_event
+        anchors.top: id_root.top
+        anchors.horizontalCenter: id_root.horizontalCenter
+        anchors.margins: 10
+        width: parent.width * 0.8
+        text: ""
+        color: "yellow"
+        font.pointSize: 50
+        font.bold: true
+        wrapMode: Text.WordWrap
+    }
+
+    Players {
+        id: id_pl
+        x: id_root.width / 2 + 50
+        y: id_root.height * 0.3
+        width: id_root.width * 0.4
+        height: id_root.height * 0.7
+
+        Component.onCompleted: {
+
+        }
+    }
+
+    Image {
+        id: id_img_winplayer
+        anchors {
+            right: id_root.horizontalCenter
+            verticalCenter: id_pl.verticalCenter
+            margins: 50
+        }
+        width: id_root.width * 0.3
+        height: width
+        source: ""
+    }
+
+    Image {
+        id: id_img_oppplayer
+        anchors {
+            left: id_root.horizontalCenter
+            verticalCenter: id_pl.verticalCenter
+            margins: 50
+        }
+        width: id_root.width * 0.3
+        height: width
+        source: ""
     }
 }
