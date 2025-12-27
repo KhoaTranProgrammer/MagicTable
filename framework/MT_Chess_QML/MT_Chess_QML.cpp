@@ -276,6 +276,7 @@ void MT_Chess_QML::readChessPlayerInfor()
 
 void MT_Chess_QML::addReviewDataWithTimeFormat(QString filename)
 {
+    qDebug() << "Read file: " << filename;
     bool isHeaderComplete = false;
     QString refine_name = filename;
     refine_name.remove("file:///");
@@ -477,12 +478,18 @@ QString MT_Chess_QML::getBlackElo()
 
 void MT_Chess_QML::accessPGNFolder(QString folderPath)
 {
+    qDebug() << folderPath;
     QString refine_folderPath = folderPath;
     refine_folderPath.remove("file:///");
     QDir dir(refine_folderPath);
     QStringList files = dir.entryList(QDir::Files);
     for (const QString &file : files) {
+#if defined(Q_OS_ANDROID)
+        QString path = dir.filePath(file);
+        this->_PGN_files.append(path);
+#else
         this->_PGN_files.append(dir.absoluteFilePath(file));
+#endif
     }
     readAllPlayersData();
 }
@@ -598,6 +605,7 @@ void MT_Chess_QML::readAllPlayersData()
         // Read file line by line
         while (!in.atEnd()) {
             QString oneline = in.readLine();
+            qDebug() << "DEBUG: " << oneline;
             if (oneline.contains("White ")) {
                 oneline.remove("[White \"");
                 oneline.remove("\"]");
