@@ -61,6 +61,9 @@ public slots:
     QString getRound();
     QString getWinner();
     QString getWinnerImage();
+    QString getNextPlayer();
+    QString findChampion();
+    int getNumberOfPlayers();
 
 private:
     QQmlEngine* _mt_engine;
@@ -88,7 +91,7 @@ private:
     QMap<QString, QString> _allPlayerImages;
     QMap<QString, float> _allPlayerResult;
     void readAllPlayersData();
-    QString findChampion();
+    int _currentPlayer = 0;
 
     void readChessPlayerInfor();
     string getPieceNameFromCharacter(char c);

@@ -614,6 +614,11 @@ void MT_Chess_QML::readAllPlayersData()
                     _allPlayerImages.insert(oneline, "");
                 }
             }
+            if (oneline.contains("Event")) {
+                this->_event = oneline;
+                this->_event.remove("[Event \"");
+                this->_event.remove("\"]");
+            }
 
             if (oneline.contains("Result")) {   // [Result "1/2-1/2"]
                 QString refine_result = oneline.remove("[Result \"");
@@ -714,5 +719,29 @@ void MT_Chess_QML::readAllPlayersData()
 
 QString MT_Chess_QML::findChampion()
 {
-    return this->_champion;
+    return _allPlayerImages[this->_champion];
+}
+
+QString MT_Chess_QML::getNextPlayer()
+{
+    QString res = "";
+    if (this->_currentPlayer < _allPlayerImages.size()) {
+        auto it = _allPlayerImages.begin();
+        std::advance(it, this->_currentPlayer);
+        if (it.key() != this->_champion) {
+            res = it.value();
+        } else {
+            this->_currentPlayer++;
+            auto it = _allPlayerImages.begin();
+            std::advance(it, this->_currentPlayer);
+            res = it.value();
+        }
+        this->_currentPlayer++;
+    }
+    return res;
+}
+
+int MT_Chess_QML::getNumberOfPlayers()
+{
+    return _allPlayerResult.count();
 }
