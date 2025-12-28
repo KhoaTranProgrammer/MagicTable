@@ -39,6 +39,10 @@ qt_add_qml_module(appFullMatchChess
         "res/background.wav"
         "res/move.wav"
         "res/end_game.wav"
+        "android/AndroidManifest.xml"
+        "android/build.gradle"
+        "android/res/values/libs.xml"
+        "android/res/xml/qtprovider_paths.xml"
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

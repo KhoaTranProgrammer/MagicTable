@@ -6,8 +6,9 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    width: 1280
-    height: 720
+    visibility: Window.FullScreen
+    // width: 1280
+    // height: 720
     visible: true
     title: qsTr("Hello World")
 
@@ -46,7 +47,7 @@ Window {
         onAccepted: {
             id_gs_gamescreen.mt_chess_qml.accessPGNFolder(id_fod_folderDialog.selectedFolder)
             isLoaded = true
-            id_txt_event.text = id_gs_gamescreen.mt_chess_qml.getEvent()
+            id_txt_event.text = id_gs_gamescreen.mt_chess_qml.getDescription()
             id_img_winplayer.source = id_gs_gamescreen.mt_chess_qml.findChampion()
             if (id_gs_gamescreen.mt_chess_qml.getNumberOfPlayers() > 2) {
                 id_pl.addItem(
@@ -92,7 +93,7 @@ Window {
     Rectangle {
         id: id_logo
         anchors.top: id_root.top
-        anchors.right: id_root.right
+        anchors.left: id_root.left
         anchors.margins: 5
         width: id_root.width * 0.05
         height: width
@@ -117,7 +118,7 @@ Window {
 
     Rectangle {
         id: id_button2
-        anchors.top: id_root.top
+        anchors.bottom: id_root.bottom
         anchors.left: id_root.left
         anchors.margins: 5
         width: id_root.width * 0.05
@@ -132,6 +133,34 @@ Window {
                 id_img_oppplayer.visible = false
                 id_txt_event.visible = false
                 id_gs_gamescreen.newGame()
+            }
+        }
+    }
+
+    FileDialog {
+        id: id_fid_des
+        title: "Select a File"
+        currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+        nameFilters: ["Text files (*.txt)", "All files (*)"]
+
+        onAccepted: {
+            id_txt_event.text = id_gs_gamescreen.mt_chess_qml.readDescriptionFromFile(selectedFile)
+        }
+    }
+
+    Rectangle {
+        id: id_button3
+        anchors.top: id_root.top
+        anchors.right: id_root.right
+        anchors.margins: 5
+        width: id_root.width * 0.05
+        height: width
+        color: "transparent"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                id_fid_des.open()
             }
         }
     }
@@ -188,7 +217,7 @@ Window {
         width: parent.width * 0.8
         text: ""
         color: "yellow"
-        font.pointSize: 50
+        font.pointSize: 30
         font.bold: true
         wrapMode: Text.WordWrap
     }
@@ -196,7 +225,7 @@ Window {
     Players {
         id: id_pl
         x: id_root.width / 2 + 50
-        y: id_root.height * 0.3
+        y: id_root.height * 0.35
         width: id_root.width * 0.4
         height: id_root.height * 0.7
 
@@ -209,10 +238,10 @@ Window {
         id: id_img_winplayer
         anchors {
             right: id_root.horizontalCenter
-            verticalCenter: id_pl.verticalCenter
-            margins: 50
+            top: id_pl.top
+            // margins: 30
         }
-        width: id_root.width * 0.3
+        width: id_root.width * 0.25
         height: width
         source: ""
     }
@@ -221,10 +250,10 @@ Window {
         id: id_img_oppplayer
         anchors {
             left: id_root.horizontalCenter
-            verticalCenter: id_pl.verticalCenter
-            margins: 50
+            top: id_img_winplayer.top
+            // margins: 30
         }
-        width: id_root.width * 0.3
+        width: id_root.width * 0.25
         height: width
         source: ""
     }

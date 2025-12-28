@@ -64,7 +64,7 @@ Item {
             top: id_table.top
             margins: 10
         }
-        height: id_root.height * 0.2
+        height: id_root.height * 0.15
         width: height
         color: "transparent"
     }
@@ -203,7 +203,7 @@ Item {
             bottom: id_table.bottom
             margins: 10
         }
-        height: id_root.height * 0.2
+        height: id_root.height * 0.15
         width: height
         color: "transparent"
     }
@@ -358,13 +358,13 @@ Item {
 
     Text {
         id: id_txt_infor
-        anchors.bottom: id_root.bottom
-        anchors.right: id_table.left
-        anchors.left: id_root.left
+        anchors.top: id_root.top
+        anchors.right: id_root.right
+        anchors.left: id_table.right
         anchors.margins: 2
         text: ""
         color: "yellow"
-        font.pointSize: 12
+        font.pointSize: 11
         font.bold: true
         wrapMode: Text.WordWrap
     }
@@ -385,10 +385,10 @@ Item {
         id: id_rec_roundarea
         anchors {
             right: id_table.left
-            verticalCenter: parent.verticalCenter
+            bottom: id_table.bottom
         }
-        width: id_table.width * 0.4
-        height: id_table.height * 0.4
+        width: id_table.width * 0.6
+        height: id_table.height * 0.7
         color: "transparent"
 
         Rounds {

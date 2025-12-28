@@ -6,9 +6,9 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    visibility: Window.FullScreen
-    // width: 720
-    // height: 1544
+    // visibility: Window.FullScreen
+    width: 720
+    height: 1544
 
     visible: true
     title: qsTr("Hello World")
@@ -350,17 +350,17 @@ Window {
                     id_txt_infor.font.bold = false
                     id_txt_infor.color = "yellow"
 
-                    id_timer.running = true
+                    // id_timer.running = true
 
                     // For debugging
-                    // q_id_chesstable.review()
-                    // q_id_chesstable.drawData()
+                    q_id_chesstable.review()
+                    q_id_chesstable.drawData()
 
-                    // if (q_id_chesstable.getBlackStep() === "") {
-                    //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
-                    // } else {
-                    //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
-                    // }
+                    if (q_id_chesstable.getBlackStep() === "") {
+                        id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
+                    } else {
+                        id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+                    }
                 }
             }
         }
