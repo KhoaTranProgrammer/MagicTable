@@ -64,6 +64,8 @@ public slots:
     QString getNextPlayer();
     QString findChampion();
     int getNumberOfPlayers();
+    QString getDescription();
+    QString readDescriptionFromFile(QString filename);
 
 private:
     QQmlEngine* _mt_engine;
@@ -92,6 +94,7 @@ private:
     QMap<QString, float> _allPlayerResult;
     void readAllPlayersData();
     int _currentPlayer = 0;
+    QString _description = "";
 
     void readChessPlayerInfor();
     string getPieceNameFromCharacter(char c);

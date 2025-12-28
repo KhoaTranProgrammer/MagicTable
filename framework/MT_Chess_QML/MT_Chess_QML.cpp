@@ -623,9 +623,16 @@ void MT_Chess_QML::readAllPlayersData()
                 }
             }
             if (oneline.contains("Event")) {
-                this->_event = oneline;
-                this->_event.remove("[Event \"");
-                this->_event.remove("\"]");
+                if (_description != "") {
+                    this->_description = oneline;
+                    this->_description.remove("[Event \"");
+                    this->_description.remove("\"]");
+                }
+            }
+            if (oneline.contains("Round")) {
+                if (!_description.contains("Round")) {
+                    this->_description = this->_description + "\n" + oneline;
+                }
             }
 
             if (oneline.contains("Result")) {   // [Result "1/2-1/2"]
@@ -752,4 +759,34 @@ QString MT_Chess_QML::getNextPlayer()
 int MT_Chess_QML::getNumberOfPlayers()
 {
     return _allPlayerResult.count();
+}
+
+QString MT_Chess_QML::getDescription()
+{
+    return _description;
+}
+
+QString MT_Chess_QML::readDescriptionFromFile(QString filename)
+{
+    QString des = "";
+    QString refine_name = filename;
+    refine_name.remove("file:///");
+
+    QFile file(refine_name);
+
+    // Try to open the file in read-only text mode
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qCritical() << "Cannot open file:" << file.errorString();
+    }
+
+    QTextStream in(&file);
+    QString line = "";
+
+    des = in.readLine();
+    // Read file line by line
+    while (!in.atEnd()) {
+        QString oneline = in.readLine();
+        des += "\n" + oneline;
+    }
+    return des;
 }
