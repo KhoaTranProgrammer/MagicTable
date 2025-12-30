@@ -6,9 +6,9 @@ import QtQuick.Dialogs
 import MT_Chess_QML 1.0
 
 Window {
-    // visibility: Window.FullScreen
-    width: 720
-    height: 1544
+    visibility: Window.FullScreen
+    // width: 720
+    // height: 1544
 
     visible: true
     title: qsTr("Hello World")
@@ -286,12 +286,14 @@ Window {
         id: id_fid_selectpgn
         title: "Select a File"
         currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
-        nameFilters: ["Text files (*.pgn)", "All files (*)"]
+        nameFilters: ["Text files (*.pgn, *.txt)", "All files (*)"]
 
         onAccepted: {
             isLoaded = true
             q_id_chesstable.addReviewDataWithTimeFormat(selectedFile)
             q_id_chesstable.createPieces()
+            q_id_chesstable.setWhitePrison(id_whitePrison)
+            q_id_chesstable.setBlackPrison(id_blackPrison)
             id_img_whitePlayerImage.source = q_id_chesstable.getWhiteImage()
             id_img_blackPlayerImage.source = q_id_chesstable.getBlackImage()
             id_txt_blackplayer.text = q_id_chesstable.getBlackPlayerName()
@@ -345,25 +347,56 @@ Window {
                     id_txt_whiteplayer.color = "white"
                     id_txt_whiteplayer_elo.color = "white"
 
-                    id_txt_infor.anchors.left = id_rec_whiteplayer.right
+                    id_txt_infor.anchors.top = undefined
+                    id_txt_infor.anchors.bottom = id_rec_blackplayer.top
+                    id_txt_infor.anchors.left = id_rec_blackplayer.left
                     id_txt_infor.font.pointSize = 10
                     id_txt_infor.font.bold = false
                     id_txt_infor.color = "yellow"
 
-                    // id_timer.running = true
+                    id_whitePrison.visible = true
+                    id_blackPrison.visible = true
+
+                    id_timer.running = true
 
                     // For debugging
-                    q_id_chesstable.review()
-                    q_id_chesstable.drawData()
+                    // q_id_chesstable.review()
+                    // q_id_chesstable.drawData()
 
-                    if (q_id_chesstable.getBlackStep() === "") {
-                        id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
-                    } else {
-                        id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
-                    }
+                    // if (q_id_chesstable.getBlackStep() === "") {
+                    //     id_txt_whiteplayer_clock.text = q_id_chesstable.getWhiteClockTime()
+                    // } else {
+                    //     id_txt_blackplayer_clock.text = q_id_chesstable.getBlackClockTime()
+                    // }
                 }
             }
         }
+    }
+
+    Rectangle {
+        id: id_blackPrison
+        anchors {
+            left: id_rec_whiteplayer.right
+            top: id_txt_whiteplayer_elo.bottom
+        }
+        width: id_table.width * 0.3
+        height: width / 4
+        // anchors.margins: height * 0.10
+        color: "grey"
+        visible: false
+    }
+
+    Rectangle {
+        id: id_whitePrison
+        anchors {
+            left: id_rec_blackplayer.right
+            top: id_txt_blackplayer_elo.bottom
+        }
+        width: id_table.width * 0.3
+        height: width / 4
+        // anchors.margins: height * 0.10
+        color: "grey"
+        visible: false
     }
 
     SoundEffect {
@@ -399,7 +432,8 @@ Window {
                     id_blackwinannounce.text = "DRAW"
                 }
 
-                id_txt_infor.text = ""
+                id_whitePrison.visible = false
+                id_blackPrison.visible = false
                 id_txt_whiteplayer_clock.text = ""
                 id_txt_blackplayer_clock.text = ""
             } else {
