@@ -474,19 +474,27 @@ mt_void MT_KingChess::review()
                 if (token[1] == 'K') piece = "king";
             }
         }
-        else if (token.size() == 7) // WRexd5+
+        else if (token.size() == 7) // WRexd5+ or O-O-O+
         {
-            if (token[6] == '+') {
-                isKingCapture = true;
-                w_column = getColumnNumber(token[4]);
-                w_row = getRowNumber(token[5]);
-                prev_col = getColumnNumber(token[2]);
+            if ((token[1] == '0' && token[2] == '-' && token[3] == '0' && token[4] == '-' && token[5] == '0') ||
+                (token[1] == 'O' && token[2] == '-' && token[3] == 'O' && token[4] == '-' && token[5] == 'O')) {
+                if (token[0] == 'W') this->castling("queenside", "white");
+                else this->castling("queenside", "black");
+
+                if (token[6] == '+') isKingCapture = true;
+            } else {
+                if (token[6] == '+') {
+                    isKingCapture = true;
+                    w_column = getColumnNumber(token[4]);
+                    w_row = getRowNumber(token[5]);
+                    prev_col = getColumnNumber(token[2]);
+                }
+                if (token[1] == 'N') piece = "knight";
+                if (token[1] == 'B') piece = "bishop";
+                if (token[1] == 'Q') piece = "queen";
+                if (token[1] == 'R') piece = "rook";
+                if (token[1] == 'K') piece = "king";
             }
-            if (token[1] == 'N') piece = "knight";
-            if (token[1] == 'B') piece = "bishop";
-            if (token[1] == 'Q') piece = "queen";
-            if (token[1] == 'R') piece = "rook";
-            if (token[1] == 'K') piece = "king";
         }
         else if (token.size() == 8 && token[7] == '+' && token[5] == '=') // Bcxd1=Q+
         {
