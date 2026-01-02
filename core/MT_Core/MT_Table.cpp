@@ -272,7 +272,7 @@ mt_bool MT_Table::checkFreePosition(MT_Position& pos)
     {
         --i;
         MT_Object *obj = this->_objectlist.at(i);
-        MT_Position *current_pos = obj->getCurPosition();
+        MT_Position *current_pos = obj->getPosition();
         if (current_pos != NULL)
         {
             if (current_pos->getColumn() == pos.getColumn() &&
