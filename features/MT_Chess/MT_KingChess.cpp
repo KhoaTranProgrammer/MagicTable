@@ -605,6 +605,41 @@ mt_void MT_KingChess::review()
     }
 }
 
+MT_Position* MT_KingChess::getKingPosition(string color)
+{
+    MT_Position* pos = NULL;
+    for(mt_uint index = 0; index < this->_listKingChessObjects.size(); index++)
+    {
+        MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(index);
+        if (cur_pie->getPiece() == "king" && cur_pie->getColor() == color) {
+            pos = cur_pie->getCurPosition();
+        }
+    }
+    return pos;
+}
+
+mt_bool MT_KingChess::isKingSafe(string color)
+{
+    MT_Position* pos = getKingPosition(color);
+    // cout << "isKingSafe: Color " << color << " pos - Col: " << pos->getColumn() << " - Row: " << pos->getRow() << endl;
+    mt_bool res = true;
+    for(mt_uint index = 0; index < this->_listKingChessObjects.size(); index++)
+    {
+        MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(index);
+        if (cur_pie->getColor() != color) {
+            vector<MT_Position*> nextMoves = findNextMove(cur_pie->getPiece(), cur_pie->getColor(), *cur_pie->getCurPosition());
+            for (mt_uint l = 0; l < nextMoves.size(); l++)
+            {
+                if (nextMoves.at(l)->getColumn() == pos->getColumn() && nextMoves.at(l)->getRow() == pos->getRow()) {
+                    // cout << "isKingSafe: Color " << cur_pie->getColor() << " - Pie: " << cur_pie->getPiece() << " - Col: " << nextMoves.at(l)->getColumn() << " - Row: " << nextMoves.at(l)->getRow() << endl;
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
 MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_Position& pos, mt_int prev_Col, mt_int prev_Row)
 {
     // cout << "findPieceFromMove: Piece: " << piece << " - Color: " << color << " - Col: " << pos.getColumn() << " - Row: " << pos.getRow() << " - Prev Col: " << prev_Col << endl;
@@ -618,9 +653,22 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                 vector<MT_Position*> nextMoves = findNextMove(piece, color, *res->getCurPosition());
                 for (mt_uint l = 0; l < nextMoves.size(); l++)
                 {
+                    // If next move of piece is same as target position, this is the correct piece
                     if (nextMoves.at(l)->getColumn() == pos.getColumn() && nextMoves.at(l)->getRow() == pos.getRow())
                     {
-                        return res;
+                        MT_Position *cur_pos = res->getCurPosition(); // Current position
+                        res->updatePosition(pos);
+                        if (isKingSafe(color)) {
+                            res->updatePosition(*cur_pos);
+                            return res;
+                        } else {
+                            if (piece == "king") {
+                                res->updatePosition(*cur_pos);
+                                return res;
+                            } else {
+                                res->updatePosition(*cur_pos);
+                            }
+                        }
                     }
                 }
             }
@@ -645,7 +693,19 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                 {
                     if (nextMoves.at(l)->getColumn() == pos.getColumn() && nextMoves.at(l)->getRow() == pos.getRow())
                     {
-                        return res;
+                        MT_Position *cur_pos = res->getCurPosition(); // Current position
+                        res->updatePosition(pos);
+                        if (isKingSafe(color)) {
+                            res->updatePosition(*cur_pos);
+                            return res;
+                        } else {
+                            if (piece == "king") {
+                                res->updatePosition(*cur_pos);
+                                return res;
+                            } else {
+                                res->updatePosition(*cur_pos);
+                            }
+                        }
                     }
                 }
             }
@@ -904,27 +964,36 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
     else if (piece == "knight")
     {
         if (curRow + 2 <= 7 && curCol + 1 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow + 2));
+            if (this->getPieColorAtPosition(curCol + 1, curRow + 2) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow + 2));
         if (curRow + 2 <= 7 && curCol - 1 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow + 2));
+            if (this->getPieColorAtPosition(curCol - 1, curRow + 2) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow + 2));
         if (curRow - 2 >= 0 && curCol + 1 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow - 2));
+            if (this->getPieColorAtPosition(curCol + 1, curRow - 2) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow - 2));
         if (curRow - 2 >= 0 && curCol - 1 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow - 2));
+            if (this->getPieColorAtPosition(curCol - 1, curRow - 2) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow - 2));
         if (curRow + 1 <= 7 && curCol + 2 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 2, curRow + 1));
+            if (this->getPieColorAtPosition(curCol + 2, curRow + 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 2, curRow + 1));
         if (curRow + 1 <= 7 && curCol - 2 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 2, curRow + 1));
+            if (this->getPieColorAtPosition(curCol - 2, curRow + 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 2, curRow + 1));
         if (curRow - 1 >= 0 && curCol + 2 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 2, curRow - 1));
+            if (this->getPieColorAtPosition(curCol + 2, curRow - 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 2, curRow - 1));
         if (curRow - 1 >= 0 && curCol - 2 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 2, curRow - 1));
+            if (this->getPieColorAtPosition(curCol - 2, curRow - 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 2, curRow - 1));
     }
     else if (piece == "bishop")
     {
         for (mt_int i = 1; curCol - i >= 0; i++) {
             if (curRow - i >= 0) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow - i));
+                if (this->getPieColorAtPosition(curCol - i, curRow - i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow - i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol - i, curRow - i))) {
                     break;
                 }
@@ -935,7 +1004,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
 
         for (mt_int i = 1; curCol + i <= 7; i++) {
             if (curRow + i <= 7) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow + i));
+                if (this->getPieColorAtPosition(curCol + i, curRow + i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow + i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol + i, curRow + i))) {
                     break;
                 }
@@ -946,7 +1016,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
 
         for (mt_int i = 1; curCol - i >= 0; i++) {
             if (curRow + i <= 7) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow + i));
+                if (this->getPieColorAtPosition(curCol - i, curRow + i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow + i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol - i, curRow + i))) {
                     break;
                 }
@@ -957,7 +1028,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
 
         for (mt_int i = 1; curCol + i <= 7; i++) {
             if (curRow - i >= 0) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow - i));
+                if (this->getPieColorAtPosition(curCol + i, curRow - i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow - i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol + i, curRow - i))) {
                     break;
                 }
@@ -970,7 +1042,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
     {
         for (mt_int i = 1; curCol - i >= 0; i++) {
             if (curRow - i >= 0) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow - i));
+                if (this->getPieColorAtPosition(curCol - i, curRow - i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow - i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol - i, curRow - i))) {
                     break;
                 }
@@ -981,7 +1054,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
 
         for (mt_int i = 1; curCol + i <= 7; i++) {
             if (curRow + i <= 7) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow + i));
+                if (this->getPieColorAtPosition(curCol + i, curRow + i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow + i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol + i, curRow + i))) {
                     break;
                 }
@@ -992,7 +1066,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
 
         for (mt_int i = 1; curCol - i >= 0; i++) {
             if (curRow + i <= 7) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow + i));
+                if (this->getPieColorAtPosition(curCol - i, curRow + i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow + i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol - i, curRow + i))) {
                     break;
                 }
@@ -1003,7 +1078,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
 
         for (mt_int i = 1; curCol + i <= 7; i++) {
             if (curRow - i >= 0) {
-                positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow - i));
+                if (this->getPieColorAtPosition(curCol + i, curRow - i) != color)
+                    positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow - i));
                 if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol + i, curRow - i))) {
                     break;
                 }
@@ -1013,29 +1089,32 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
         }
 
         for (mt_int i = 1; curCol - i >= 0; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow));
+            if (this->getPieColorAtPosition(curCol - i, curRow) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol - i, curRow))) {
                 break;
             }
         }
 
         for (mt_int i = 1; curCol + i <= 7; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow));
+            if (this->getPieColorAtPosition(curCol + i, curRow) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol + i, curRow))) {
                 break;
             }
         }
 
         for (mt_int i = 1; curRow - i >= 0; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol, curRow - i));
+            if (this->getPieColorAtPosition(curCol, curRow - i) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol, curRow - i));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol, curRow - i))) {
                 break;
             }
         }
 
         for (mt_int i = 1; curRow + i <= 7; i++) {
-            cout << "curCol: " << curCol << " - curRow: " << curRow + i << endl;
-            positionList.push_back(this->_mttable.getPositionAt(curCol, curRow + i));
+            if (this->getPieColorAtPosition(curCol, curRow + i) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol, curRow + i));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol, curRow + i))) {
                 break;
             }
@@ -1043,28 +1122,32 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
     }
     else if (piece == "rook") {
         for (mt_int i = 1; curCol - i >= 0; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow));
+            if (this->getPieColorAtPosition(curCol - i, curRow) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - i, curRow));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol - i, curRow))) {
                 break;
             }
         }
 
         for (mt_int i = 1; curCol + i <= 7; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow));
+            if (this->getPieColorAtPosition(curCol + i, curRow) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + i, curRow));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol + i, curRow))) {
                 break;
             }
         }
 
         for (mt_int i = 1; curRow - i >= 0; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol, curRow - i));
+            if (this->getPieColorAtPosition(curCol, curRow - i) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol, curRow - i));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol, curRow - i))) {
                 break;
             }
         }
 
         for (mt_int i = 1; curRow + i <= 7; i++) {
-            positionList.push_back(this->_mttable.getPositionAt(curCol, curRow + i));
+            if (this->getPieColorAtPosition(curCol, curRow + i) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol, curRow + i));
             if (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(curCol, curRow + i))) {
                 break;
             }
@@ -1072,21 +1155,29 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
     }
     else if (piece == "king") {
         if (curRow - 1 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol, curRow - 1));
+            if (this->getPieColorAtPosition(curCol, curRow - 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol, curRow - 1));
         if (curRow + 1 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol, curRow + 1));
+            if (this->getPieColorAtPosition(curCol, curRow + 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol, curRow + 1));
         if (curCol - 1 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow));
+            if (this->getPieColorAtPosition(curCol - 1, curRow) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow));
         if (curCol + 1 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow));
+            if (this->getPieColorAtPosition(curCol + 1, curRow) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow));
         if (curRow - 1 >= 0 && curCol - 1 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow - 1));
+            if (this->getPieColorAtPosition(curCol - 1, curRow - 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow - 1));
         if (curRow + 1 <= 7 && curCol + 1 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow + 1));
+            if (this->getPieColorAtPosition(curCol + 1, curRow + 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow + 1));
         if (curRow - 1 >= 0 && curCol + 1 <= 7)
-            positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow - 1));
+            if (this->getPieColorAtPosition(curCol + 1, curRow - 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol + 1, curRow - 1));
         if (curRow + 1 <= 7 && curCol - 1 >= 0)
-            positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow + 1));
+            if (this->getPieColorAtPosition(curCol - 1, curRow + 1) != color)
+                positionList.push_back(this->_mttable.getPositionAt(curCol - 1, curRow + 1));
     }
     return positionList;
 }
@@ -1193,4 +1284,18 @@ mt_void MT_KingChess::reset()
     _blackClockTime = "";
     _piecePrisoner = "";
     _colorPrisoner = "";
+}
+
+string MT_KingChess::getPieColorAtPosition(mt_int col, mt_int row)
+{
+    string color = "";
+    for(mt_uint index = 0; index < this->_listKingChessObjects.size(); index++)
+    {
+        MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(index);
+        MT_Position* pos = cur_pie->getCurPosition();
+        if (pos->getColumn() == col && pos->getRow() == row) {
+            color = cur_pie->getColor();
+        }
+    }
+    return color;
 }

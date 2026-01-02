@@ -29,6 +29,9 @@ private:
     MT_Chess_Object* findPawnSpecificMove2(string piece, string color, MT_Position& pos, mt_int prev_Col);
     string removeSubString(string larger, string sub);
     mt_int convertStringToSecond(const std::string &timeStr);
+    mt_bool isKingSafe(string color);
+    MT_Position* getKingPosition(string color);
+    string getPieColorAtPosition(mt_int col, mt_int row);
 
 public:
     MT_KingChess();
