@@ -618,7 +618,7 @@ MT_Position* MT_KingChess::getKingPosition(string color)
     return pos;
 }
 
-mt_bool MT_KingChess::isKingSafe(string color)
+mt_bool MT_KingChess::isKingSafe(string color, MT_Position& newpos)
 {
     MT_Position* pos = getKingPosition(color);
     // cout << "isKingSafe: Color " << color << " pos - Col: " << pos->getColumn() << " - Row: " << pos->getRow() << endl;
@@ -631,8 +631,11 @@ mt_bool MT_KingChess::isKingSafe(string color)
             for (mt_uint l = 0; l < nextMoves.size(); l++)
             {
                 if (nextMoves.at(l)->getColumn() == pos->getColumn() && nextMoves.at(l)->getRow() == pos->getRow()) {
-                    // cout << "isKingSafe: Color " << cur_pie->getColor() << " - Pie: " << cur_pie->getPiece() << " - Col: " << nextMoves.at(l)->getColumn() << " - Row: " << nextMoves.at(l)->getRow() << endl;
-                    return false;
+                    if (cur_pie->getPosition()->getColumn() != newpos.getColumn() &&
+                        cur_pie->getPosition()->getRow() != newpos.getRow()) {
+                        // cout << "isKingSafe: Color " << cur_pie->getColor() << " - Pie: " << cur_pie->getPiece() << " - Col: " << nextMoves.at(l)->getColumn() << " - Row: " << nextMoves.at(l)->getRow() << endl;
+                        return false;
+                    }
                 }
             }
         }
@@ -658,7 +661,7 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                     {
                         MT_Position *cur_pos = res->getCurPosition(); // Current position
                         res->updatePosition(pos);
-                        if (isKingSafe(color)) {
+                        if (isKingSafe(color, pos)) {
                             res->updatePosition(*cur_pos);
                             return res;
                         } else {
@@ -695,7 +698,7 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                     {
                         MT_Position *cur_pos = res->getCurPosition(); // Current position
                         res->updatePosition(pos);
-                        if (isKingSafe(color)) {
+                        if (isKingSafe(color, pos)) {
                             res->updatePosition(*cur_pos);
                             return res;
                         } else {
