@@ -310,7 +310,7 @@ mt_void MT_KingChess::review()
         this->_colorPrisoner = "";
 
         string token = this->_move_steps_in_PGN.at(0);
-        // cout << "Moving step: " << _stepNumber + 1 << " - " << token << endl;
+        cout << "Moving step: " << _stepNumber + 1 << " - " << token << endl;
         this->_move_steps_in_PGN.erase(this->_move_steps_in_PGN.begin());
 
         string clocktime = "";
@@ -633,7 +633,7 @@ mt_bool MT_KingChess::isKingSafe(string color, MT_Position& newpos)
                 if (nextMoves.at(l)->getColumn() == pos->getColumn() && nextMoves.at(l)->getRow() == pos->getRow()) {
                     if (cur_pie->getPosition()->getColumn() != newpos.getColumn() &&
                         cur_pie->getPosition()->getRow() != newpos.getRow()) {
-                        // cout << "isKingSafe: Color " << cur_pie->getColor() << " - Pie: " << cur_pie->getPiece() << " - Col: " << nextMoves.at(l)->getColumn() << " - Row: " << nextMoves.at(l)->getRow() << endl;
+                        cout << "isKingSafe: Color " << cur_pie->getColor() << " - Pie: " << cur_pie->getPiece() << " - Col: " << nextMoves.at(l)->getColumn() << " - Row: " << nextMoves.at(l)->getRow() << endl;
                         return false;
                     }
                 }
@@ -645,7 +645,7 @@ mt_bool MT_KingChess::isKingSafe(string color, MT_Position& newpos)
 
 MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_Position& pos, mt_int prev_Col, mt_int prev_Row)
 {
-    // cout << "findPieceFromMove: Piece: " << piece << " - Color: " << color << " - Col: " << pos.getColumn() << " - Row: " << pos.getRow() << " - Prev Col: " << prev_Col << endl;
+    cout << "findPieceFromMove: Piece: " << piece << " - Color: " << color << " - Col: " << pos.getColumn() << " - Row: " << pos.getRow() << " - Prev Col: " << prev_Col << endl;
     for(mt_uint i = 0; i < this->_listKingChessObjects.size(); i++)
     {
         MT_Chess_Object *res = this->_listKingChessObjects.at(i);
@@ -931,7 +931,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
             }
             else
             {
-                positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1));
+                if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1)))
+                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1));
             }
             if ((pos.getColumn() > 0) && (pos.getRow() < 7) &&
                 (!this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn() - 1, pos.getRow() + 1)))) {
@@ -953,7 +954,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
             }
             else
             {
-                positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1));
+                if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1)))
+                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1));
             }
 
             if ((pos.getColumn() > 0) && (pos.getRow() > 0) &&
