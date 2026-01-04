@@ -53,6 +53,7 @@ void MT_SummaryTable_QML::addTableData(QString filename)
             else points.push_back(0);
         }
         this->_result.insert(data_list[0], points);
+        this->_resultTotal.insert(data_list[0], 0);
         qDebug() << data_list[0] << " - " << this->_result[data_list[0]];
     }
 
@@ -63,7 +64,7 @@ void MT_SummaryTable_QML::addTableData(QString filename)
     int init_pos = 0;
     while (i.hasNext()) {
         i.next();
-        MT_SummaryTable_QML_Object* obj = new MT_SummaryTable_QML_Object(*_mt_engine, *this, i.key(), i.value().at(0));
+        MT_SummaryTable_QML_Object* obj = new MT_SummaryTable_QML_Object(*_mt_engine, *this, i.key(), 0);
         this->_mttable.addObject(*obj);
         this->_listObjects.push_back(obj);
         this->_mttable.updateObjectPosition(*obj, 0, init_pos);
@@ -74,4 +75,21 @@ void MT_SummaryTable_QML::addTableData(QString filename)
 void MT_SummaryTable_QML::drawData()
 {
     this->_mttable.drawObjects();
+}
+
+void MT_SummaryTable_QML::getNext()
+{
+    if (this->_round < this->_result.first().size()) {
+        // Get data at current round
+        QMapIterator<QString, vector<float>> i(this->_result);
+        int player_index = 0;
+        while (i.hasNext()) {
+            i.next();
+            this->_resultTotal[i.key()] += i.value().at(this->_round);
+            this->_listObjects.at(player_index)->setPoint(this->_resultTotal[i.key()]);
+            player_index++;
+        }
+
+        this->_round++;
+    }
 }

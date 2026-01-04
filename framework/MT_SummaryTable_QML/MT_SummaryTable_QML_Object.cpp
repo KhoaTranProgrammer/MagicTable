@@ -79,3 +79,9 @@ void MT_SummaryTable_QML_Object::createObject(int x, int y, int w, int h, int an
 
     _quickitem->setParentItem(myparent);
 }
+
+void MT_SummaryTable_QML_Object::setPoint(float point)
+{
+    this->_point = point;
+    _quickitem->setProperty("width", this->getCurPosition()->getW() * ((this->_point * 5) / 100));
+}

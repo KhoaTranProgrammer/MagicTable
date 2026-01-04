@@ -34,6 +34,7 @@ public:
 public slots:
     void addTableData(QString filename);
     void drawData();
+    void getNext();
 
 private:
     QQmlEngine* _mt_engine;
@@ -42,6 +43,8 @@ private:
 
     // Store database read from file
     QMap<QString, vector<float>> _result;
+    QMap<QString, float> _resultTotal;
+    int _round = 0;
 };
 
 #endif // MT_SUMMARYTABLE_QML_H

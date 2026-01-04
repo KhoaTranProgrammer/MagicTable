@@ -17,6 +17,7 @@ public:
     void createObject(int x, int y, int w, int h, int animationTime);
     void clearDrawing();
     void drawSpecific();
+    void setPoint(float point);
 
 protected:
     QQmlEngine* _engine;
