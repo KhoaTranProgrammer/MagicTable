@@ -41,4 +41,23 @@ Window {
             console.log(selectedFile)
         }
     }
+
+    Rectangle {
+        anchors {
+            right: id_root.right
+            top: id_table.top
+            margins: 10
+        }
+        width: 50
+        height: width
+        color: "transparent"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                id_mt_st.getNext()
+                id_mt_st.drawData()
+            }
+        }
+    }
 }
