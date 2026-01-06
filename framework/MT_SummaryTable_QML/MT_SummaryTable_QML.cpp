@@ -82,14 +82,49 @@ void MT_SummaryTable_QML::getNext()
     if (this->_round < this->_result.first().size()) {
         // Get data at current round
         QMapIterator<QString, vector<float>> i(this->_result);
-        int player_index = 0;
+
         while (i.hasNext()) {
             i.next();
             this->_resultTotal[i.key()] += i.value().at(this->_round);
-            this->_listObjects.at(player_index)->setPoint(this->_resultTotal[i.key()]);
-            player_index++;
+            for (int index = 0; index < this->_listObjects.size(); index++) {
+                if (this->_listObjects.at(index)->getPlayerName() == i.key())
+                    this->_listObjects.at(index)->setPoint(this->_resultTotal[i.key()]);
+            }
         }
-
         this->_round++;
     }
+
+    sortPlayerByPoint();
+    for (int index = 0; index < this->_listObjects.size(); index++) {
+        this->_mttable.updateObjectPosition(*this->_listObjects.at(index), 0, index);
+    }
+}
+
+void MT_SummaryTable_QML::sortPlayerByPoint()
+{
+    // The flag are used for swapping
+    bool isSwapped;
+    // The number of elements will be sorted. This value will be decreased when complete sort for one element
+    mt_int unsortedElements = this->_listObjects.size();
+    do
+    {
+        // This value will be true in case 2 elements need to be swapped
+        isSwapped = false;
+
+        // Loop the array's element
+        for(mt_int i = 0; i < unsortedElements - 1; ++i)
+        {
+            if(this->_listObjects.at(i)->getPoint() < this->_listObjects.at(i+1)->getPoint())
+            {
+                MT_SummaryTable_QML_Object* temp = this->_listObjects.at(i);
+                this->_listObjects.at(i) = this->_listObjects.at(i+1);
+                this->_listObjects.at(i+1) = temp;
+                isSwapped = true;
+            }
+        }
+
+        --unsortedElements;
+    }
+    // In case the array is not complete sorted, this value is false
+    while(isSwapped);
 }

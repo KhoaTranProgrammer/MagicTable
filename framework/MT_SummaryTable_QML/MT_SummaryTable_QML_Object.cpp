@@ -61,6 +61,8 @@ void MT_SummaryTable_QML_Object::createObject(int x, int y, int w, int h, int an
                             "anchors.fill: parent;"
                             "anchors.margins: 2;"
                             "Text {"
+                                "id: id_txt;"
+                                "anchors.margins: 2;"
                                 "anchors.left: parent.left;"
                                 "anchors.verticalCenter: parent.verticalCenter;"
                                 "font.pointSize: 14;"
@@ -68,6 +70,7 @@ void MT_SummaryTable_QML_Object::createObject(int x, int y, int w, int h, int an
                                 "text: \"" + this->_name + "\";"
                             "}"
                         "}"
+                        "function updateText(mytext) { id_txt.text = mytext; }"
                         "z: 2;"
                         "Behavior on x { NumberAnimation { duration: 500 }}"
                         "Behavior on y { NumberAnimation { duration: 500 }}"
@@ -84,4 +87,16 @@ void MT_SummaryTable_QML_Object::setPoint(float point)
 {
     this->_point = point;
     _quickitem->setProperty("width", this->getCurPosition()->getW() * ((this->_point * 5) / 100));
+    // Set node value
+    QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateText", Q_ARG(QVariant, this->_name + ": " +QString::number(this->_point)));
+}
+
+QString MT_SummaryTable_QML_Object::getPlayerName()
+{
+    return this->_name;
+}
+
+float MT_SummaryTable_QML_Object::getPoint()
+{
+    return this->_point;
 }

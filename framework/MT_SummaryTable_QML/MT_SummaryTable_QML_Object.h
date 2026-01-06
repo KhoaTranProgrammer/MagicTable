@@ -18,6 +18,8 @@ public:
     void clearDrawing();
     void drawSpecific();
     void setPoint(float point);
+    QString getPlayerName();
+    float getPoint();
 
 protected:
     QQmlEngine* _engine;

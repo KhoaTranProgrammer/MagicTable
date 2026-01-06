@@ -45,6 +45,9 @@ private:
     QMap<QString, vector<float>> _result;
     QMap<QString, float> _resultTotal;
     int _round = 0;
+
+    // Sorting data
+    void sortPlayerByPoint();
 };
 
 #endif // MT_SUMMARYTABLE_QML_H
