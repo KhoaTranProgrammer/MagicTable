@@ -659,6 +659,8 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                     // If next move of piece is same as target position, this is the correct piece
                     if (nextMoves.at(l)->getColumn() == pos.getColumn() && nextMoves.at(l)->getRow() == pos.getRow())
                     {
+                        if (piece == "king") return res;
+
                         MT_Position *cur_pos = res->getCurPosition(); // Current position
                         res->updatePosition(pos);
                         if (isKingSafe(color, pos)) {
@@ -696,6 +698,8 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
                 {
                     if (nextMoves.at(l)->getColumn() == pos.getColumn() && nextMoves.at(l)->getRow() == pos.getRow())
                     {
+                        if (piece == "king") return res;
+
                         MT_Position *cur_pos = res->getCurPosition(); // Current position
                         res->updatePosition(pos);
                         if (isKingSafe(color, pos)) {
@@ -732,6 +736,7 @@ MT_Chess_Object* MT_KingChess::findPieceFromMove(string piece, string color, MT_
 
 MT_Chess_Object* MT_KingChess::findPawnSpecificMove(string piece, string color, MT_Position& pos)
 {
+    cout << "MT_KingChess::findPawnSpecificMove" << endl;
     mt_int left = -1;
     mt_int right = -1;
     mt_int top = -1;
@@ -909,6 +914,51 @@ MT_Chess_Object* MT_KingChess::findPawnSpecificMove2(string piece, string color,
         }
     }
 
+    // pawn advanced two squares on the previous turn
+    if (color == "white") {
+        if ((prev_column == pos.getColumn()) &&
+            prev_row + 1 == pos.getRow()) {
+            cout << "Pawn advanced two squares" << endl;
+            for(mt_uint re_index = 0; re_index < this->_listKingChessObjects.size(); re_index++) {
+                MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(re_index);
+                MT_Position *cur_pie_pos = cur_pie->getCurPosition();
+                if ((cur_pie->getColor() == "black") &&
+                    (cur_pie_pos->getColumn() == prev_column) &&
+                    (cur_pie_pos->getRow() == prev_row + 2)) {
+
+                    mt_int remove_index = re_index;
+                    // Setting prisoner
+                    this->_piecePrisoner = this->_listKingChessObjects.at(remove_index)->getPiece();
+                    this->_colorPrisoner = this->_listKingChessObjects.at(remove_index)->getColor();
+
+                    this->_mttable.removeObject(this->_listKingChessObjects.at(remove_index));
+                    this->_listKingChessObjects.erase(this->_listKingChessObjects.begin() + remove_index);
+                }
+            }
+        }
+    } else {
+        if ((prev_column == pos.getColumn()) &&
+            prev_row - 1 == pos.getRow()) {
+            cout << "Pawn advanced two squares" << endl;
+            for(mt_uint re_index = 0; re_index < this->_listKingChessObjects.size(); re_index++) {
+                MT_Chess_Object *cur_pie = this->_listKingChessObjects.at(re_index);
+                MT_Position *cur_pie_pos = cur_pie->getCurPosition();
+                if ((cur_pie->getColor() == "white") &&
+                    (cur_pie_pos->getColumn() == prev_column) &&
+                    (cur_pie_pos->getRow() == prev_row - 2)) {
+
+                    mt_int remove_index = re_index;
+                    // Setting prisoner
+                    this->_piecePrisoner = this->_listKingChessObjects.at(remove_index)->getPiece();
+                    this->_colorPrisoner = this->_listKingChessObjects.at(remove_index)->getColor();
+
+                    this->_mttable.removeObject(this->_listKingChessObjects.at(remove_index));
+                    this->_listKingChessObjects.erase(this->_listKingChessObjects.begin() + remove_index);
+                }
+            }
+        }
+    }
+
     return obj;
 }
 
@@ -926,7 +976,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
             {
                 if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1))) {
                     positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 1));
-                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 2));
+                    if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 2)))
+                        positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() + 2));
                 }
             }
             else
@@ -949,7 +1000,8 @@ vector<MT_Position*> MT_KingChess::findNextMove(string piece, string color, MT_P
             {
                 if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1))) {
                     positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 1));
-                    positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 2));
+                    if (this->_mttable.checkFreePosition(*this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 2)))
+                        positionList.push_back(this->_mttable.getPositionAt(pos.getColumn(), pos.getRow() - 2));
                 }
             }
             else
