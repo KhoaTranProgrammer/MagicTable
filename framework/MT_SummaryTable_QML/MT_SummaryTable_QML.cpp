@@ -41,10 +41,15 @@ void MT_SummaryTable_QML::addTableData(QString filename)
 
     QTextStream in(&file);
 
+    // Read first line of event
+    QString event = in.readLine();
+    event.remove("[Event \"");
+    event.remove("\"]");
+    this->_description = event + " - Overall Result";
+
     // Read file line by line
     while (!in.atEnd()) {
         QString oneline = in.readLine();
-        // qDebug() << oneline;
         QStringList data_list = oneline.split(",");
         vector<float> points;
         for (int i = 3; i < data_list.count(); i++) {
@@ -54,17 +59,23 @@ void MT_SummaryTable_QML::addTableData(QString filename)
         }
         this->_result.insert(data_list[0], points);
         this->_resultTotal.insert(data_list[0], 0);
-        qDebug() << data_list[0] << " - " << this->_result[data_list[0]];
     }
+
+    // Set total round
+    this->_totalRound = this->_result.first().size();
 
     // Create table
     this->_mttable.createTable((int)this->width(), (int)this->height(), 1, this->_result.count());
+
+    // Read data
+    readChessPlayerInfor();
 
     QMapIterator<QString, vector<float>> i(this->_result);
     int init_pos = 0;
     while (i.hasNext()) {
         i.next();
-        MT_SummaryTable_QML_Object* obj = new MT_SummaryTable_QML_Object(*_mt_engine, *this, i.key(), 0);
+        MT_SummaryTable_QML_Object* obj = new MT_SummaryTable_QML_Object(*_mt_engine, *this, i.key(), 0,
+                                                                         this->_playerImage[i.key()], this->_totalRound);
         this->_mttable.addObject(*obj);
         this->_listObjects.push_back(obj);
         this->_mttable.updateObjectPosition(*obj, 0, init_pos);
@@ -127,4 +138,86 @@ void MT_SummaryTable_QML::sortPlayerByPoint()
     }
     // In case the array is not complete sorted, this value is false
     while(isSwapped);
+}
+
+void MT_SummaryTable_QML::readChessPlayerInfor()
+{
+    // Example: Raw GitHub file URL (must be the "raw" link)
+    QUrl url("https://github.com/KhoaTranProgrammer/Common_Topics/blob/main/Chess_Players.json");
+
+    // Network manager for HTTP request
+    QNetworkAccessManager manager;
+    QNetworkRequest request(url);
+
+    // Send GET request
+    QNetworkReply *reply = manager.get(request);
+
+    // Use event loop to wait for the request to finish (synchronous for simplicity)
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Read file content
+    QByteArray data = reply->readAll();
+    QString fileContent = QString::fromUtf8(data);
+
+    // Basic split by comma
+    fileContent = fileContent.split("rawLines")[1];
+    fileContent = fileContent.split("stylingDirectives")[0];
+    fileContent.remove('\\');
+    fileContent.remove("\"");
+    fileContent.replace(":[{,", "{");
+    fileContent.replace(":[,", ":[");
+    fileContent.replace("},],}],", "}]}");
+    fileContent.replace(",,", ",\n");
+
+    reply->deleteLater();
+
+    QStringList players_list = fileContent.split("\n");
+    for(int i = 0; i < players_list.count(); i++) {
+        QString player_name = players_list[i].split(", image: ")[0];
+        QString image_link = players_list[i].split(", image: ")[1];
+
+        player_name.remove("    {name: ");
+        image_link.remove("}]}");
+        image_link.remove("},");
+        image_link.remove("}");
+
+        addImagePlayer(player_name, image_link);
+    }
+}
+
+void MT_SummaryTable_QML::addImagePlayer(QString player, QString imagelink)
+{
+    QMapIterator<QString, vector<float>> i(this->_result);
+
+    while (i.hasNext()) {
+        i.next();
+        // Check if player in list
+        bool isAvailable = true;
+
+        QStringList playerinlist;
+        if (player.contains(", "))
+            playerinlist = player.split(", ");
+        else
+            playerinlist = player.split(" ");
+        for (int l = 0; l < playerinlist.count(); l++) {
+            if (!i.key().contains(playerinlist[l])) isAvailable = false;
+        }
+
+        if (isAvailable == true) {
+            _playerImage.insert(i.key(), imagelink);
+            return;
+        }
+    }
+}
+
+QString MT_SummaryTable_QML::getDescription()
+{
+    return this->_description;
+}
+
+int MT_SummaryTable_QML::getRound()
+{
+    return this->_round;
 }

@@ -35,19 +35,26 @@ public slots:
     void addTableData(QString filename);
     void drawData();
     void getNext();
+    QString getDescription();
+    int getRound();
 
 private:
     QQmlEngine* _mt_engine;
     MT_Table _mttable;
     vector<MT_SummaryTable_QML_Object*> _listObjects;
+    QString _description = "";
 
     // Store database read from file
     QMap<QString, vector<float>> _result;
     QMap<QString, float> _resultTotal;
+    QMap<QString, QString> _playerImage;
     int _round = 0;
+    int _totalRound = 0;
 
     // Sorting data
     void sortPlayerByPoint();
+    void readChessPlayerInfor();
+    void addImagePlayer(QString player, QString imagelink);
 };
 
 #endif // MT_SUMMARYTABLE_QML_H

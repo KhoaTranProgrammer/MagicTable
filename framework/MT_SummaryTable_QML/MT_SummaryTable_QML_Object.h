@@ -9,7 +9,7 @@
 class MT_SummaryTable_QML_Object : public MT_Object
 {
 public:
-    MT_SummaryTable_QML_Object(QQmlEngine& engine, QObject& parent, QString name, float point);
+    MT_SummaryTable_QML_Object(QQmlEngine& engine, QObject& parent, QString name, float point, QString imagelink, int roundnum);
     ~MT_SummaryTable_QML_Object();
 
     void drawObject();
@@ -30,6 +30,8 @@ protected:
 private:
     QString _name;
     float _point;
+    QString _image;
+    int _roundNum = 0;
 };
 
 #endif // MT_SUMMARYTABLE_QML_OBJECT_H

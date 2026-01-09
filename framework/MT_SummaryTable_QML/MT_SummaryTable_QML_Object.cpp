@@ -1,12 +1,15 @@
 #include "MT_SummaryTable_QML_Object.h"
 
-MT_SummaryTable_QML_Object::MT_SummaryTable_QML_Object(QQmlEngine& engine, QObject& parent, QString name, float point)
+MT_SummaryTable_QML_Object::MT_SummaryTable_QML_Object(QQmlEngine& engine, QObject& parent, QString name,
+                                                       float point, QString imagelink, int roundnum)
     : MT_Object()
 {
     this->_engine = &engine;
     this->_parent = &parent;
     this->_name = name;
     this->_point = point;
+    this->_image = imagelink;
+    this->_roundNum = roundnum;
 }
 
 MT_SummaryTable_QML_Object::~MT_SummaryTable_QML_Object()
@@ -52,7 +55,7 @@ void MT_SummaryTable_QML_Object::createObject(int x, int y, int w, int h, int an
                     "Item { "
                         "x: " + QString::number(x) + ";"
                         "y: " + QString::number(y) + ";"
-                        "width: " + QString::number(w * ((this->_point * 5) / 100)) + ";"
+                                          "width: " + QString::number(w * ((this->_point * (100 / this->_roundNum)) / 100)) + ";"
                         "height: " + QString::number(h) + ";"
                         "Rectangle { "
                             "id: id_name; "
@@ -60,20 +63,30 @@ void MT_SummaryTable_QML_Object::createObject(int x, int y, int w, int h, int an
                             "color: \"blue\";"
                             "anchors.fill: parent;"
                             "anchors.margins: 2;"
+                            "Image { "
+                                "id: id_img;"
+                                "source: \"" + this->_image + "\";"
+                                "anchors.left: parent.left;"
+                                "anchors.top: parent.top;"
+                                "anchors.bottom: parent.bottom;"
+                                "width: height;"
+                            "}"
                             "Text {"
                                 "id: id_txt;"
                                 "anchors.margins: 2;"
-                                "anchors.left: parent.left;"
+                                "anchors.left: id_img.right;"
                                 "anchors.verticalCenter: parent.verticalCenter;"
-                                "font.pointSize: 14;"
+                                "font.pointSize: 12;"
                                 "font.family: \"Helvetica\";"
                                 "text: \"" + this->_name + "\";"
+                                "color: \"white\";"
                             "}"
                         "}"
                         "function updateText(mytext) { id_txt.text = mytext; }"
                         "z: 2;"
-                        "Behavior on x { NumberAnimation { duration: 500 }}"
-                        "Behavior on y { NumberAnimation { duration: 500 }}"
+                        "Behavior on x { NumberAnimation { duration: 800 }}"
+                        "Behavior on y { NumberAnimation { duration: 800 }}"
+                        "Behavior on width { NumberAnimation { duration: 800 }}"
                     "}";
     _component = new QQmlComponent(this->_engine);
     _component->setData(data.toUtf8(), QUrl());
@@ -86,7 +99,7 @@ void MT_SummaryTable_QML_Object::createObject(int x, int y, int w, int h, int an
 void MT_SummaryTable_QML_Object::setPoint(float point)
 {
     this->_point = point;
-    _quickitem->setProperty("width", this->getCurPosition()->getW() * ((this->_point * 5) / 100));
+    _quickitem->setProperty("width", this->getCurPosition()->getW() * ((this->_point * (100 / this->_roundNum)) / 100));
     // Set node value
     QMetaObject::invokeMethod(qobject_cast<QObject*>(_quickitem), "updateText", Q_ARG(QVariant, this->_name + ": " +QString::number(this->_point)));
 }
