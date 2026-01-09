@@ -6,29 +6,62 @@ import QtQuick.Dialogs
 import MT_SummaryTable_QML 1.0
 
 Window {
-    width: 640
-    height: 480
+    width: 720 / 2
+    height: 1280 / 2
     visible: true
     title: qsTr("Hello World")
 
     Component.onCompleted: {
-        // id_fid_selectpgn.open()
+        id_fid_selectpgn.open()
     }
 
     Rectangle {
         id: id_root
         anchors.fill: parent
         color: "transparent"
+
+        Background {
+            anchors.fill: parent
+        }
     }
 
     MT_SummaryTable_QML {
         id: id_mt_st
-        anchors.fill: id_root
+        anchors {
+            left: id_root.left
+            right: id_root.right
+            verticalCenter: id_root.verticalCenter
+        }
+        height: id_root.height * 0.7
 
         Component.onCompleted: {
-            id_mt_st.addTableData("file:///F:/Project/MagicTable/Workspace/MagicTable/build/data/result_table.txt")
-            id_mt_st.drawData()
+
         }
+    }
+
+    Text {
+        id: id_txt_infor
+        anchors.bottom: id_mt_st.top
+        anchors.left: id_root.left
+        anchors.right: id_root.right
+        anchors.margins: 2
+        text: ""
+        color: "yellow"
+        font.pointSize: 20
+        font.bold: true
+        wrapMode: Text.WordWrap
+    }
+
+    Text {
+        id: id_txt_round
+        anchors.top: id_mt_st.bottom
+        anchors.right: id_root.right
+        anchors.margins: 2
+        text: ""
+        color: "yellow"
+        font.pointSize: 20
+        font.bold: true
+        wrapMode: Text.WordWrap
     }
 
     FileDialog {
@@ -39,6 +72,9 @@ Window {
 
         onAccepted: {
             console.log(selectedFile)
+            id_mt_st.addTableData(selectedFile)
+            id_mt_st.drawData()
+            id_txt_infor.text = id_mt_st.getDescription()
         }
     }
 
@@ -52,12 +88,27 @@ Window {
         height: width
         color: "transparent"
 
+        Image {
+            source: Qt.resolvedUrl("icon/logo.png")
+            anchors.fill: parent
+        }
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                id_mt_st.getNext()
-                id_mt_st.drawData()
+                id_tim_execution.running = true
             }
+        }
+    }
+
+    Timer {
+        id: id_tim_execution
+        interval: 2000; running: false; repeat: true
+
+        onTriggered: {
+            id_mt_st.getNext()
+            id_mt_st.drawData()
+            id_txt_round.text = "Round: " + id_mt_st.getRound()
         }
     }
 }
