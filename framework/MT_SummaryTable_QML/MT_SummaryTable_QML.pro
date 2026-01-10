@@ -67,11 +67,11 @@ android {
 win32 {
     INCLUDEPATH += $$PWD/../../build/include
     DEPENDPATH += $$PWD/../../build/include
-    LIBS += -L$$PWD/../../build/lib -lMT_Core -lMT_DSA
+    LIBS += -L$$PWD/../../build/lib -lMT_Core
 }
 
 android {
     INCLUDEPATH += $$PWD/../../build/include
     DEPENDPATH += $$PWD/../../build/include
-    LIBS += -L$$PWD/../../build/lib -lMT_Core_arm64-v8a -lMT_DSA_arm64-v8a
+    LIBS += -L$$PWD/../../build/lib -lMT_Core_arm64-v8a
 }
