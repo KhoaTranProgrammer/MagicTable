@@ -49,3 +49,17 @@ install(TARGETS appLeagueSummary
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../../build/lib/)
 
+set_target_properties(appLeagueSummary PROPERTIES
+    QT_ANDROID_EXTRA_LIBS
+    "${CMAKE_CURRENT_LIST_DIR}/../../build/lib/libMT_Core_arm64-v8a.so"
+)
+
+set_target_properties(appLeagueSummary PROPERTIES
+    QT_ANDROID_EXTRA_PLUGINS
+    "${CMAKE_CURRENT_LIST_DIR}/../../build/lib/MT_SummaryTable_QML/"
+)
+
+set_target_properties(appLeagueSummary PROPERTIES
+    QT_ANDROID_PACKAGE_SOURCE_DIR
+    "${CMAKE_CURRENT_LIST_DIR}/android"
+)

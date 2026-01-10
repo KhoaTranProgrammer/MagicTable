@@ -6,8 +6,9 @@ import QtQuick.Dialogs
 import MT_SummaryTable_QML 1.0
 
 Window {
-    width: 720 / 2
-    height: 1280 / 2
+    visibility: Window.FullScreen
+    // width: 720 / 2
+    // height: 1280 / 2
     visible: true
     title: qsTr("Hello World")
 
@@ -41,13 +42,14 @@ Window {
 
     Text {
         id: id_txt_infor
-        anchors.bottom: id_mt_st.top
+        anchors.verticalCenter: id_root.verticalCenter
         anchors.left: id_root.left
         anchors.right: id_root.right
         anchors.margins: 2
+        // width: id_root.width
         text: ""
         color: "yellow"
-        font.pointSize: 20
+        font.pointSize: 40
         font.bold: true
         wrapMode: Text.WordWrap
     }
@@ -96,7 +98,14 @@ Window {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                id_txt_infor.anchors.verticalCenter = undefined
+                id_txt_infor.anchors.horizontalCenter = undefined
+                id_txt_infor.anchors.bottom = id_mt_st.top
+                id_txt_infor.anchors.left = id_root.left
+                id_txt_infor.anchors.right = id_root.right
+                id_txt_infor.font.pointSize = 20
                 id_tim_execution.running = true
+
             }
         }
     }
