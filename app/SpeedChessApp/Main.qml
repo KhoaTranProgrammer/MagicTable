@@ -47,8 +47,7 @@ Window {
         anchors.fill: id_table
         Component.onCompleted: {
             q_id_chesstable.createTable(8, 8)
-            // q_id_chesstable.createPieces()
-            // q_id_chesstable.drawData()
+            q_id_chesstable.setAnimationTime(400)
         }
     }
 
@@ -407,7 +406,7 @@ Window {
 
     Timer {
         id: id_tim_play
-        interval: 1000; running: false; repeat: true
+        interval: 800; running: false; repeat: true
 
         onTriggered: {
             q_id_chesstable.review()
