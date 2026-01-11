@@ -56,7 +56,7 @@ Window {
 
     Text {
         id: id_txt_round
-        anchors.top: id_mt_st.bottom
+        anchors.verticalCenter: id_root.verticalCenter
         anchors.right: id_root.right
         anchors.margins: 2
         text: ""
