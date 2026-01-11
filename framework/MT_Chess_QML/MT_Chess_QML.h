@@ -66,6 +66,7 @@ public slots:
     int getNumberOfPlayers();
     QString getDescription();
     QString readDescriptionFromFile(QString filename);
+    void setAnimationTime(int animationtime);
 
 private:
     QQmlEngine* _mt_engine;
@@ -87,6 +88,7 @@ private:
     QMap<QString, float> _result;
     QMap<QString, QString> _playerImages;
     QString _winner = "";
+    int _animationTime = 500;
 
     // Use for openning screen
     QString _champion = "";

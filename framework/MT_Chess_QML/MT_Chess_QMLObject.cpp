@@ -1,10 +1,11 @@
 #include "MT_Chess_QMLObject.h"
 
-MT_Chess_QMLObject::MT_Chess_QMLObject(QQmlEngine& engine, QObject& parent, string piece, string color)
+MT_Chess_QMLObject::MT_Chess_QMLObject(QQmlEngine& engine, QObject& parent, string piece, string color, int animationtime)
     : MT_Chess_Object(piece, color)
 {
     this->_engine = &engine;
     this->_parent = &parent;
+    this->_animationTime = animationtime;
 }
 
 MT_Chess_QMLObject::~MT_Chess_QMLObject()
@@ -20,7 +21,7 @@ void MT_Chess_QMLObject::drawObject()
     // cout << "MT_Chess_QMLObject::drawObject" << endl;
     this->createObject(this->getCurPosition()->getX(), this->getCurPosition()->getY(),
                        this->getCurPosition()->getW(), this->getCurPosition()->getH(),
-                       this->getAnimationTime());
+                       this->_animationTime);
 }
 
 void MT_Chess_QMLObject::move()
@@ -41,7 +42,7 @@ void MT_Chess_QMLObject::drawSpecific()
 {
     this->createObject(this->getCurPosition()->getX(), this->getCurPosition()->getY(),
                        this->getCurPosition()->getW(), this->getCurPosition()->getH(),
-                       this->getAnimationTime());
+                       this->_animationTime);
 }
 
 void MT_Chess_QMLObject::createObject(int x, int y, int w, int h, int animationTime)
@@ -70,8 +71,8 @@ void MT_Chess_QMLObject::createObject(int x, int y, int w, int h, int animationT
                             "}"
                         "}"
                         "z: 2;"
-                        "Behavior on x { NumberAnimation { duration: 500 }}"
-                        "Behavior on y { NumberAnimation { duration: 500 }}"
+                        "Behavior on x { NumberAnimation { duration: " + QString::number(animationTime) + "}}"
+                        "Behavior on y { NumberAnimation { duration: " + QString::number(animationTime) + "}}"
                     "}";
     _component = new QQmlComponent(this->_engine);
     _component->setData(data.toUtf8(), QUrl());

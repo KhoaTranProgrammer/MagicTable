@@ -15,7 +15,7 @@ using namespace std;
 class MT_Chess_QMLObject : public MT_Chess_Object
 {
 public:
-    MT_Chess_QMLObject(QQmlEngine& engine, QObject& parent, string piece, string color);
+    MT_Chess_QMLObject(QQmlEngine& engine, QObject& parent, string piece, string color, int animationtime);
     ~MT_Chess_QMLObject();
 
     void drawObject();
@@ -29,6 +29,7 @@ protected:
     QObject* _parent;
     QQmlComponent* _component = NULL;
     QQuickItem* _quickitem = NULL;
+    int _animationTime = 500;
 };
 
 #endif // MT_CHESS_QMLOBJECT_H
