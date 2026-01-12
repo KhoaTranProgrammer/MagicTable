@@ -54,6 +54,7 @@ Item {
         anchors.fill: id_table
         Component.onCompleted: {
             q_id_chesstable.createTable(8, 8)
+            q_id_chesstable.setAnimationTime(400)
         }
     }
 
@@ -303,7 +304,7 @@ Item {
 
     Timer {
         id: id_tim_playgame
-        interval: 1000; running: false; repeat: true
+        interval: 800; running: false; repeat: true
 
         onTriggered: {
             // id_txt_infor.text = q_id_chesstable.getInformation()
