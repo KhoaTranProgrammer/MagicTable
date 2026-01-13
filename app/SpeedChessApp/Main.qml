@@ -37,8 +37,27 @@ Window {
         height: width
         color: "transparent"
         Image {
+            id: id_img_table
             source: Qt.resolvedUrl("icon/table.png")
             anchors.fill: parent
+            visible: false
+        }
+    }
+
+    Rectangle {
+        id: id_rec_event
+        anchors {
+            bottom: id_rec_blackplayer.top
+            horizontalCenter: id_root.horizontalCenter
+            margins: 10
+        }
+        width: id_root.width * 0.5
+        height: width * 0.5
+        color: "transparent"
+        Image {
+            id: id_img_event
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
         }
     }
 
@@ -47,7 +66,6 @@ Window {
         anchors.fill: id_table
         Component.onCompleted: {
             q_id_chesstable.createTable(8, 8)
-            q_id_chesstable.setAnimationTime(400)
         }
     }
 
@@ -272,13 +290,15 @@ Window {
         id: id_txt_infor
         anchors.top: id_txt_whiteplayer_elo.bottom
         anchors.left: id_root.left
+        anchors.right: id_root.right
         anchors.margins: 2
         width: id_root.width
         text: ""
-        color: "red"
+        color: "yellow"
         font.pointSize: 35
         font.bold: true
         wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
     }
 
     FileDialog {
@@ -301,6 +321,9 @@ Window {
             id_txt_whiteplayer_elo.text = "Elo: " + q_id_chesstable.getWhiteElo()
 
             id_txt_infor.text = q_id_chesstable.getInformation()
+
+            console.log(q_id_chesstable.getEvent())
+            id_img_event.source = Qt.resolvedUrl("icon/" + q_id_chesstable.getEventImage())
         }
     }
 
@@ -324,6 +347,8 @@ Window {
                 if (isLoaded == false) {
                     id_fid_selectpgn.open()
                 } else {
+                    id_rec_event.visible = false
+                    id_img_table.visible = true
                     q_id_chesstable.drawData()
 
                     id_rec_blackplayer.x = id_blackPlayerPos.x
