@@ -67,6 +67,7 @@ public slots:
     QString getDescription();
     QString readDescriptionFromFile(QString filename);
     void setAnimationTime(int animationtime);
+    QString getEventImage();
 
 private:
     QQmlEngine* _mt_engine;

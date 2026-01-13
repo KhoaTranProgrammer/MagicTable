@@ -795,3 +795,12 @@ void MT_Chess_QML::setAnimationTime(int animationtime)
 {
     this->_animationTime = animationtime;
 }
+
+QString MT_Chess_QML::getEventImage()
+{
+    QString result = "";
+    if (this->getEvent().contains("Titled Tuesday")) {
+        result = "Titled_Tuesday.png";
+    }
+    return result;
+}
