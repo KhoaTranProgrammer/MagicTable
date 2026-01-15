@@ -605,7 +605,7 @@ void MT_Chess_QML::readAllPlayersData()
         // Read file line by line
         while (!in.atEnd()) {
             QString oneline = in.readLine();
-            qDebug() << "DEBUG: " << oneline;
+            // qDebug() << "DEBUG: " << oneline;
             if (oneline.contains("White ")) {
                 oneline.remove("[White \"");
                 oneline.remove("\"]");
@@ -628,6 +628,9 @@ void MT_Chess_QML::readAllPlayersData()
                     this->_description.remove("[Event \"");
                     this->_description.remove("\"]");
                 }
+                this->_event = oneline;
+                this->_event.remove("[Event \"");
+                this->_event.remove("\"]");
             }
             if (oneline.contains("Round")) {
                 if (!_description.contains("Round")) {
