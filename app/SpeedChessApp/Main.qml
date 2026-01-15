@@ -127,7 +127,7 @@ Window {
         anchors.top: id_rec_blackplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -139,7 +139,7 @@ Window {
         anchors.top: id_txt_blackplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -216,7 +216,7 @@ Window {
         anchors.top: id_rec_whiteplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
@@ -228,7 +228,7 @@ Window {
         anchors.top: id_txt_whiteplayer.bottom
         anchors.margins: 2
         text: ""
-        color: "black"
+        color: "white"
         font.pointSize: 14
         font.bold: true
         font.family: "Helvetica"
