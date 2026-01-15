@@ -49,6 +49,7 @@ Window {
             isLoaded = true
             id_txt_event.text = id_gs_gamescreen.mt_chess_qml.getDescription()
             id_img_winplayer.source = id_gs_gamescreen.mt_chess_qml.findChampion()
+            id_img_event.source = Qt.resolvedUrl("icon/" + id_gs_gamescreen.mt_chess_qml.getEventImage())
             if (id_gs_gamescreen.mt_chess_qml.getNumberOfPlayers() > 2) {
                 id_pl.addItem(
                     id_gs_gamescreen.mt_chess_qml.getNextPlayer(),
@@ -131,6 +132,7 @@ Window {
                 id_pl.clearList()
                 id_img_winplayer.visible = false
                 id_img_oppplayer.visible = false
+                id_img_event.visible = false
                 id_txt_event.visible = false
                 id_gs_gamescreen.newGame()
             }
@@ -256,5 +258,17 @@ Window {
         width: id_root.width * 0.25
         height: width
         source: ""
+    }
+
+    Image {
+        id: id_img_event
+        anchors {
+            right: id_img_winplayer.left
+            verticalCenter: id_root.verticalCenter
+            margins: 10
+        }
+        width: id_img_winplayer.width * 0.6
+        height: width * 0.5
+        fillMode: Image.PreserveAspectFit
     }
 }
