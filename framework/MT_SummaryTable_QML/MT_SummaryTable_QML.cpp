@@ -45,7 +45,7 @@ void MT_SummaryTable_QML::addTableData(QString filename)
     QString event = in.readLine();
     event.remove("[Event \"");
     event.remove("\"]");
-    this->_description = event + " - Overall Result";
+    this->_description = event + " - Leaderboard";
 
     // Read file line by line
     while (!in.atEnd()) {
@@ -220,4 +220,13 @@ QString MT_SummaryTable_QML::getDescription()
 int MT_SummaryTable_QML::getRound()
 {
     return this->_round;
+}
+
+QString MT_SummaryTable_QML::getEventImage()
+{
+    QString result = "";
+    if (this->_description.contains("Titled Tuesday")) {
+        result = "Titled_Tuesday.png";
+    }
+    return result;
 }

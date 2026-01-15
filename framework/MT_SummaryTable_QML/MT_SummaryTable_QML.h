@@ -37,6 +37,7 @@ public slots:
     void getNext();
     QString getDescription();
     int getRound();
+    QString getEventImage();
 
 private:
     QQmlEngine* _mt_engine;
