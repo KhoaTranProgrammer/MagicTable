@@ -26,6 +26,23 @@ Window {
         }
     }
 
+    Rectangle {
+        id: id_rec_event
+        anchors {
+            right: id_mt_st.right
+            bottom: id_mt_st.bottom
+            margins: 10
+        }
+        width: id_mt_st.width * 0.5
+        height: width * 0.5
+        color: "transparent"
+        Image {
+            id: id_img_event
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+
     MT_SummaryTable_QML {
         id: id_mt_st
         anchors {
@@ -77,6 +94,7 @@ Window {
             id_mt_st.addTableData(selectedFile)
             id_mt_st.drawData()
             id_txt_infor.text = id_mt_st.getDescription()
+            id_img_event.source = Qt.resolvedUrl("icon/" + id_mt_st.getEventImage())
         }
     }
 
