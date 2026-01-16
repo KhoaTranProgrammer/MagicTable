@@ -25,6 +25,8 @@ qt_add_qml_module(appSpeedChessApp
         "icon/star.png"
         "icon/logo.png"
         "icon/Titled_Tuesday.png"
+        "icon/30_Thursday.png"
+        "icon/FreestyleFriday.png"
         "res/move.wav"
         "android/AndroidManifest.xml"
 )
