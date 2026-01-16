@@ -227,6 +227,10 @@ QString MT_SummaryTable_QML::getEventImage()
     QString result = "";
     if (this->_description.contains("Titled Tuesday")) {
         result = "Titled_Tuesday.png";
+    } else if (this->_description.contains("Freestyle Friday")) {
+        result = "FreestyleFriday.png";
+    } else if (this->_description.contains("3 0 Thursday")) {
+        result = "30_Thursday.png";
     }
     return result;
 }
