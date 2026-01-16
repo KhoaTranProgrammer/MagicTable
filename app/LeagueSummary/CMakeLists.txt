@@ -24,6 +24,8 @@ qt_add_qml_module(appLeagueSummary
         "icon/star.png"
         "icon/logo.png"
         "icon/Titled_Tuesday.png"
+        "icon/30_Thursday.png"
+        "icon/FreestyleFriday.png"
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
