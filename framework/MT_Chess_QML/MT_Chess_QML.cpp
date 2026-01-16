@@ -804,6 +804,10 @@ QString MT_Chess_QML::getEventImage()
     QString result = "";
     if (this->getEvent().contains("Titled Tuesday")) {
         result = "Titled_Tuesday.png";
+    } else if (this->getEvent().contains("Freestyle Friday")) {
+        result = "FreestyleFriday.png";
+    } else if (this->getEvent().contains("3 0 Thursday")) {
+        result = "30_Thursday.png";
     }
     return result;
 }
