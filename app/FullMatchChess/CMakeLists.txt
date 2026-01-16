@@ -37,6 +37,8 @@ qt_add_qml_module(appFullMatchChess
         "icon/winner.png"
         "icon/loser.png"
         "icon/Titled_Tuesday.png"
+        "icon/30_Thursday.png"
+        "icon/FreestyleFriday.png"
         "res/background.wav"
         "res/move.wav"
         "res/end_game.wav"
