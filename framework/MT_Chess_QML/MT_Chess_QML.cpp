@@ -733,6 +733,8 @@ void MT_Chess_QML::readAllPlayersData()
             _champion = item.key();
         }
     }
+
+    this->_currentPlayer = _allPlayerImages.size() - 1;
 }
 
 QString MT_Chess_QML::findChampion()
@@ -749,12 +751,12 @@ QString MT_Chess_QML::getNextPlayer()
         if (it.key() != this->_champion) {
             res = it.value();
         } else {
-            this->_currentPlayer++;
+            this->_currentPlayer--;
             auto it = _allPlayerImages.begin();
             std::advance(it, this->_currentPlayer);
             res = it.value();
         }
-        this->_currentPlayer++;
+        this->_currentPlayer--;
     }
     return res;
 }
