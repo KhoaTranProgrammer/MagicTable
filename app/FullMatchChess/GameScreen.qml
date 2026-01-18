@@ -17,6 +17,8 @@ Item {
     property bool isStartComplete: false
     property string whiteStatus: ""
     property string blackStatus: ""
+    property bool isCompleteIntroduction: false
+    property string audio_folder: ""
 
     Component.onCompleted: {
         mt_chess_qml = q_id_chesstable
@@ -480,6 +482,7 @@ Item {
         if (selectedFile === "") {
             matchComplete()
         } else {
+            isCompleteIntroduction = false
             id_img_whitewinner.source = ""
             id_img_blackwinner.source = ""
             id_txt_blackplayer_elo.text = ""
@@ -518,8 +521,11 @@ Item {
 
             q_id_chesstable.createPieces()
             id_txt_roundinfo.text = q_id_chesstable.getRound()
+            // console.log(q_id_chesstable.getRound())
+            id_soundEffect_introduction.source = audio_folder + "/" + q_id_chesstable.getRound() + ".wav"
+            id_soundEffect_introduction.play()
 
-            id_tim_startgame.running = true
+            // id_tim_startgame.running = true
         }
     }
 
@@ -528,5 +534,20 @@ Item {
         id_ctrCharacterList.clearList()
         id_img_table.visible = false
         id_txt_infor.text = ""
+    }
+
+    SoundEffect {
+        id: id_soundEffect_introduction
+
+        onPlayingChanged: {
+            console.log("onPlayingChanged")
+            if (!isCompleteIntroduction) {
+                console.log("Start playback")
+                isCompleteIntroduction = true
+            } else {
+                console.log("Complete playback")
+                id_tim_startgame.running = true
+            }
+        }
     }
 }

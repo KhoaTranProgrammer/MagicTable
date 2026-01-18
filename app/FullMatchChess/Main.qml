@@ -18,9 +18,10 @@ Window {
     property bool isMatchComplete: false
     property string whiteStatus: ""
     property string blackStatus: ""
+    property bool isCompleteIntroduction: false
 
     Component.onCompleted: {
-
+        // id_soundEffect_introduction.play()
     }
 
     SoundEffect {
@@ -129,13 +130,44 @@ Window {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                id_pl.clearList()
-                id_img_winplayer.visible = false
-                id_img_oppplayer.visible = false
-                id_img_event.visible = false
-                id_txt_event.visible = false
-                id_gs_gamescreen.newGame()
+                // id_pl.clearList()
+                // id_img_winplayer.visible = false
+                // id_img_oppplayer.visible = false
+                // id_img_event.visible = false
+                // id_txt_event.visible = false
+                id_soundEffect_introduction.play()
+                // id_gs_gamescreen.newGame()
             }
+        }
+    }
+
+    Rectangle {
+        id: id_button4
+        anchors.bottom: id_root.bottom
+        anchors.right: id_root.right
+        anchors.margins: 5
+        width: id_root.width * 0.05
+        height: width
+        color: "transparent"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                id_fod_folderDialogAudio.open()
+            }
+        }
+    }
+
+    FolderDialog {
+        id: id_fod_folderDialogAudio
+        currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+        selectedFolder: viewer.folder
+
+        onAccepted: {
+            console.log(id_fod_folderDialogAudio.selectedFolder)
+            id_soundEffect_introduction.source = id_fod_folderDialogAudio.selectedFolder + "/introduction_text.wav"
+            id_gs_gamescreen.audio_folder = id_fod_folderDialogAudio.selectedFolder
+            // id_soundEffect_introduction.play()
         }
     }
 
@@ -270,5 +302,25 @@ Window {
         width: id_img_winplayer.width * 0.6
         height: width * 0.5
         fillMode: Image.PreserveAspectFit
+    }
+
+    SoundEffect {
+        id: id_soundEffect_introduction
+
+        onPlayingChanged: {
+            console.log("onPlayingChanged")
+            if (!isCompleteIntroduction) {
+                console.log("Start playback")
+                isCompleteIntroduction = true
+            } else {
+                console.log("Complete playback")
+                id_pl.clearList()
+                id_img_winplayer.visible = false
+                id_img_oppplayer.visible = false
+                id_img_event.visible = false
+                id_txt_event.visible = false
+                id_gs_gamescreen.newGame()
+            }
+        }
     }
 }
