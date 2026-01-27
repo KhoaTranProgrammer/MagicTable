@@ -17,7 +17,6 @@ Item {
     property bool isStartComplete: false
     property string whiteStatus: ""
     property string blackStatus: ""
-    property bool isCompleteIntroduction: false
     property string audio_folder: ""
 
     Component.onCompleted: {
@@ -482,7 +481,6 @@ Item {
         if (selectedFile === "") {
             matchComplete()
         } else {
-            isCompleteIntroduction = false
             id_img_whitewinner.source = ""
             id_img_blackwinner.source = ""
             id_txt_blackplayer_elo.text = ""
@@ -522,10 +520,17 @@ Item {
             q_id_chesstable.createPieces()
             id_txt_roundinfo.text = q_id_chesstable.getRound()
             // console.log(q_id_chesstable.getRound())
-            id_soundEffect_introduction.source = audio_folder + "/" + q_id_chesstable.getRound() + ".wav"
-            id_soundEffect_introduction.play()
 
-            // id_tim_startgame.running = true
+            // mediaPlayer1.stop()
+            // var roundnumber = q_id_chesstable.getRound()
+            // roundnumber = roundnumber.replace(" ", "")
+            // mediaPlayer1.source = audio_folder + roundnumber + ".wav"
+            // mediaPlayer1.source = "content://com.android.externalstorage.documents/document/primary%3ADownload%2FLibrera%2F2026-titled-tuesday-blitz-january-20_audio%2FRound01.wav"
+            // mediaPlayer1.source = audio_folder + "01.wav"
+            // console.log(mediaPlayer1.source)
+            // mediaPlayer1.play()
+
+            id_tim_startgame.running = true
         }
     }
 
@@ -536,16 +541,14 @@ Item {
         id_txt_infor.text = ""
     }
 
-    SoundEffect {
-        id: id_soundEffect_introduction
+    MediaPlayer {
+        id: mediaPlayer1
+        audioOutput: AudioOutput {}
 
-        onPlayingChanged: {
-            console.log("onPlayingChanged")
-            if (!isCompleteIntroduction) {
-                console.log("Start playback")
-                isCompleteIntroduction = true
-            } else {
-                console.log("Complete playback")
+        // Detect when media finishes playing
+        onMediaStatusChanged: {
+            if (mediaStatus === MediaPlayer.EndOfMedia) {
+                console.log("Playback complete!")
                 id_tim_startgame.running = true
             }
         }

@@ -18,10 +18,9 @@ Window {
     property bool isMatchComplete: false
     property string whiteStatus: ""
     property string blackStatus: ""
-    property bool isCompleteIntroduction: false
 
     Component.onCompleted: {
-        // id_soundEffect_introduction.play()
+
     }
 
     SoundEffect {
@@ -130,13 +129,7 @@ Window {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                // id_pl.clearList()
-                // id_img_winplayer.visible = false
-                // id_img_oppplayer.visible = false
-                // id_img_event.visible = false
-                // id_txt_event.visible = false
-                id_soundEffect_introduction.play()
-                // id_gs_gamescreen.newGame()
+                mediaPlayer.play()
             }
         }
     }
@@ -153,21 +146,40 @@ Window {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                id_fod_folderDialogAudio.open()
+                id_fid_audio.open()
+                // id_fod_folderDialogAudio.open()
             }
         }
     }
 
-    FolderDialog {
-        id: id_fod_folderDialogAudio
-        currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-        selectedFolder: viewer.folder
+    MediaPlayer {
+        id: mediaPlayer
 
+        audioOutput: AudioOutput {}
+
+        // Detect when media finishes playing
+        onMediaStatusChanged: {
+            if (mediaStatus === MediaPlayer.EndOfMedia) {
+                console.log("Playback complete!")
+                id_pl.clearList()
+                id_img_winplayer.visible = false
+                id_img_oppplayer.visible = false
+                id_img_event.visible = false
+                id_txt_event.visible = false
+                id_gs_gamescreen.newGame()
+            }
+        }
+    }
+
+    FileDialog {
+        id: id_fid_audio
+        title: "Please choose a audio file"
         onAccepted: {
-            console.log(id_fod_folderDialogAudio.selectedFolder)
-            id_soundEffect_introduction.source = id_fod_folderDialogAudio.selectedFolder + "/introduction_text.wav"
-            id_gs_gamescreen.audio_folder = id_fod_folderDialogAudio.selectedFolder
-            // id_soundEffect_introduction.play()
+            mediaPlayer.stop()
+            mediaPlayer.source = id_fid_audio.selectedFile
+            var selectfile = selectedFile.toString()
+            console.log("Please choose a audio file: " + selectfile)
+            id_gs_gamescreen.audio_folder = selectfile.replace("introduction_text.wav", "")
         }
     }
 
@@ -302,25 +314,5 @@ Window {
         width: id_img_winplayer.width * 0.6
         height: width * 0.5
         fillMode: Image.PreserveAspectFit
-    }
-
-    SoundEffect {
-        id: id_soundEffect_introduction
-
-        onPlayingChanged: {
-            console.log("onPlayingChanged")
-            if (!isCompleteIntroduction) {
-                console.log("Start playback")
-                isCompleteIntroduction = true
-            } else {
-                console.log("Complete playback")
-                id_pl.clearList()
-                id_img_winplayer.visible = false
-                id_img_oppplayer.visible = false
-                id_img_event.visible = false
-                id_txt_event.visible = false
-                id_gs_gamescreen.newGame()
-            }
-        }
     }
 }
