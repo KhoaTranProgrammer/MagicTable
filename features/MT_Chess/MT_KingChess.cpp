@@ -456,6 +456,9 @@ mt_void MT_KingChess::review()
                     prev_col = getColumnNumber(token[2]);
                     w_column = getColumnNumber(token[3]);
                     w_row = getRowNumber(token[4]);
+                    if (prev_col == -1) {
+                        prev_row = getRowNumber(token[2]);
+                    }
                     if (token[1] == 'N') piece = "knight";
                     if (token[1] == 'B') piece = "bishop";
                     if (token[1] == 'Q') piece = "queen";
